@@ -1,0 +1,19 @@
+﻿.header {
+    padding: 30px;
+    border-bottom: 2px solid gray;
+    height: 150px;
+    margin-bottom: 40px;
+}
+
+.header .logoContainer {
+    float: left;
+    width: 400px;
+    display: flex;
+}
+
+.header .logoTittle {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 24px;
+    margin-right: 15px;
+}

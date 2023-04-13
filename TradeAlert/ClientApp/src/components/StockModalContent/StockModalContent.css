@@ -1,0 +1,79 @@
+﻿.stockModalContent {
+    padding: 10px;
+}
+
+    .stockModalContent .title {
+        display: flex;
+    }
+
+    .stockModalContent .symbol {
+        font-weight: bold;
+        font-size: 28px;
+        color: #413F42;
+    }
+
+    .stockModalContent .name {
+        color: #413F42;
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    .stockModalContent .quotes {
+        margin: 8px;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+.quotes .price {
+    font-size: 50px;
+    color: #413F42;
+}
+
+.stockModalContent .changePercent {
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: 8px;
+    display: flex;
+}
+
+.stockModalContent .changePercent-up {
+    color: #68B984;
+}
+
+.stockModalContent .changePercent-down {
+    color: #E21818;
+}
+
+.stockModalContent .changePercent-zero {
+    color: #413F42;
+}
+
+.stockModalContent .quote-arrow {
+    width: 25px;
+    height: 23px;
+    margin-top: 7px;
+    margin-right: 2px;
+}
+
+
+.changePercent-up .quote-arrow {
+    background-image: url("../../images/quote_arrow_up.png");
+}
+
+.changePercent-down .quote-arrow {
+    background-image: url("../../images/quote_arrow_down.png");
+}
+
+.changePercent-zero .quote-arrow {
+    background-image: url("../../images/quote_arrow_zero.png");
+}
+
+.stockModalContent .listGroupAlerts {
+    margin-top: 10px;
+
+}
+
+.listGroupAlerts .itemAlert {
+    text-align: center;
+}
