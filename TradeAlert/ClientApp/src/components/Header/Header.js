@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import style from "./Header.css";
 import logoChart from "../../images/tradeAlertLogo.png";
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -11,7 +12,9 @@ const Header = () => {
                 <div className="logoTittle">TradeAlert</div>
                 <img src={logoChart} height="80px" />
             </div>
-
+            <div>
+                <Link to="/Stocks">Acciones</Link>
+            </div>
         </div>
     )
 

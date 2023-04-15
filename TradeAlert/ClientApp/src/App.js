@@ -1,15 +1,21 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import Home from "./pages/Home/Home"
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Stocks from "./pages/Stocks/Stocks";
 
 
 const App = () => {
 
     return (
         <BrowserRouter>
-            <Route path="/">
-                <Home />
-            </Route>
+            <Switch>
+                <Route path="/Stocks">
+                    <Stocks />
+                </Route>
+                <Route path="/">
+                    <Home />
+                </Route>
+            </Switch>
         </BrowserRouter>
     )
 
