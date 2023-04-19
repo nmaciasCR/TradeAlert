@@ -29,13 +29,10 @@ namespace TradeAlert
                 configuration.RootPath = "ClientApp/build";
             });
             //Base de datos
-            //services.AddDbContext<Repositories.Entities.TradeAlertContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("TradeAlert"));
-            //});
             services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("TradeAlert"));
+                //.UseLazyLoadingProxies();
             });
             services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();

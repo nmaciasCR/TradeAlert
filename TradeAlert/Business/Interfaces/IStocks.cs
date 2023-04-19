@@ -8,6 +8,8 @@ namespace TradeAlert.Business.Interfaces
     public interface IStocks
     {
         List<Data.Entities.Quotes> GetList();
-
+        Data.Entities.Quotes GetQuote(int id);
+        Boolean AddAlert(int quoteId, int typeId, decimal price);
+        Boolean DeleteAlert(int quoteId, int alertId);
     }
 }

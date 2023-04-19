@@ -36,5 +36,60 @@ namespace TradeAlert.Business
             }
 
         }
+
+
+        public Data.Entities.Quotes GetQuote(int id)
+        {
+            return _dbContext.Quotes.Find(id);
+        }
+
+        public Boolean AddAlert(int quoteId, int typeId, decimal price)
+        {
+            try
+            {
+                Data.Entities.Quotes quote = _dbContext.Quotes.Include(q => q.QuotesAlerts).First(q => q.ID == quoteId);
+                quote.QuotesAlerts.Add(new Data.Entities.QuotesAlerts()
+                {
+                    QuoteId = quoteId,
+                    description = String.Empty,
+                    QuoteAlertTypeId = typeId,
+                    price = price
+                });
+
+                _dbContext.Quotes.Update(quote);
+                _dbContext.SaveChanges();
+
+                return true;
+
+            } catch
+            {
+                return false;
+            }
+
+        }
+
+
+        public Boolean DeleteAlert(int quoteId, int alertId)
+        {
+            try
+            {
+                //Obtenemos la cotizacion
+                Data.Entities.Quotes quote = _dbContext.Quotes.Include(q => q.QuotesAlerts).First(q => q.ID == quoteId);
+                //Eliminamos el alert
+                Data.Entities.QuotesAlerts alertToDelete = quote.QuotesAlerts.First(qa => qa.ID == alertId);
+                _dbContext.QuotesAlerts.Remove(alertToDelete);
+                //actualizamos el objeto de cotizacion
+
+                _dbContext.SaveChanges();
+
+                return true;
+
+            } catch
+            {
+                return false;
+            }
+        }
+
+
     }
 }

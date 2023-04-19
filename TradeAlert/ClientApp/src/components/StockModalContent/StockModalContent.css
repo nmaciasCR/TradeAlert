@@ -25,6 +25,15 @@
         font-weight: bold;
     }
 
+    .stockModalContent .hide-element {
+        display: none;
+    }
+
+    .stockModalContent .show-element {
+        display: block;
+    }
+
+
 .quotes .price {
     font-size: 50px;
     color: #413F42;
@@ -71,9 +80,16 @@
 
 .stockModalContent .listGroupAlerts {
     margin-top: 10px;
-
 }
 
 .listGroupAlerts .itemAlert {
     text-align: center;
+}
+
+.listGroupAlerts .inputNewAlert {
+    width: 100px;
+}
+
+.listGroupAlerts .remove-icon {
+    margin-left: 35px;
 }
