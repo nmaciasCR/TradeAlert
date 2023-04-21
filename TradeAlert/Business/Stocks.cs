@@ -48,6 +48,7 @@ namespace TradeAlert.Business
             try
             {
                 Data.Entities.Quotes quote = _dbContext.Quotes.Include(q => q.QuotesAlerts).First(q => q.ID == quoteId);
+                //Agregamos la nueva alerta
                 quote.QuotesAlerts.Add(new Data.Entities.QuotesAlerts()
                 {
                     QuoteId = quoteId,
@@ -55,8 +56,10 @@ namespace TradeAlert.Business
                     QuoteAlertTypeId = typeId,
                     price = price
                 });
-
+                //actualizamos el review de la accion
+                quote.dateReview = DateTime.Now;
                 _dbContext.Quotes.Update(quote);
+
                 _dbContext.SaveChanges();
 
                 return true;
@@ -78,7 +81,10 @@ namespace TradeAlert.Business
                 //Eliminamos el alert
                 Data.Entities.QuotesAlerts alertToDelete = quote.QuotesAlerts.First(qa => qa.ID == alertId);
                 _dbContext.QuotesAlerts.Remove(alertToDelete);
+                
                 //actualizamos el objeto de cotizacion
+                quote.dateReview = DateTime.Now;
+                _dbContext.Quotes.Update(quote);
 
                 _dbContext.SaveChanges();
 

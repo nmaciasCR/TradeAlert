@@ -27,7 +27,6 @@ namespace TradeAlert.Data.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-
             }
         }
 
@@ -54,6 +53,8 @@ namespace TradeAlert.Data.Entities
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.dateReview).HasColumnType("datetime");
 
                 entity.Property(e => e.name)
                     .IsRequired()

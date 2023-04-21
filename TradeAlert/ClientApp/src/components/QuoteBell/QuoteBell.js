@@ -10,8 +10,14 @@ import ModalContent from "../StockModalContent/StockModalContent.jsx";
 const QuoteBell = (props) => {
     const [showModal, setShowModal] = useState(false);
 
-    const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+    const handleClose = () => {
+        setShowModal(false);
+        //Accion despues de cerrar el modal
+        if (props.afterCloseModal != undefined) {
+            props.afterCloseModal();
+        }
+    }
 
 
     return (

@@ -6,10 +6,9 @@ import ActionAlert from "../../../../components/QuoteBell/QuoteBell";
 
 const ActionContainer = (props) => {
 
-
     return (
         <div className="Action-Container">
-            <ActionAlert quote={props.quote} />
+            <ActionAlert quote={props.quote} afterCloseModal={props.refreshTable} />
         </div>
     )
 }

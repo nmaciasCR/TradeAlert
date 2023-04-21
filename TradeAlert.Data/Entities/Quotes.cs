@@ -22,6 +22,7 @@ namespace TradeAlert.Data.Entities
         public DateTime? updateDate { get; set; }
         public int priorityId { get; set; }
         public decimal? regularMarketChange { get; set; }
+        public DateTime dateReview { get; set; }
 
         public virtual Markets market { get; set; }
         public virtual QuotesPriority priority { get; set; }

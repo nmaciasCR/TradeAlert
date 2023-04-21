@@ -3,10 +3,11 @@ import Styles from "./StocksTable.css";
 import Table from 'react-bootstrap/Table';
 import { StockItem } from "../StockItem/StockItem";
 import ActionContainer from "../ActionsContainer/ActionsContainer";
+import { format } from 'date-fns';
 
 
 
-const StockYable = (props) => {
+const StockTable = (props) => {
 
     return (
         <Table responsive>
@@ -19,6 +20,7 @@ const StockYable = (props) => {
                     <th>Precio</th>
                     <th>%</th>
                     <th>Variación</th>
+                    <th>Última Revisión</th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,7 +34,8 @@ const StockYable = (props) => {
                     <td>{q.regularMarketPrice}</td>
                     <td>{StockItem.changePercent(q.regularMarketChangePercent)}</td>
                     <td>{StockItem.change(q.regularMarketChange)}</td>
-                    <td><ActionContainer quote={q} /></td>
+                    <td>{format(new Date(q.dateReview), 'dd/MM/yyyy')}</td>
+                    <td><ActionContainer quote={q} refreshTable={props.refreshTableStocks} /></td>
                 </tr>)
                 )}
             </tbody>
@@ -42,4 +45,4 @@ const StockYable = (props) => {
 }
 
 
-export default StockYable;
+export default StockTable;
