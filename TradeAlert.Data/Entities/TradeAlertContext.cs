@@ -8,9 +8,9 @@ namespace TradeAlert.Data.Entities
 {
     public partial class TradeAlertContext : DbContext
     {
-        public TradeAlertContext()
-        {
-        }
+        //public TradeAlertContext()
+        //{
+        //}
 
         public TradeAlertContext(DbContextOptions<TradeAlertContext> options)
             : base(options)
@@ -94,6 +94,8 @@ namespace TradeAlert.Data.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.price).HasColumnType("decimal(12, 2)");
+
+                entity.Property(e => e.regularMarketPercentDiff).HasColumnType("decimal(12, 2)");
 
                 entity.HasOne(d => d.QuoteAlertType)
                     .WithMany(p => p.QuotesAlerts)

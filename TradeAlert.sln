@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAlert", "TradeAlert\TradeAlert.csproj", "{A9DC323A-8633-4AE9-8076-A486AE177EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAlert.Data", "TradeAlert.Data\TradeAlert.Data.csproj", "{84D1D72A-BFC8-4F9F-8875-5F0BD99449A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAlert.Data", "TradeAlert.Data\TradeAlert.Data.csproj", "{84D1D72A-BFC8-4F9F-8875-5F0BD99449A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationManager", "NotificationManager\NotificationManager.csproj", "{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{84D1D72A-BFC8-4F9F-8875-5F0BD99449A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84D1D72A-BFC8-4F9F-8875-5F0BD99449A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84D1D72A-BFC8-4F9F-8875-5F0BD99449A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

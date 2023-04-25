@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NotificationManager.Business.Interfaces;
+using NotificationManager.Business;
 
 namespace TradeAlert
 {
@@ -28,8 +30,12 @@ namespace TradeAlert
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            //Notification Manager
+            services.AddHostedService<NotificationManager.Worker>();
+            services.AddTransient<IProcessAlerts, ProcessAlerts>();
+
             //Base de datos
-            services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>
+            services.AddDbContextPool<TradeAlert.Data.Entities.TradeAlertContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("TradeAlert"));
                 //.UseLazyLoadingProxies();
