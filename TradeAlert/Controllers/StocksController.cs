@@ -13,10 +13,10 @@ namespace TradeAlert.Controllers
     [ApiController]
     public class StocksController : ControllerBase
     {
-        private readonly Business.Interfaces.IStocks _businessStocks;
+        private readonly IStocks _businessStocks;
         private readonly IQuotesAlerts _businessQuotesAlerts;
 
-        public StocksController(Business.Interfaces.IStocks businessStocks, Business.Interfaces.IQuotesAlerts businessQuotesAlerts)
+        public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts)
         {
             _businessStocks = businessStocks;
             _businessQuotesAlerts = businessQuotesAlerts;

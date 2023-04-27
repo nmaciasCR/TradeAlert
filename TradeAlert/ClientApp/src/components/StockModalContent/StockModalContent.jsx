@@ -32,6 +32,7 @@ function StockModalContent(props) {
         fetch(`api/Stocks/GetQuotesAlerts?stockId=${props.quote.id}`)
             .then(response => { return response.json() })
             .then(responseJson => {
+                //Guardamos la lista de soportes ordenadas de manor a mayor
                 setSupportsAlertsList(responseJson.filter(s => s.quoteAlertTypeId == 1));
                 setResistorsAlertsList(responseJson.filter(s => s.quoteAlertTypeId == 2));
             })
@@ -121,9 +122,10 @@ function StockModalContent(props) {
                     <CancelIcon onClick={CancelResistorIconOnClick} width="25" title="Cancelar" />
                 </ListGroup.Item>
                 {resistorsAlertsList.length > 0 ? (
-                    resistorsAlertsList.map(r => (
+                    /*Listamos las resistencias de mayor a menor*/
+                    resistorsAlertsList.sort((a, b) => a.price < b.price ? 1: -1).map(r => (
                         <ListGroup.Item className="itemAlert">
-                            {r.price}
+                            {r.price} ({r.regularMarketPercentDiff} %)
                             <span className="remove-icon"><RemoveIcon width="25" title="Eliminar" onClick={() => RemoveIconOnClick(props.quote.id, r.id)} /></span>
                         </ListGroup.Item>)
                     )
@@ -143,9 +145,9 @@ function StockModalContent(props) {
                     <CancelIcon onClick={CancelSupportIconOnClick} width="25" title="Cancelar" />
                 </ListGroup.Item>
                 {supportsAlertsList.length > 0 ? (
-                    supportsAlertsList.map(r => (
+                    supportsAlertsList.sort((a, b) => a.price < b.price ? 1 : -1).map(r => (
                         <ListGroup.Item className="itemAlert">
-                            {r.price}
+                            {r.price} ({r.regularMarketPercentDiff} %)
                             <span className="remove-icon"><RemoveIcon width="25" title="Eliminar" onClick={() => RemoveIconOnClick(props.quote.id, r.id)} /></span>
                         </ListGroup.Item>)
                     )

@@ -11,5 +11,6 @@ namespace TradeAlert.Business.Interfaces
         Data.Entities.Quotes GetQuote(int id);
         Boolean AddAlert(int quoteId, int typeId, decimal price);
         Boolean DeleteAlert(int quoteId, int alertId);
+        List<Data.Entities.Quotes> GetListByPriority(int priorityId);
     }
 }

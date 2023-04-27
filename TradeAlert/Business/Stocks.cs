@@ -64,7 +64,8 @@ namespace TradeAlert.Business
 
                 return true;
 
-            } catch
+            }
+            catch
             {
                 return false;
             }
@@ -81,7 +82,7 @@ namespace TradeAlert.Business
                 //Eliminamos el alert
                 Data.Entities.QuotesAlerts alertToDelete = quote.QuotesAlerts.First(qa => qa.ID == alertId);
                 _dbContext.QuotesAlerts.Remove(alertToDelete);
-                
+
                 //actualizamos el objeto de cotizacion
                 quote.dateReview = DateTime.Now;
                 _dbContext.Quotes.Update(quote);
@@ -90,11 +91,45 @@ namespace TradeAlert.Business
 
                 return true;
 
-            } catch
+            }
+            catch
             {
                 return false;
             }
         }
+
+
+        /// <summary>
+        /// Retorna un listado de quotes filtradas por prioridad
+        /// ordenadas por el porcentaje de diferencia de precio de sus alertas
+        /// </summary>
+        /// <param name="priorityId"></param>
+        public List<Data.Entities.Quotes> GetListByPriority(int priorityId)
+        {
+            List<Data.Entities.Quotes> list = new List<Data.Entities.Quotes>();
+
+            try
+            {
+                list = _dbContext.Quotes
+                    .Where(q => q.priorityId == priorityId)
+                    .Include(q => q.QuotesAlerts)
+                    .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
+                    .ToList();
+
+                //Eliminamos la coleccion QuotesAlerts
+                list.ForEach(q => q.QuotesAlerts = new List<Data.Entities.QuotesAlerts>());
+
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return list;
+            }
+
+        }
+
+
 
 
     }

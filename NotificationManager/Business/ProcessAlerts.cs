@@ -25,13 +25,15 @@ namespace NotificationManager.Business
         {
             try
             {
+                //hacer un reloado de todas las colecciones de la db
+                _dbContext.ChangeTracker.Entries().ToList().ForEach(e => e.Reload());
 
                 _dbContext.Quotes
                     .Include(q => q.QuotesAlerts)
                     .ToList()
                     .ForEach(q => q.QuotesAlerts.ToList().ForEach(qa => qa.regularMarketPercentDiff = GetAbsolutePercentDiff(q.regularMarketPrice, qa.price)));
 
-                _dbContext?.SaveChanges();
+                _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {

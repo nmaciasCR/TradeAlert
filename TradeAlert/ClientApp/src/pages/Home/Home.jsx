@@ -7,7 +7,7 @@ const Home = () => {
     const [stocksList, setStockList] = useState([]);
 
     useEffect(() => {
-        fetch("api/Stocks/GetStocks")
+        fetch("api/Home/GetStocksOrderAlerts?priorityId=1")
             .then(response => { return response.json() })
             .then(responseJson => {
                 setStockList(responseJson);

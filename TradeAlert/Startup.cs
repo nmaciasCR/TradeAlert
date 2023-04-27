@@ -35,7 +35,7 @@ namespace TradeAlert
             services.AddTransient<IProcessAlerts, ProcessAlerts>();
 
             //Base de datos
-            services.AddDbContextPool<TradeAlert.Data.Entities.TradeAlertContext>(options =>
+            services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("TradeAlert"));
                 //.UseLazyLoadingProxies();
