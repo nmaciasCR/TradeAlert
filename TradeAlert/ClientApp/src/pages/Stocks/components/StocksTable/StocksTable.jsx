@@ -28,7 +28,7 @@ const StockTable = (props) => {
                 {props.quotes.map(q => 
                 (<tr>
                     <td>{StockItem.symbol(q.symbol)}</td>
-                    <td>{q.name}</td>
+                    <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)}</td>
                     <td>{q.priorityId}</td>
                     <td>{q.currency}</td>
                     <td>{q.regularMarketPrice}</td>

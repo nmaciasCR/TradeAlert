@@ -25,7 +25,7 @@ namespace NotificationManager.Business
         {
             try
             {
-                //hacer un reloado de todas las colecciones de la db
+                //hacer un reload de todas las colecciones de la db
                 _dbContext.ChangeTracker.Entries().ToList().ForEach(e => e.Reload());
 
                 //Setea el porcentaje de diferencia entre el valor de la alerta y la cotizacion de la accion
@@ -34,7 +34,7 @@ namespace NotificationManager.Business
                     .ToList()
                     .ForEach(q => q.QuotesAlerts.ToList().ForEach(qa => qa.regularMarketPercentDiff = GetAbsolutePercentDiff(q.regularMarketPrice, qa.price)));
 
-                //Define lr prioridad de la accion
+                //Define la prioridad de la accion
                 _dbContext.Quotes
                     .ToList()
                     .ForEach(q => q.priorityId = GetStockPriority(q.QuotesAlerts.Select(qa => qa.regularMarketPercentDiff).ToList()));

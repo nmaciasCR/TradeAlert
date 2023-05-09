@@ -1,5 +1,7 @@
 ﻿import React from "react";
 import Styles from "./StockItem.css";
+import InfoIcon from "../InfoRedIcon/InfoRedIcon";
+
 
 
 
@@ -52,5 +54,8 @@ export const StockItem = {
                 <div className={priceClass}>{price}</div>
             </div>
         );
+    },
+    infoRedIcon: (showElement) => {
+        return (showElement && <InfoIcon title="Revisión Requerida" />)
     }
 }

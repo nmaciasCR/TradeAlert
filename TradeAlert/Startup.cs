@@ -40,6 +40,8 @@ namespace TradeAlert
                 options.UseSqlServer(Configuration.GetConnectionString("TradeAlert"));
                 //.UseLazyLoadingProxies();
             });
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
         }

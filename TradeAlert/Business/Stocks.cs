@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace TradeAlert.Business
     {
 
         private Data.Entities.TradeAlertContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public Stocks(Data.Entities.TradeAlertContext dbContext)
+        public Stocks(Data.Entities.TradeAlertContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
+            this._mapper = mapper;
         }
 
 
@@ -26,7 +29,9 @@ namespace TradeAlert.Business
 
             try
             {
-                list = _dbContext.Quotes.ToList();
+                list = _dbContext.Quotes
+                    .Include(q => q.QuotesAlerts)
+                    .ToList();
 
                 return list;
             }
@@ -129,6 +134,41 @@ namespace TradeAlert.Business
 
         }
 
+
+        public DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote)
+        {
+            DTO.StocksDTO DTOReturn = _mapper.Map<DTO.StocksDTO>(quote);
+            //Indicamos si hay que hacer una review sw la accion
+            DTOReturn.reviewRequired = this.HasReviewRequired(quote.regularMarketPrice, quote.QuotesAlerts.ToList());
+
+            return DTOReturn;
+
+        }
+
+
+        /// <summary>
+        /// Indoca si una accion debe ser re evaluada
+        /// </summary>
+        /// <param name="price"></param>
+        /// <param name="alertsList"></param>
+        public Boolean HasReviewRequired(decimal price, List<Data.Entities.QuotesAlerts> alertsList)
+        {
+            Boolean hasReview = false;
+
+            //Tiene alguna alerta tipo RESISTENCIA menor al precio de la accion
+            if (!hasReview && alertsList.Any(a => (a.QuoteAlertTypeId == 2 && (a.price < price))))
+            {
+                hasReview = true;
+            }
+
+            //Tiene alguna alerta tipo SOPORTE mayor al precio de la accion
+            if (!hasReview && alertsList.Any(a => (a.QuoteAlertTypeId == 1 && (a.price > price))))
+            {
+                hasReview = true;
+            }
+
+            return hasReview;
+        }
 
 
 

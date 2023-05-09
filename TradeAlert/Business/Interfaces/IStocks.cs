@@ -12,5 +12,7 @@ namespace TradeAlert.Business.Interfaces
         Boolean AddAlert(int quoteId, int typeId, decimal price);
         Boolean DeleteAlert(int quoteId, int alertId);
         List<Data.Entities.Quotes> GetListByPriority(int priorityId);
+        DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote);
+        public Boolean HasReviewRequired(decimal price, List<Data.Entities.QuotesAlerts> alertsList);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Business;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Business.Request;
 
 namespace TradeAlert.Controllers
 {
@@ -22,7 +24,9 @@ namespace TradeAlert.Controllers
             _businessQuotesAlerts = businessQuotesAlerts;
         }
 
-
+        /// <summary>
+        /// Listado de acciones para mostrar en tabla
+        /// </summary>
         [HttpGet]
         [Route("GetStocks")]
         public IActionResult GetStocks()
@@ -30,7 +34,7 @@ namespace TradeAlert.Controllers
             try
             {
 
-                return StatusCode(StatusCodes.Status200OK, _businessStocks.GetList());
+                return StatusCode(StatusCodes.Status200OK, _businessStocks.GetList().Select(s => _businessStocks.MapToDTO(s)));
                 
 
             } catch (Exception ex)
@@ -58,7 +62,7 @@ namespace TradeAlert.Controllers
 
         [HttpPost]
         [Route("AddQuoteAlert")]
-        public IActionResult AddQuoteAlert(Business.Model.Request.AddQuoteAlert newAlert)
+        public IActionResult AddQuoteAlert(AddQuoteAlert newAlert)
         {
             try
             {
@@ -74,7 +78,7 @@ namespace TradeAlert.Controllers
 
         [HttpPost]
         [Route("DeleteQuoteAlert")]
-        public IActionResult DeleteQuoteAlert(Business.Model.Request.DeleteQuoteAlert alertToDelete)
+        public IActionResult DeleteQuoteAlert(DeleteQuoteAlert alertToDelete)
         {
             try
             {
