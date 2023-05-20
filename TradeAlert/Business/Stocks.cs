@@ -155,6 +155,12 @@ namespace TradeAlert.Business
         {
             Boolean hasReview = false;
 
+            //Al menos una alerta
+            if (!hasReview && !alertsList.Any())
+            {
+                hasReview = true;
+            }
+
             //Tiene alguna alerta tipo RESISTENCIA menor al precio de la accion
             if (!hasReview && alertsList.Any(a => (a.QuoteAlertTypeId == 2 && (a.price < price))))
             {
