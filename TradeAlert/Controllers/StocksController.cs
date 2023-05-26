@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Business;
+using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Business.Request;
 
@@ -17,11 +18,13 @@ namespace TradeAlert.Controllers
     {
         private readonly IStocks _businessStocks;
         private readonly IQuotesAlerts _businessQuotesAlerts;
+        private readonly IMarkets _businessMarkets;
 
-        public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts)
+        public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts, IMarkets businessMarkets)
         {
             _businessStocks = businessStocks;
             _businessQuotesAlerts = businessQuotesAlerts;
+            _businessMarkets = businessMarkets;
         }
 
         /// <summary>
@@ -33,11 +36,19 @@ namespace TradeAlert.Controllers
         {
             try
             {
+                List<StocksDTO> quotesDTOList = new();
 
-                return StatusCode(StatusCodes.Status200OK, _businessStocks.GetList().Select(s => _businessStocks.MapToDTO(s)));
-                
+                foreach (Data.Entities.Quotes q in _businessStocks.GetList())
+                {
+                    StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
+                    stocksDTO._market = _businessMarkets.MapToDTO(q.market);
+                    quotesDTOList.Add(stocksDTO);
+                }
 
-            } catch (Exception ex)
+                return StatusCode(StatusCodes.Status200OK, quotesDTOList);
+
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -54,7 +65,8 @@ namespace TradeAlert.Controllers
                 return StatusCode(StatusCodes.Status200OK, _businessQuotesAlerts.GetList(stockId));
 
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -70,7 +82,8 @@ namespace TradeAlert.Controllers
                 return StatusCode(StatusCodes.Status200OK, newAlert);
 
 
-            } catch
+            }
+            catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -86,7 +99,8 @@ namespace TradeAlert.Controllers
 
                 return StatusCode(StatusCodes.Status200OK);
 
-            } catch
+            }
+            catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

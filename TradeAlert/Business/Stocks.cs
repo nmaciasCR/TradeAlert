@@ -31,6 +31,7 @@ namespace TradeAlert.Business
             {
                 list = _dbContext.Quotes
                     .Include(q => q.QuotesAlerts)
+                    .Include(q => q.market)
                     .ToList();
 
                 return list;
@@ -138,11 +139,12 @@ namespace TradeAlert.Business
         public DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote)
         {
             DTO.StocksDTO DTOReturn = _mapper.Map<DTO.StocksDTO>(quote);
-            //Indicamos si hay que hacer una review sw la accion
+            //Indicamos si hay que hacer una review de la accion
             DTOReturn.reviewRequired = this.HasReviewRequired(quote.regularMarketPrice, quote.QuotesAlerts.ToList());
+            //Diferencia de dias desde la ultima revision
+            DTOReturn.dateReviewDaysDiff = quote.dateReviewDaysDiff;
 
             return DTOReturn;
-
         }
 
 

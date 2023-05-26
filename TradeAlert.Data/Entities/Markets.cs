@@ -14,6 +14,8 @@ namespace TradeAlert.Data.Entities
 
         public int ID { get; set; }
         public string name { get; set; }
+        public string description { get; set; }
+        public string flag { get; set; }
         public string state { get; set; }
 
         public virtual ICollection<Quotes> Quotes { get; set; }

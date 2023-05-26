@@ -3,8 +3,6 @@ import Styles from "./StocksTable.css";
 import Table from 'react-bootstrap/Table';
 import { StockItem } from "../StockItem/StockItem";
 import ActionContainer from "../ActionsContainer/ActionsContainer";
-import { format } from 'date-fns';
-
 
 
 const StockTable = (props) => {
@@ -14,6 +12,7 @@ const StockTable = (props) => {
             <thead>
                 <tr>
                     <th>Simbolo</th>
+                    <th>Mercado</th>
                     <th>Nombre</th>
                     <th>Prioridad</th>
                     <th>Moneda</th>
@@ -28,13 +27,14 @@ const StockTable = (props) => {
                 {props.quotes.map(q => 
                 (<tr>
                     <td>{StockItem.symbol(q.symbol)}</td>
+                    <td>{StockItem.market(q._market.flag, q._market.description)}</td>
                     <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)}</td>
-                    <td>{q.priorityId}</td>
+                    <td>{StockItem.priorityIcon(q.priorityId)}</td>
                     <td>{q.currency}</td>
                     <td>{q.regularMarketPrice}</td>
                     <td>{StockItem.changePercent(q.regularMarketChangePercent)}</td>
                     <td>{StockItem.change(q.regularMarketChange)}</td>
-                    <td>{format(new Date(q.dateReview), 'dd/MM/yyyy')}</td>
+                    <td>{StockItem.lastReview(q.dateReviewDaysDiff, q.dateReview)}</td>
                     <td><ActionContainer quote={q} refreshTable={props.refreshTableStocks} /></td>
                 </tr>)
                 )}

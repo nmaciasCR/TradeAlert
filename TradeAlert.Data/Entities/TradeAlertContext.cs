@@ -36,15 +36,23 @@ namespace TradeAlert.Data.Entities
 
             modelBuilder.Entity<Markets>(entity =>
             {
+                entity.Property(e => e.description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.flag)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.name)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.state)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Quotes>(entity =>

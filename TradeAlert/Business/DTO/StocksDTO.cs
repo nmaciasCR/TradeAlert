@@ -17,7 +17,10 @@ namespace TradeAlert.Business.DTO
         public DateTime dateReview { get; set; }
         //Indica si la accion debe ser re-evaluada
         public bool reviewRequired { get; set; }
+        //Dias desde la ultima revision
+        public int dateReviewDaysDiff { get; set; }
 
 
+        public MarketDTO _market { get; set; }
     }
 }

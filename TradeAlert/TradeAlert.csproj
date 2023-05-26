@@ -33,12 +33,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\images\" />
+    <ProjectReference Include="..\NotificationManager\NotificationManager.csproj" />
+    <ProjectReference Include="..\TradeAlert.Data\TradeAlert.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationManager\NotificationManager.csproj" />
-    <ProjectReference Include="..\TradeAlert.Data\TradeAlert.Data.csproj" />
+    <None Update="ClientApp\src\images\flags\estados_unidos.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

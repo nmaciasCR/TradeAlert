@@ -44,6 +44,7 @@ namespace TradeAlert
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
+            services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

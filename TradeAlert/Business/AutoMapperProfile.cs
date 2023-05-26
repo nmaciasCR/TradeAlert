@@ -8,6 +8,7 @@ namespace TradeAlert.Business
         public AutoMapperProfile()
         {
             CreateMap<Data.Entities.Quotes, DTO.StocksDTO>();
+            CreateMap<Data.Entities.Markets, DTO.MarketDTO>();
         }
 
 
