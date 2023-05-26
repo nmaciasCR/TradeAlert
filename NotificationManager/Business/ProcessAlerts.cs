@@ -87,11 +87,11 @@ namespace NotificationManager.Business
         {
             int priorityId;
 
-            if (priceAlertsDiff.Any(p => p < 5))
+            if (priceAlertsDiff.Any(p => p <= 3))
             {
                 priorityId = 1;
             }
-            else if (priceAlertsDiff.Any(p => p < 10))
+            else if (priceAlertsDiff.Any(p => p <= 7))
             {
                 priorityId = 2;
             }
