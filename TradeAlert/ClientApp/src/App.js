@@ -12,6 +12,9 @@ const App = () => {
                 <Route path="/Stocks">
                     <Stocks />
                 </Route>
+                <Route path="/Home">
+                    <Home />
+                </Route>
                 <Route path="/">
                     <Home />
                 </Route>
