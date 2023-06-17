@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import QuotesGrid from "../../components/QuotesGrid/QuotesGrid";
-
+import IndexMarket from "../../components/IndexMarket/IndexMarket";
 
 const Home = () => {
     const [stocksList, setStockList] = useState([]);
@@ -21,6 +21,7 @@ const Home = () => {
     return (
         <div>
             <Header />
+            <IndexMarket />
             <div className="Container" style={{ padding: "10px" }}>
                 <h2>Alta Prioridad</h2>
                 <QuotesGrid quotes={stocksList.filter(s => s.priorityId == 1)} />

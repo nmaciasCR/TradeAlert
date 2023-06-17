@@ -2,6 +2,7 @@
 import Styles from "./Stocks.css";
 import Header from "../../components/Header/Header";
 import StocksTable from "./components/StocksTable/StocksTable";
+import IndexMarket from "../../components/IndexMarket/IndexMarket";
 
 
 
@@ -32,6 +33,7 @@ const Stocks = () => {
     return (
         <div>
             <Header />
+            <IndexMarket />
             <div className="Container">
                 <h1>Listado de Acciones</h1>
                 <StocksTable quotes={stocksList} refreshTableStocks={loadTableStocks} />

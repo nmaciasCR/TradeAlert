@@ -106,5 +106,27 @@ namespace TradeAlert.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetMainStocks")]
+        public IActionResult GetMainStocks()
+        {
+
+            try
+            {
+
+                List<StocksDTO> mainStockDTO = _businessStocks.GetList()
+                    .Where(s => s.isMainIndex)
+                    .Select(x => _businessStocks.MapToDTO(x))
+                    .ToList();
+
+                return StatusCode(StatusCodes.Status200OK, mainStockDTO);
+
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
     }
 }

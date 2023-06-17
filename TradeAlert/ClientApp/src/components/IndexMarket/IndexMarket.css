@@ -1,0 +1,47 @@
+﻿.indexMarketContainer {
+    height: 80px;
+    margin-bottom: 10px;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    grid-gap: 15px;
+    align-items: center;
+}
+
+    .indexMarketContainer .block {
+        border-radius: 5px;
+        width: 200px;
+        height: 56px;
+        background-color: white;
+        display: flex;
+        padding: 8px;
+        justify-content: center;
+    }
+
+.block .symbol {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.block .arrow {
+    margin: 5px;
+    margin-top: 6px;
+}
+
+.block .quote {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.block .quote-up {
+    color: #68B984;
+}
+
+.block .quote-down {
+    color: #E21818;
+}
+
+.block .quote-zero {
+    color: #413F42;
+}
