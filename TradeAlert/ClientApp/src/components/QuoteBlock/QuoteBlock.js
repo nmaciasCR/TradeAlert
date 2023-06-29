@@ -25,9 +25,11 @@ function Block(props) {
                 <span className="blkSymbol">{props.quote.symbol}</span>
                 <span className="blkPrice">   {props.quote.regularMarketPrice}</span>
                 <span className="blkCurrency">  {props.quote.currency}</span>
-                <BellIcon quote={ props.quote } />
+                <div className="bellIconContainer">
+                    <BellIcon quote={props.quote} />
+                </div>
             </div>
-            <div className="blkCompanyName">{props.quote.name}</div>
+            <div className="blkCompanyName" title={props.quote.name}>{props.quote.name}</div>
             <div className="blkRegularMarketPrices">
                 <div className="quote-arrow"></div>
                 <span className="blkMarketPrice">{props.quote.regularMarketChangePercent}% ({props.quote.regularMarketChange})</span>
