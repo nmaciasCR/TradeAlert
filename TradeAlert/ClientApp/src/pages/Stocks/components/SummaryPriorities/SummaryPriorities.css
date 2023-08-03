@@ -1,0 +1,16 @@
+﻿.Summary-container {
+    display: flex;
+}
+
+    .Summary-container .item {
+        margin: 5px;
+    }
+
+    .Summary-container .icon {
+        margin: 8px;
+    }
+
+    .Summary-container .item-count {
+        font-size: 25px;
+        font-weight: bold;
+    }
