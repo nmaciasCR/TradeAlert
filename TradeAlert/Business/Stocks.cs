@@ -135,7 +135,11 @@ namespace TradeAlert.Business
 
         }
 
-
+        /// <summary>
+        /// Mapea un objeto quotes en su correspondiente DTO
+        /// </summary>
+        /// <param name="quote"></param>
+        /// <returns></returns>
         public DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote)
         {
             DTO.StocksDTO DTOReturn = _mapper.Map<DTO.StocksDTO>(quote);
@@ -176,6 +180,18 @@ namespace TradeAlert.Business
             }
 
             return hasReview;
+        }
+
+        /// <summary>
+        /// Mapea una lista de quotes en su correspondiente DTO
+        /// </summary>
+        /// <param name="quotes"></param>
+        /// <returns></returns>
+        public List<DTO.StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes)
+        {
+            List< DTO.StocksDTO> listReturn = new List<DTO.StocksDTO>();
+            quotes.ForEach(q => listReturn.Add(MapToDTO(q)));
+            return listReturn;
         }
 
 

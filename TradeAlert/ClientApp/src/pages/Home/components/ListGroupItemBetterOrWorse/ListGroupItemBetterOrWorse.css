@@ -1,0 +1,31 @@
+﻿.itemListContainer {
+    display: flex;
+
+}
+    .itemListContainer .flag {
+        margin: 4px;
+    }
+    .itemListContainer .symbol {
+        font-weight: bold;
+        font-size: 22px;
+    }
+    .itemListContainer .imgArrow {
+        margin: 3px;
+    }
+
+    .itemListContainer .quote {
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .itemListContainer .quote-up {
+        color: #68B984;
+    }
+
+    .itemListContainer .quote-down {
+        color: #E21818;
+    }
+
+    .itemListContainer .quote-zero {
+        color: #413F42;
+    }
