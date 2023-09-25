@@ -1,4 +1,5 @@
 ﻿import React, { useEffect, useState } from "react";
+import Styles from "./Home.css";
 import Header from "../../components/Header/Header";
 import QuotesGrid from "../../components/QuotesGrid/QuotesGrid";
 import IndexMarket from "../../components/IndexMarket/IndexMarket";
@@ -7,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from './components/ListGroupItemBetterOrWorse/ListGroupItemBetterOrWorse.jsx';
+import ImgHighPriority from "../../images/high_priority_icon.png";
 
 
 const Home = () => {
@@ -54,20 +56,23 @@ const Home = () => {
             <div className="container-fluid">
                 <Row>
                     <Col sm={10}>
-                        <h2>Alta Prioridad</h2>
-                        <QuotesGrid quotes={stocksList.filter(s => s.priorityId == 1)} />
-
+                        <ListGroup>
+                            <ListGroup.Item variant="secondary"><h3>Alta Prioridad</h3></ListGroup.Item>
+                            <ListGroup.Item className="mainItemListGroup">
+                                <QuotesGrid quotes={stocksList.filter(s => s.priorityId == 1)} />
+                            </ListGroup.Item>
+                        </ListGroup>
                     </Col>
                     <Col sm={2}>
                         <ListGroup>
-                            <ListGroup.Item variant="success">Lo Mejor</ListGroup.Item>
+                            <ListGroup.Item variant="success"><h3>Lo Mejor</h3></ListGroup.Item>
                             {
                                 stocksBetterList.map(q => (<ListGroupItem quote={q} />))
                             }
                         </ListGroup>
                         <br />
                         <ListGroup>
-                            <ListGroup.Item variant="danger">Lo Peor</ListGroup.Item>
+                            <ListGroup.Item variant="danger"><h3>Lo Peor</h3></ListGroup.Item>
                             {
                                 stocksWorseList.map(q => (<ListGroupItem quote={q} />))
                             }

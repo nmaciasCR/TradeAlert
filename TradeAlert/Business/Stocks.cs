@@ -122,10 +122,6 @@ namespace TradeAlert.Business
                     .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
                     .ToList();
 
-                //Eliminamos la coleccion QuotesAlerts
-                list.ForEach(q => q.QuotesAlerts = new List<Data.Entities.QuotesAlerts>());
-
-
                 return list;
             }
             catch (Exception ex)

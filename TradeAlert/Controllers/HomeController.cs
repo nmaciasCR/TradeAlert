@@ -29,8 +29,8 @@ namespace TradeAlert.Controllers
         {
             try
             {
-
-                return StatusCode(StatusCodes.Status200OK, _businessStocks.GetListByPriority(priorityId));
+                List<Data.Entities.Quotes> listByPriority = _businessStocks.GetListByPriority(priorityId);
+                return StatusCode(StatusCodes.Status200OK, _businessStocks.MapToDTO(listByPriority));
 
 
             }

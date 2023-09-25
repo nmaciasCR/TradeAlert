@@ -1,6 +1,7 @@
 ﻿import React from "react";
 import styles from "./QuoteBlock.css";
 import BellIcon from "../QuoteBell/QuoteBell";
+import { Trunc2Decimal } from "../../Utils/Numbers.js";
 
 
 
@@ -23,7 +24,7 @@ function Block(props) {
         <div className={`blockContainer ${cssname}`}>
             <div>
                 <span className="blkSymbol">{props.quote.symbol}</span>
-                <span className="blkPrice">   {props.quote.regularMarketPrice}</span>
+                <span className="blkPrice">   {Trunc2Decimal(props.quote.regularMarketPrice)}</span>
                 <span className="blkCurrency">  {props.quote.currency}</span>
                 <div className="bellIconContainer">
                     <BellIcon quote={props.quote} />
@@ -32,7 +33,7 @@ function Block(props) {
             <div className="blkCompanyName" title={props.quote.name}>{props.quote.name}</div>
             <div className="blkRegularMarketPrices">
                 <div className="quote-arrow"></div>
-                <span className="blkMarketPrice">{props.quote.regularMarketChangePercent}% ({props.quote.regularMarketChange})</span>
+                <span className="blkMarketPrice">{Trunc2Decimal(props.quote.regularMarketChangePercent)}% ({Trunc2Decimal(props.quote.regularMarketChange)})</span>
                 <span></span>
             </div>
         </div>

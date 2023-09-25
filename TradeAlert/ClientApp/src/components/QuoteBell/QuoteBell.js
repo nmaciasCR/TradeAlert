@@ -7,6 +7,18 @@ import ModalInfo from "../Common/Modals/ModalInfo.jsx";
 import ModalContent from "../StockModalContent/StockModalContent.jsx";
 
 
+
+
+function GetBellIcon(isActive) {
+    if (isActive) {
+        return bellIconActive;
+    } else {
+        return bellIcon;
+    }
+}
+
+
+
 const QuoteBell = (props) => {
     const [showModal, setShowModal] = useState(false);
 
@@ -22,7 +34,7 @@ const QuoteBell = (props) => {
 
     return (
         <>
-            <img className="bell-icon" src={bellIcon} onClick={() => setShowModal(true)} />
+            <img className="bell-icon" src={GetBellIcon(props.quote.reviewRequired)} onClick={() => setShowModal(true)} />
             <ModalInfo
                 show={showModal}
                 onClose={handleClose}
