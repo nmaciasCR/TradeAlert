@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Data.Entities;
 
 namespace TradeAlert.Controllers
 {
@@ -23,16 +24,32 @@ namespace TradeAlert.Controllers
             _businessMarkets = businessMarkets;
         }
 
+
+        /// <summary>
+        /// Listado de stocks para la grilla de bloques de la pagina principal
+        /// </summary>
         [HttpGet]
         [Route("GetStocksOrderAlerts")]
         public IActionResult GetStocksOrderAlerts(int priorityId)
         {
+            List<Data.Entities.Quotes> listByPriority;
+            List<StocksDTO> quotesDTO;
+
+
             try
             {
-                List<Data.Entities.Quotes> listByPriority = _businessStocks.GetListByPriority(priorityId);
-                return StatusCode(StatusCodes.Status200OK, _businessStocks.MapToDTO(listByPriority));
+                listByPriority = _businessStocks.GetListByPriority(priorityId);
+                quotesDTO = new List<StocksDTO>();
+
+                //Agregamos el objeto market
+                listByPriority.ForEach(q => {
+                    StocksDTO newStock = _businessStocks.MapToDTO(q);
+                    newStock._market = _businessMarkets.MapToDTO(q.market);
+                    quotesDTO.Add(newStock);
+                });
 
 
+                return StatusCode(StatusCodes.Status200OK, quotesDTO);
             }
             catch
             {

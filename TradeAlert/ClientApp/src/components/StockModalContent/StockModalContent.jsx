@@ -5,6 +5,9 @@ import PlusIcon from "../Common/PlusIcon/PlusIcon";
 import AcceptIcon from "../Common/AcceptIcon/AcceptIcon";
 import CancelIcon from "../Common/CancelIcon/CancelIcon";
 import RemoveIcon from "../Common/RemoveIcon/RemoveIcon";
+import { Trunc2Decimal } from "../../Utils/Numbers.js";
+
+const imgPath = require.context('../../images/flags', true);
 
 
 function containerClass(price) {
@@ -102,14 +105,24 @@ function StockModalContent(props) {
         setShowSupportInput(false);
     }
 
+    //Indica si una resistencia o un soporte fueron superadas por el precio de la accion
+    function IsAlertDefeated(type, quotePrice, alertPrice) {
+        if (((type == "RESISTOR") && (quotePrice > alertPrice)) || ((type == "SUPPORT") && (quotePrice < alertPrice))) {
+            //La resistencia/soporte fue superada
+            return "defeated";
+        } else return "";
+
+    }
+
 
     return (
         <div className="stockModalContent">
             <div className="title">
+                <img className="flag" src={imgPath(`./` + props.quote._market.flag)} title={props.quote._market.description} />
                 <div className="symbol">{props.quote.symbol}</div>
                 <div className={`changePercent ${cssname}`}>
                     <div className="quote-arrow"></div>
-                    {props.quote.regularMarketChangePercent} % ({props.quote.regularMarketChange})
+                    {Trunc2Decimal(props.quote.regularMarketChangePercent)} % ({Trunc2Decimal(props.quote.regularMarketChange)})
                 </div>
             </div>
 
@@ -125,7 +138,7 @@ function StockModalContent(props) {
                     /*Listamos las resistencias de mayor a menor*/
                     resistorsAlertsList.sort((a, b) => a.price < b.price ? 1: -1).map(r => (
                         <ListGroup.Item className="itemAlert">
-                            {r.price} ({r.regularMarketPercentDiff} %)
+                            <span className={IsAlertDefeated('RESISTOR', props.quote.regularMarketPrice, r.price)}>{Trunc2Decimal(r.price)} ({Trunc2Decimal(r.regularMarketPercentDiff)} %)</span>
                             <span className="remove-icon"><RemoveIcon width="25" title="Eliminar" onClick={() => RemoveIconOnClick(props.quote.id, r.id)} /></span>
                         </ListGroup.Item>)
                     )
@@ -134,7 +147,7 @@ function StockModalContent(props) {
             </ListGroup>
 
             <div className="quotes">
-                <span className="price">{props.quote.regularMarketPrice}</span>
+                <span className="price">{Trunc2Decimal(props.quote.regularMarketPrice)}</span>
             </div>
 
             <ListGroup className="listGroupAlerts">
@@ -147,7 +160,7 @@ function StockModalContent(props) {
                 {supportsAlertsList.length > 0 ? (
                     supportsAlertsList.sort((a, b) => a.price < b.price ? 1 : -1).map(r => (
                         <ListGroup.Item className="itemAlert">
-                            {r.price} ({r.regularMarketPercentDiff} %)
+                            <span className={IsAlertDefeated('SUPPORT', props.quote.regularMarketPrice, r.price)}>{Trunc2Decimal(r.price)} ({Trunc2Decimal(r.regularMarketPercentDiff)} %)</span>
                             <span className="remove-icon"><RemoveIcon width="25" title="Eliminar" onClick={() => RemoveIconOnClick(props.quote.id, r.id)} /></span>
                         </ListGroup.Item>)
                     )

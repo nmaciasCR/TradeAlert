@@ -118,6 +118,7 @@ namespace TradeAlert.Business
             {
                 list = _dbContext.Quotes
                     .Where(q => q.priorityId == priorityId)
+                    .Include(q => q.market)
                     .Include(q => q.QuotesAlerts)
                     .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
                     .ToList();

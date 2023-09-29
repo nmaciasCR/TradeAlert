@@ -6,6 +6,14 @@
         display: flex;
     }
 
+.title .flag {
+    width: 35px;
+    height: 35px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+
     .stockModalContent .symbol {
         font-weight: bold;
         font-size: 28px;
@@ -85,6 +93,12 @@
 .listGroupAlerts .itemAlert {
     text-align: center;
 }
+
+    .listGroupAlerts .itemAlert .defeated {
+        text-decoration: line-through;
+        color: #E21818;
+    }
+
 
 .listGroupAlerts .inputNewAlert {
     width: 100px;
