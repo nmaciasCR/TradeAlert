@@ -17,19 +17,19 @@ const Summary = ({ quotes }) => {
     return (
         <div className="Summary-container">
             <div className="item">
-                <img className="icon" src={highPriorityIcon} width="32" title="Alta Prioridad" />
-                <span className="item-count">{quotes.filter(s => s.priorityId == HIGH_PRIORITY).length}</span>
+                <img className="icon" src={highPriorityIcon} width="32" title="Alta Prioridad" alt="Alta Prioridad" />
+                <span className="item-count">{quotes.filter(s => s.priorityId === HIGH_PRIORITY).length}</span>
             </div>
             <div className="item">
-                <img className="icon" src={mediumPriorityIcon} width="32" title="Alta Prioridad" />
-                <span className="item-count">{quotes.filter(s => s.priorityId == MEDIUM_PRIORIDAD).length}</span>
+                <img className="icon" src={mediumPriorityIcon} width="32" title="Media Prioridad" alt="Media Prioridad" />
+                <span className="item-count">{quotes.filter(s => s.priorityId === MEDIUM_PRIORIDAD).length}</span>
             </div>
             <div className="item">
-                <img className="icon" src={lowPriorityIcon} width="32" title="Alta Prioridad" />
-                <span className="item-count">{quotes.filter(s => s.priorityId == LOW_PRIORITY).length}</span>
+                <img className="icon" src={lowPriorityIcon} width="32" title="Baja Prioridad" alt="Baja Prioridad" />
+                <span className="item-count">{quotes.filter(s => s.priorityId === LOW_PRIORITY).length}</span>
             </div>
             <div className="item">
-                <img className="icon" src={infoIcon} width="32" title="Revisión Requerida" />
+                <img className="icon" src={infoIcon} width="32" title="Revisión Requerida" alt="Revisión Requerida" />
                 <span className="item-count">{quotes.filter(s => s.reviewRequired).length}</span>
             </div>
         </div>

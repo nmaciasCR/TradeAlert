@@ -10,9 +10,6 @@ import Summary from "./components/SummaryPriorities/SummaryPriorities";
 
 const Stocks = () => {
     const [stocksList, setStockList] = useState([]);
-    const HIGH_PRIORITY = 1;
-    const MEDIUM_PRIORIDAD = 2;
-    const LOW_PRIORITY = 3;
 
     const loadTableStocks = useCallback(() => {
         fetch("api/Stocks/GetStocks")

@@ -13,17 +13,17 @@ const Header = () => {
         <div className="header">
             <div className="logoContainer">
                 <div className="logoTittle">TradeAlert</div>
-                <img src={logoChart} height="80px" />
+                <img src={logoChart} height="80px" alt="TradeAlert"/>
             </div>
             <div className="iconContainer">
                 <Link to="/Home">
-                    <img src={homeIcon} height="60px" title="Inicio" className="iconActions" />
+                    <img src={homeIcon} height="60px" title="Inicio" className="iconActions" alt="Inicio" />
                 </Link>
                 <Link to="/Stocks">
-                    <img src={stocksIcon} height="60px" title="Cotizaciones" className="iconActions" />
+                    <img src={stocksIcon} height="60px" title="Cotizaciones" className="iconActions" alt="Cotizaciones" />
                 </Link>
                 <Link to="/">
-                    <img src={notificationIcon} height="60px" title="Notificaciones" className="iconActions" />
+                    <img src={notificationIcon} height="60px" title="Notificaciones" className="iconActions" alt="Notificaciones" />
                 </Link>
 
             </div>

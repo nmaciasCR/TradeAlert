@@ -34,9 +34,9 @@ function GetPriceClass(price) {
 
 function GetPriorityIcon(priorityId) {
     switch (priorityId) {
-        case 1: return (<img src={highPriorityIcon} title="Alta Prioridad" width="26px" />);
-        case 2: return (<img src={mediumPriorityIcon} title="Media Prioridad" width="26px" />);
-        case 3: return (<img src={lowPriorityIcon} title="Baja Prioridad" width="26px" />);
+        case 1: return (<img src={highPriorityIcon} title="Alta Prioridad" width="26px" alt="Alta Prioridad" />);
+        case 2: return (<img src={mediumPriorityIcon} title="Media Prioridad" width="26px" alt="Media Prioridad" />);
+        case 3: return (<img src={lowPriorityIcon} title="Baja Prioridad" width="26px" alt="Baja Prioridad" />);
         default: return null;
     }
 }
@@ -46,7 +46,7 @@ export const StockItem = {
         return (<span className="StockItem-ticker">{ticker}</span>);
     },
     market: (flag, title) => {
-        return (<img src={imgPath(`./` + flag)} title={title} width="26px" />);
+        return (<img src={imgPath(`./` + flag)} title={title} width="26px" alt={title} />);
     },
     arrow: (price) => {
         let arrowClass = GetArrowClass(price);
@@ -79,6 +79,6 @@ export const StockItem = {
     },
     lastReview: (daysDiff, dateReview) => {
         var dateRev = format(new Date(dateReview), 'dd/MM/yyyy')
-        return (<soan title={dateRev}>{daysDiff} Días</soan>)
+        return (<span title={dateRev}>{daysDiff} Días</span>)
     }
 }

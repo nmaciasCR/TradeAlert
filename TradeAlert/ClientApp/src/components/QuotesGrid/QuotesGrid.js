@@ -9,7 +9,7 @@ const Grid = (props) => {
     return (
         <div className="quotesGrid">
             {props.quotes.map(s => (
-                <QuoteBlock quote={s} />
+                <QuoteBlock key={s.id} quote={s} />
             ))}
 
 

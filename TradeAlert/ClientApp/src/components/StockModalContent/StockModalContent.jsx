@@ -36,8 +36,8 @@ function StockModalContent(props) {
             .then(response => { return response.json() })
             .then(responseJson => {
                 //Guardamos la lista de soportes ordenadas de manor a mayor
-                setSupportsAlertsList(responseJson.filter(s => s.quoteAlertTypeId == 1));
-                setResistorsAlertsList(responseJson.filter(s => s.quoteAlertTypeId == 2));
+                setSupportsAlertsList(responseJson.filter(s => s.quoteAlertTypeId === 1));
+                setResistorsAlertsList(responseJson.filter(s => s.quoteAlertTypeId === 2));
             })
             .catch(error => {
                 console.log(error);
@@ -107,7 +107,7 @@ function StockModalContent(props) {
 
     //Indica si una resistencia o un soporte fueron superadas por el precio de la accion
     function IsAlertDefeated(type, quotePrice, alertPrice) {
-        if (((type == "RESISTOR") && (quotePrice > alertPrice)) || ((type == "SUPPORT") && (quotePrice < alertPrice))) {
+        if (((type === "RESISTOR") && (quotePrice > alertPrice)) || ((type === "SUPPORT") && (quotePrice < alertPrice))) {
             //La resistencia/soporte fue superada
             return "defeated";
         } else return "";
@@ -118,7 +118,7 @@ function StockModalContent(props) {
     return (
         <div className="stockModalContent">
             <div className="title">
-                <img className="flag" src={imgPath(`./` + props.quote._market.flag)} title={props.quote._market.description} />
+                <img className="flag" src={imgPath(`./` + props.quote._market.flag)} title={props.quote._market.description} alt={props.quote._market.description} />
                 <div className="symbol">{props.quote.symbol}</div>
                 <div className={`changePercent ${cssname}`}>
                     <div className="quote-arrow"></div>

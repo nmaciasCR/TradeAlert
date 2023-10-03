@@ -25,7 +25,7 @@ const StockTable = (props) => {
             </thead>
             <tbody>
                 {props.quotes.map(q => 
-                (<tr>
+                (<tr key={q.id}>
                     <td>{StockItem.symbol(q.symbol)}</td>
                     <td>{StockItem.market(q._market.flag, q._market.description)}</td>
                     <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)}</td>
