@@ -4,12 +4,44 @@ import Header from "../../components/Header/Header";
 import StocksTable from "./components/StocksTable/StocksTable";
 import IndexMarket from "../../components/IndexMarket/IndexMarket";
 import Summary from "./components/SummaryPriorities/SummaryPriorities";
+import { TODO, REVISION, SelectFilterList } from "./components/SelectFilterList/SelectFilterList";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
+let stockFilters = {
+    type: TODO
+}
 
 
 const Stocks = () => {
     const [stocksList, setStockList] = useState([]);
+    const [stocksDisplayList, setStockDisplayList] = useState([]);
+
+
+    const onChangeSelectStockList = (event) => {
+        stockFilters.type = parseInt(event.target.value);
+        filterStockList(stocksList);
+    }
+
+    //filtramos la lista de acciones que se van a mostrar
+    const filterStockList = (stocks) => {
+        switch (stockFilters.type) {
+            case TODO:
+                setStockDisplayList(stocks);
+                break;
+            case REVISION:
+                setStockDisplayList(stocks.filter((s) => s.reviewRequired));
+                break;
+            default:
+                alert('ERROR EN stockFilters.type');
+                break;
+        }
+
+    }
+
+
+
 
     const loadTableStocks = useCallback(() => {
         fetch("api/Stocks/GetStocks")
@@ -19,6 +51,7 @@ const Stocks = () => {
                 //Primeros las revisadas hace mas tiempo
                 let sortedList = responseJson.sort((a, b) => new Date(a.dateReview) > new Date(b.dateReview) ? 1 : -1)
                 setStockList(sortedList);
+                filterStockList(sortedList);
             })
             .catch(error => {
                 console.log(error);
@@ -36,12 +69,22 @@ const Stocks = () => {
             <Header />
             <IndexMarket />
             <div className="Container">
-                <div className="Title-container">
-                    <div className="Title">Listado de Acciones ({stocksList.length})</div>
-                    <Summary quotes={stocksList} />
+                <div className="container-fluid">
+                    <Row>
+                        <Col sm={3}>
+                            <div className="Title">Listado de Acciones ({stocksList.length})</div>
+                        </Col>
+                        <Col sm={6}>
+                            <Summary quotes={stocksList} />
+                        </Col>
+                        <Col sm={3}>
+                            <span className="FilterTitle">Filtrar </span>
+                            <SelectFilterList onChangeEvent={onChangeSelectStockList} />
+                        </Col>
+                    </Row>
                 </div>
                 <br />
-                <StocksTable quotes={stocksList} refreshTableStocks={loadTableStocks} />
+                <StocksTable quotes={stocksDisplayList} refreshTableStocks={loadTableStocks} />
             </div>
         </div>
     )

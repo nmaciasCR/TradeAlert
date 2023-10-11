@@ -53,7 +53,7 @@ const Indexs = () => {
             mainstocksList.map(q =>
             (<div key={q.id} className="block">
                 <div  className="symbol" title={q.name}>{q.symbol}</div>
-                <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="22px" alt=""/></div>
+                <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="20px" alt=""/></div>
                 <div className={`quote ${GetQuoteClass(q.regularMarketChangePercent)}`}>{q.regularMarketChangePercent} %</div>
             </div>)
             )

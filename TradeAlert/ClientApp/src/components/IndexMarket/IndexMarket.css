@@ -11,8 +11,8 @@
 
     .indexMarketContainer .block {
         border-radius: 5px;
-        width: 200px;
-        height: 56px;
+        width: 220px;
+        height: 50px;
         background-color: white;
         display: flex;
         padding: 8px;
@@ -21,17 +21,17 @@
 
 .block .symbol {
     font-weight: bold;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 .block .arrow {
-    margin: 5px;
-    margin-top: 6px;
+    margin: 3px;
+    margin-top: 3px;
 }
 
 .block .quote {
     font-weight: bold;
-    font-size: 26px;
+    font-size: 22px;
 }
 
 .block .quote-up {
