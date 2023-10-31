@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import homeIcon from "../../images/home_icon.png";
 import stocksIcon from "../../images/stock_icon.png";
 import notificationIcon from "../../images/bell_icon.png";
-
+import portfolioIcon from "../../images/portfolio_icon.png";
 
 const Header = () => {
 
@@ -21,6 +21,9 @@ const Header = () => {
                 </Link>
                 <Link to="/Stocks">
                     <img src={stocksIcon} height="60px" title="Cotizaciones" className="iconActions" alt="Cotizaciones" />
+                </Link>
+                <Link to="/Portfolio">
+                    <img src={portfolioIcon} height="60px" title="Portafolio" className="iconActions" alt="Portafolio" />
                 </Link>
                 <Link to="/">
                     <img src={notificationIcon} height="60px" title="Notificaciones" className="iconActions" alt="Notificaciones" />

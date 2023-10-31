@@ -45,6 +45,9 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
             services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
+            services.AddTransient<Business.Interfaces.IPortfolio, Business.Portfolio>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

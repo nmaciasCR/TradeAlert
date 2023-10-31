@@ -18,6 +18,7 @@ namespace TradeAlert.Data.Entities
         }
 
         public virtual DbSet<Markets> Markets { get; set; }
+        public virtual DbSet<Portfolio> Portfolio { get; set; }
         public virtual DbSet<Quotes> Quotes { get; set; }
         public virtual DbSet<QuotesAlerts> QuotesAlerts { get; set; }
         public virtual DbSet<QuotesAlertsTypes> QuotesAlertsTypes { get; set; }
@@ -53,6 +54,15 @@ namespace TradeAlert.Data.Entities
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Portfolio>(entity =>
+            {
+                entity.HasOne(d => d.quote)
+                    .WithMany(p => p.Portfolio)
+                    .HasForeignKey(d => d.quoteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Portfolio_Quotes");
             });
 
             modelBuilder.Entity<Quotes>(entity =>

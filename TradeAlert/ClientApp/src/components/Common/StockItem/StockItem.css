@@ -1,0 +1,39 @@
+﻿.StockItem-ticker {
+    font-weight: bold;
+}
+
+.StockItem-price-container {
+    display: flex;
+    font-weight: bold;
+}
+
+    .StockItem-price-container .quote-arrow-up {
+        width: 25px;
+        height: 23px;
+        background-image: url("../../../images/quote_arrow_up.png");
+    }
+
+    .StockItem-price-container .quote-arrow-down {
+        width: 25px;
+        height: 23px;
+        background-image: url("../../../images/quote_arrow_down.png");
+    }
+
+    .StockItem-price-container .quote-arrow-zero {
+        width: 25px;
+        height: 23px;
+        background-image: url("../../../images/quote_arrow_zero.png");
+    }
+
+    .StockItem-price-container .price-up {
+        color: #68B984;
+    }
+
+    .StockItem-price-container .price-down {
+        color: #E21818;
+    }
+
+    .StockItem-price-container .price-zero {
+        color: #413F42;
+    }
+

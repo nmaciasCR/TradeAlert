@@ -1,5 +1,5 @@
 ﻿.Container {
-    padding: 10px;
+
 }
 
 .Title-container {
@@ -7,7 +7,7 @@
 }
 
 .Container .Title {
-    font-size: 2.3rem;
+    font-size: 30px;
 }
 
 .Container .FilterTitle {

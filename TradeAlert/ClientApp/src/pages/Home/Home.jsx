@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from './components/ListGroupItemBetterOrWorse/ListGroupItemBetterOrWorse.jsx';
+import PortfolioTable from '../../components/Common/PortfolioTable/PortfolioTable.jsx';
 
 
 
@@ -54,9 +55,12 @@ const Home = () => {
             <IndexMarket />
             <div className="container-fluid">
                 <Row>
-                    <Col sm={10}>
+                    <Col sm={2}>
+                        <PortfolioTable />
+                    </Col>
+                    <Col sm={8}>
                         <ListGroup>
-                            <ListGroup.Item variant="secondary"><h3>Alta Prioridad</h3></ListGroup.Item>
+                            <ListGroup.Item variant="secondary"><h4>Alta Prioridad</h4></ListGroup.Item>
                             <ListGroup.Item className="mainItemListGroup">
                                 <QuotesGrid quotes={stocksList.filter(s => s.priorityId === 1)} />
                             </ListGroup.Item>
@@ -64,14 +68,14 @@ const Home = () => {
                     </Col>
                     <Col sm={2}>
                         <ListGroup>
-                            <ListGroup.Item variant="success"><h3>Lo Mejor</h3></ListGroup.Item>
+                            <ListGroup.Item variant="success"><h4>Lo Mejor</h4></ListGroup.Item>
                             {
                                 stocksBetterList.map(q => (<ListGroupItem key={q.id} quote={q} />))
                             }
                         </ListGroup>
                         <br />
                         <ListGroup>
-                            <ListGroup.Item variant="danger"><h3>Lo Peor</h3></ListGroup.Item>
+                            <ListGroup.Item variant="danger"><h4>Lo Peor</h4></ListGroup.Item>
                             {
                                 stocksWorseList.map(q => (<ListGroupItem key={q.id} quote={q} />))
                             }

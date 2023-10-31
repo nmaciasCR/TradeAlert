@@ -1,0 +1,33 @@
+﻿.itemPortfolioContainer {
+    display: flex;
+}
+    .itemPortfolioContainer .flag {
+        margin-top: 2px;
+        margin-right: 8px;
+    }
+
+    .itemPortfolioContainer .symbol {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .itemPortfolioContainer .imgArrow {
+        margin: 3px;
+    }
+    .itemPortfolioContainer .quote {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .itemPortfolioContainer .quote-up {
+        color: #68B984;
+    }
+
+    .itemPortfolioContainer .quote-down {
+        color: #E21818;
+    }
+
+    .itemPortfolioContainer .quote-zero {
+        color: #413F42;
+    }
+

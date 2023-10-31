@@ -28,7 +28,7 @@ namespace TradeAlert.Testing
             services.AddScoped<IStocks, Stocks>();
             var serviceProvider = services.BuildServiceProvider();
 
-            _homeController = new HomeController(serviceProvider.GetService<IStocks>());
+            _homeController = new HomeController(serviceProvider.GetService<IStocks>(), serviceProvider.GetService<IMarkets>());
 
         }
 

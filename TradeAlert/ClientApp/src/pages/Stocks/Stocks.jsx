@@ -7,6 +7,8 @@ import Summary from "./components/SummaryPriorities/SummaryPriorities";
 import { TODO, REVISION, SelectFilterList } from "./components/SelectFilterList/SelectFilterList";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import PortfolioTable from '../../components/Common/PortfolioTable/PortfolioTable.jsx';
+
 
 
 let stockFilters = {
@@ -71,20 +73,33 @@ const Stocks = () => {
             <div className="Container">
                 <div className="container-fluid">
                     <Row>
-                        <Col sm={3}>
-                            <div className="Title">Listado de Acciones ({stocksList.length})</div>
+                        <Col sm={2}>
+                            <PortfolioTable />
                         </Col>
-                        <Col sm={6}>
-                            <Summary quotes={stocksList} />
-                        </Col>
-                        <Col sm={3}>
-                            <span className="FilterTitle">Filtrar </span>
-                            <SelectFilterList onChangeEvent={onChangeSelectStockList} />
+                        <Col sm={10}>
+                            <div className="container-fluid">
+                                <Row>
+                                    <Col sm={4}>
+                                        <div className="Title">Listado de Acciones ({stocksList.length})</div>
+                                    </Col>
+                                    <Col sm={5}>
+                                        <Summary quotes={stocksList} />
+                                    </Col>
+                                    <Col sm={3}>
+                                        <span className="FilterTitle">Filtrar </span>
+                                        <SelectFilterList onChangeEvent={onChangeSelectStockList} />
+                                    </Col>
+                                </Row>
+                            </div>
+                            <br />
+                            <StocksTable quotes={stocksDisplayList} refreshTableStocks={loadTableStocks} />
                         </Col>
                     </Row>
                 </div>
-                <br />
-                <StocksTable quotes={stocksDisplayList} refreshTableStocks={loadTableStocks} />
+
+
+
+
             </div>
         </div>
     )
