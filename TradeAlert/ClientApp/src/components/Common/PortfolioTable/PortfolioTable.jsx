@@ -4,7 +4,7 @@ import arrowUp from "../../../images/quote_arrow_up.png";
 import arrowDown from "../../../images/quote_arrow_down.png";
 import arrowZero from "../../../images/quote_arrow_zero.png";
 import Styles from "./PortfolioTable.css";
-
+import { Trunc2Decimal } from "../../Utils/Numbers.js";
 
 
 
@@ -47,7 +47,7 @@ const portfolioStockItem = (quote) => {
                 <div className="flag">{getFlag(quote._market.flag, quote._market.description)}</div>
                 <div className="symbol" title={quote.name}>{quote.symbol}</div>
                 <div className="imgArrow"><img src={GetArrow(quote.regularMarketChangePercent)} width="16px" /></div>
-                <div className={`quote ${GetQuoteClass(quote.regularMarketChangePercent)}`}>{quote.regularMarketChangePercent} %</div>
+                <div className={`quote ${GetQuoteClass(quote.regularMarketChangePercent)}`}>{Trunc2Decimal(quote.regularMarketChangePercent)} %</div>
             </div>
         </ListGroup.Item>
     )
