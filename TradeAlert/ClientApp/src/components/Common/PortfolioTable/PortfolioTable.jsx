@@ -4,7 +4,7 @@ import arrowUp from "../../../images/quote_arrow_up.png";
 import arrowDown from "../../../images/quote_arrow_down.png";
 import arrowZero from "../../../images/quote_arrow_zero.png";
 import Styles from "./PortfolioTable.css";
-import { Trunc2Decimal } from "../../Utils/Numbers.js";
+import { Trunc2Decimal } from "../../../Utils/Numbers.js";
 
 
 
