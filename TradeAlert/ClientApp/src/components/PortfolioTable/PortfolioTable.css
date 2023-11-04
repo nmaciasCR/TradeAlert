@@ -1,9 +1,27 @@
-﻿.itemPortfolioContainer {
-    display: flex;
+﻿.PortfolioContainer {
+
 }
+
+    .PortfolioContainer .linkToPortfolio {
+        text-align: center;
+    }
+
+
+.itemPortfolioContainer {
+    display: flex;
+    justify-content: space-between;
+}
+    .itemPortfolioContainer .symbolContainer {
+        display: flex;
+    }
+
+    .itemPortfolioContainer .quoteContainer {
+        display: flex;
+    }
+
     .itemPortfolioContainer .flag {
-        margin-top: 2px;
-        margin-right: 8px;
+        margin: 1px;
+        margin-right: 6px;
     }
 
     .itemPortfolioContainer .symbol {

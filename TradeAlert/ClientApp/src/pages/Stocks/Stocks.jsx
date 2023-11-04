@@ -7,7 +7,7 @@ import Summary from "./components/SummaryPriorities/SummaryPriorities";
 import { TODO, REVISION, SelectFilterList } from "./components/SelectFilterList/SelectFilterList";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import PortfolioTable from '../../components/Common/PortfolioTable/PortfolioTable.jsx';
+import PortfolioTable from '../../components/PortfolioTable/PortfolioTable.jsx';
 
 
 
