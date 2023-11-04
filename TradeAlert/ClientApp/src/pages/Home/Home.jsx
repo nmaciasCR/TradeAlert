@@ -6,15 +6,12 @@ import IndexMarket from "../../components/IndexMarket/IndexMarket";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import ListGroupItem from './components/ListGroupItemBetterOrWorse/ListGroupItemBetterOrWorse.jsx';
 import PortfolioTable from '../../components/Common/PortfolioTable/PortfolioTable.jsx';
-
+import StockTableBetterOrWorse from '../../components/StockTableBetterOrWorse/StockTableBetterOrWorse.jsx';
 
 
 const Home = () => {
     const [stocksList, setStockList] = useState([]);
-    const [stocksBetterList, setStocksBetterList] = useState([]);
-    const [stocksWorseList, setStocksWorseList] = useState([]);
 
     useEffect(() => {
         //Stocks para la grilla principal
@@ -26,26 +23,6 @@ const Home = () => {
             .catch(error => {
                 console.log(error);
             });
-        //Stocks para la tabla de Mejores Acciones del dia
-        fetch("api/Home/GetStocksOrderByChangePercent?take=8&order=DESC")
-            .then(response => { return response.json() })
-            .then(responseJson => {
-                setStocksBetterList(responseJson);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        //Stocks para la tabla de las peores acciones del dia
-        fetch("api/Home/GetStocksOrderByChangePercent?take=8&order=ASC")
-            .then(response => { return response.json() })
-            .then(responseJson => {
-                setStocksWorseList(responseJson);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-
     }, []);
 
 
@@ -67,25 +44,10 @@ const Home = () => {
                         </ListGroup>
                     </Col>
                     <Col sm={2}>
-                        <ListGroup>
-                            <ListGroup.Item variant="success"><h4>Lo Mejor</h4></ListGroup.Item>
-                            {
-                                stocksBetterList.map(q => (<ListGroupItem key={q.id} quote={q} />))
-                            }
-                        </ListGroup>
-                        <br />
-                        <ListGroup>
-                            <ListGroup.Item variant="danger"><h4>Lo Peor</h4></ListGroup.Item>
-                            {
-                                stocksWorseList.map(q => (<ListGroupItem key={q.id} quote={q} />))
-                            }
-                        </ListGroup>
-
+                        <StockTableBetterOrWorse />
                     </Col>
                 </Row>
             </div>
-
-
         </div>
     )
 }

@@ -1,0 +1,48 @@
+﻿.itemListContainer {
+    display: flex;
+    justify-content: space-between;
+}
+    .itemListContainer .symbolContainer {
+        display: flex;
+    }
+
+    .itemListContainer .quoteContainer {
+        display: flex;
+    }
+
+    .itemListContainer .flag {
+        margin: 1px;
+        margin-right: 6px;
+    }
+
+    .itemListContainer .symbol {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .itemListContainer .portfolioIcon {
+        margin-left: 8px;
+        margin-top: 1px;
+    }
+
+
+    .itemListContainer .imgArrow {
+        margin: 3px;
+    }
+
+    .itemListContainer .quote {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .itemListContainer .quote-up {
+        color: #68B984;
+    }
+
+    .itemListContainer .quote-down {
+        color: #E21818;
+    }
+
+    .itemListContainer .quote-zero {
+        color: #413F42;
+    }

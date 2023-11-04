@@ -9,7 +9,6 @@ namespace TradeAlert.Data.Entities
     {
         public Quotes()
         {
-            Portfolio = new HashSet<Portfolio>();
             QuotesAlerts = new HashSet<QuotesAlerts>();
         }
 
@@ -28,7 +27,7 @@ namespace TradeAlert.Data.Entities
 
         public virtual Markets market { get; set; }
         public virtual QuotesPriority priority { get; set; }
-        public virtual ICollection<Portfolio> Portfolio { get; set; }
+        public virtual Portfolio Portfolio { get; set; }
         public virtual ICollection<QuotesAlerts> QuotesAlerts { get; set; }
     }
 }

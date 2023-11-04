@@ -58,9 +58,13 @@ namespace TradeAlert.Data.Entities
 
             modelBuilder.Entity<Portfolio>(entity =>
             {
+                entity.HasKey(e => e.quoteId);
+
+                entity.Property(e => e.quoteId).ValueGeneratedNever();
+
                 entity.HasOne(d => d.quote)
-                    .WithMany(p => p.Portfolio)
-                    .HasForeignKey(d => d.quoteId)
+                    .WithOne(p => p.Portfolio)
+                    .HasForeignKey<Portfolio>(d => d.quoteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Portfolio_Quotes");
             });

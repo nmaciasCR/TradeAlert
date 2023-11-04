@@ -32,6 +32,7 @@ namespace TradeAlert.Business
                 list = _dbContext.Quotes
                     .Include(q => q.QuotesAlerts)
                     .Include(q => q.market)
+                    .Include (q => q.Portfolio)
                     .ToList();
 
                 return list;

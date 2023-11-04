@@ -22,5 +22,6 @@ namespace TradeAlert.Business.DTO
 
 
         public MarketDTO _market { get; set; }
+        public virtual PortfolioDTO _Portfolio { get; set; }
     }
 }

@@ -6,18 +6,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import PortfolioTable from "./components/PortfolioTable/PortfolioTable.jsx";
-
-
+import StockTableBetterOrWorse from '../../components/StockTableBetterOrWorse/StockTableBetterOrWorse.jsx';
 
 
 const Portfolio = () => {
 
     const [portfolioStocks, setPortfolioStocks] = useState([]);
-
-
-
-
-
 
     const loadTablePortfolioStocks = useCallback(() => {
         fetch("api/Portfolio/GetPortfolio")
@@ -32,13 +26,9 @@ const Portfolio = () => {
     }, []);
 
 
-
     useEffect(() => {
         loadTablePortfolioStocks();
     }, [loadTablePortfolioStocks]);
-
-
-
 
     return (
         <div>
@@ -49,32 +39,13 @@ const Portfolio = () => {
                     <Col sm={10}>
                         <div className="title">Portfolio</div>
                         <PortfolioTable portfolioStocks={portfolioStocks} />
-
-
                     </Col>
                     <Col sm={2}>
-                        <ListGroup>
-                            <ListGroup.Item variant="success"><h4>Lo Mejor</h4></ListGroup.Item>
-                            {
-                                //stocksBetterList.map(q => (<ListGroupItem key={q.id} quote={q} />))
-                            }
-                        </ListGroup>
-                        <br />
-                        <ListGroup>
-                            <ListGroup.Item variant="danger"><h4>Lo Peor</h4></ListGroup.Item>
-                            {
-                                //stocksWorseList.map(q => (<ListGroupItem key={q.id} quote={q} />))
-                            }
-                        </ListGroup>
-
+                        <StockTableBetterOrWorse />
                     </Col>
                 </Row>
             </div>
-
-
         </div>
-
-
     )
 
 }
