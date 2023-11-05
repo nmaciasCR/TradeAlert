@@ -1,14 +1,16 @@
 ﻿import React, { useEffect, useState } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
-import arrowUp from "../../../images/quote_arrow_up.png";
-import arrowDown from "../../../images/quote_arrow_down.png";
-import arrowZero from "../../../images/quote_arrow_zero.png";
+import arrowUp from "../../images/quote_arrow_up.png";
+import arrowDown from "../../images/quote_arrow_down.png";
+import arrowZero from "../../images/quote_arrow_zero.png";
 import Styles from "./PortfolioTable.css";
+import { Trunc2Decimal } from "../../Utils/Numbers";
+import { Link } from 'react-router-dom';
 
 
 
 
-const imgPath = require.context('../../../images/flags', true);
+const imgPath = require.context('../../images/flags', true);
 
 const getFlag = (flag, title) => {
     return (<img src={imgPath(`./` + flag)} title={title} width="22px" alt={title} />)
@@ -44,10 +46,14 @@ const portfolioStockItem = (quote) => {
     return (
         <ListGroup.Item key={quote.id}>
             <div className="itemPortfolioContainer">
-                <div className="flag">{getFlag(quote._market.flag, quote._market.description)}</div>
-                <div className="symbol" title={quote.name}>{quote.symbol}</div>
-                <div className="imgArrow"><img src={GetArrow(quote.regularMarketChangePercent)} width="16px" /></div>
-                <div className={`quote ${GetQuoteClass(quote.regularMarketChangePercent)}`}>{quote.regularMarketChangePercent} %</div>
+                <div className="symbolContainer">
+                    <div className="flag">{getFlag(quote._market.flag, quote._market.description)}</div>
+                    <div className="symbol" title={quote.name}>{quote.symbol}</div>
+                </div>
+                <div className="quoteContainer">
+                    <div className="imgArrow"><img src={GetArrow(quote.regularMarketChangePercent)} width="16px" /></div>
+                    <div className={`quote ${GetQuoteClass(quote.regularMarketChangePercent)}`}>{Trunc2Decimal(quote.regularMarketChangePercent)} %</div>
+                </div>
             </div>
         </ListGroup.Item>
     )
@@ -75,12 +81,15 @@ const PortfolioTable = () => {
 
 
     return (
-        <ListGroup>
+        <ListGroup className="PortfolioContainer">
             <ListGroup.Item variant=""><h4>Portafolio</h4></ListGroup.Item>
             {
                 portfolioList.sort((a, b) => a._quote.name > b._quote.name ? 1 : -1)
                     .map(p => (portfolioStockItem(p._quote)))
             }
+            <ListGroup.Item className="linkToPortfolio">
+                <Link to="/Portfolio">Ir a Portfolio</Link>
+            </ListGroup.Item>
         </ListGroup>
     )
 }

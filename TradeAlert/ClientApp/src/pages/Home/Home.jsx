@@ -6,7 +6,7 @@ import IndexMarket from "../../components/IndexMarket/IndexMarket";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
-import PortfolioTable from '../../components/Common/PortfolioTable/PortfolioTable.jsx';
+import PortfolioTable from '../../components/PortfolioTable/PortfolioTable';
 import StockTableBetterOrWorse from '../../components/StockTableBetterOrWorse/StockTableBetterOrWorse.jsx';
 
 
