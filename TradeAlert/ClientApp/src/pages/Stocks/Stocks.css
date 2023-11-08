@@ -2,17 +2,29 @@
 
 }
 
-.Title-container {
-    display: flex;
-}
 
 .Container .Title {
     font-size: 30px;
 }
 
-.Container .FilterTitle {
+    .Container .col-filter-table {
+        display: flex;
+        align-items:center;
+    }
+
+
+.col-filter-table .filter-title {
     font-weight: bold;
-    margin-top: 3px;
+    margin-right: 10px;
 }
 
 
+.Container .col-search-autocomplete {
+    display: flex;
+    align-items: center;
+}
+
+.col-search-autocomplete .search-title {
+    font-weight: bold;
+    margin-right: 10px;
+}

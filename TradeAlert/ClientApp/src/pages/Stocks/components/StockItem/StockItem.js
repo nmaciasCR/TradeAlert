@@ -1,10 +1,11 @@
 ﻿import React from "react";
 import Styles from "./StockItem.css";
-import InfoIcon from "../InfoRedIcon/InfoRedIcon";
 import highPriorityIcon from "../../../../images/high_priority_icon.png";
 import mediumPriorityIcon from "../../../../images/medium_priority_icon.png";
 import lowPriorityIcon from "../../../../images/low_priority_icon.png";
 import { format } from 'date-fns';
+import InfoIcon from "../../../../images/info_red_icon.png";
+import portfolioIcon from "../../../../images/portfolio_brown_icon.png";
 
 
 
@@ -72,7 +73,7 @@ export const StockItem = {
         );
     },
     infoRedIcon: (showElement) => {
-        return (showElement && <InfoIcon title="Revisión Requerida" />)
+        return (showElement && <img src={InfoIcon} className="name-table-icon" width="20" title="Revisión Requerida" />)
     },
     priorityIcon: (priorityId) => {
         return GetPriorityIcon(priorityId);
@@ -80,5 +81,9 @@ export const StockItem = {
     lastReview: (daysDiff, dateReview) => {
         var dateRev = format(new Date(dateReview), 'dd/MM/yyyy')
         return (<span title={dateRev}>{daysDiff} Días</span>)
-    }
+    },
+    portfolioIcon: (showElement) => {
+        return (showElement && <img src={portfolioIcon} className="name-table-icon"  width="20" title="En Portafolio" />)
+    },
+
 }

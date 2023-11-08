@@ -8,6 +8,7 @@ import { TODO, REVISION, SelectFilterList } from "./components/SelectFilterList/
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PortfolioTable from '../../components/PortfolioTable/PortfolioTable.jsx';
+import SearchInput from "../../components/SearchInput/SearchInput.jsx";
 
 
 
@@ -20,11 +21,17 @@ const Stocks = () => {
     const [stocksList, setStockList] = useState([]);
     const [stocksDisplayList, setStockDisplayList] = useState([]);
 
-
+    //evento del filtro
     const onChangeSelectStockList = (event) => {
         stockFilters.type = parseInt(event.target.value);
         filterStockList(stocksList);
     }
+
+    //Evento del buscador
+    const onChangeSearchInput = (event) => {
+        searchStocks(event.target.value, stocksList);
+    }
+
 
     //filtramos la lista de acciones que se van a mostrar
     const filterStockList = (stocks) => {
@@ -42,7 +49,15 @@ const Stocks = () => {
 
     }
 
-
+    //Buscador de acciones por simbolo o nombre
+    const searchStocks = (textToSearch, allStocksList) => {
+        if (textToSearch == "") {
+            setStockDisplayList(allStocksList);
+        } else {
+            setStockDisplayList(allStocksList.filter((s) => (s.symbol.toUpperCase().match(textToSearch.toUpperCase()) !== null)
+                || (s.name.toUpperCase().match(textToSearch.toUpperCase()) !== null)));
+        }
+    }
 
 
     const loadTableStocks = useCallback(() => {
@@ -85,9 +100,15 @@ const Stocks = () => {
                                     <Col sm={5}>
                                         <Summary quotes={stocksList} />
                                     </Col>
-                                    <Col sm={3}>
-                                        <span className="FilterTitle">Filtrar </span>
+                                    <Col sm={3} className="col-filter-table">
+                                        <span className="filter-title">Filtrar </span>
                                         <SelectFilterList onChangeEvent={onChangeSelectStockList} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col sm={4} className="col-search-autocomplete">
+                                        <span className="search-title">Buscador</span>
+                                        <SearchInput omChange={onChangeSearchInput} />
                                     </Col>
                                 </Row>
                             </div>
