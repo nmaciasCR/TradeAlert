@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TradeAlert.Business.Interfaces
 {
@@ -8,8 +9,8 @@ namespace TradeAlert.Business.Interfaces
         List<Data.Entities.Portfolio> GetList();
         DTO.PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio);
         List<DTO.PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList);
-
-
+        Boolean Update(Request.UpdatePortfolio pStock);
+        Boolean Delete(int idPortfolio);
 
     }
 }

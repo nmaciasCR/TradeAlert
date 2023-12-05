@@ -1,0 +1,58 @@
+﻿.ModalTemplate {
+    padding: 10px;
+}
+
+    .ModalTemplate .title {
+        display: flex;
+    }
+
+.title .flag {
+    width: 35px;
+    height: 35px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+
+.ModalTemplate .symbol {
+    font-weight: bold;
+    font-size: 28px;
+    color: #413F42;
+}
+
+.ModalTemplate .name {
+    color: #413F42;
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+.ModalTemplate .quotes {
+    margin: 8px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.ModalTemplate .changePercent {
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 8px;
+    display: flex;
+}
+
+.ModalTemplate .changePercent-up {
+    color: #68B984;
+}
+
+.ModalTemplate .changePercent-down {
+    color: #E21818;
+}
+
+.ModalTemplate .changePercent-zero {
+    color: #413F42;
+}
+
+.ModalTemplate .quote-arrow {
+    margin-top: -3px;
+    margin-right: 6px;
+}

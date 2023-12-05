@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TradeAlert.Business.DTO;
@@ -46,11 +47,58 @@ namespace TradeAlert.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        /// <summary>
+        /// Actualiza una accion del portfolio
+        /// </summary>
+        [HttpPost]
+        [Route("UpdatePortfolioStock")]
+        public IActionResult UpdatePortfolioStock(Business.Request.UpdatePortfolio pStock)
+        {
+            try
+            {
+                if (_businessPortfolio.Update(pStock))
+                {
+                    return StatusCode(StatusCodes.Status200OK);
+                } else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, "ERROR 400: ERROR AL ACTUALIZAR UNA ACCION DEL PORTFOLIO");
+                }
+
+            } catch {
+                return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL ACTUALIZAR UNA ACCION DEL PORTFOLIO");
+            }
+
+        }
+
+        /// <summary>
+        /// Elimina una accion del portfolio
+        /// </summary>
+        [HttpDelete]
+        [Route("DeleteStockPortfolio")]
+        public IActionResult DeleteStockPortfolio(int idPortfolio)
+        {
+
+            try
+            {
+                if (_businessPortfolio.Delete(idPortfolio))
+                {
+                    return StatusCode(StatusCodes.Status200OK);
+                } else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, "ERROR 400: ERROR AL ELIMINAR UNA ACCION DEL PORTFOLIO");
+                }
+
+
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL ELIMINAR UNA ACCION DEL PORTFOLIO");
+            }
 
 
 
         }
-
 
     }
 }

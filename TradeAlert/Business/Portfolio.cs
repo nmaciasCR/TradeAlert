@@ -75,8 +75,41 @@ namespace TradeAlert.Business
         }
 
 
+        /// <summary>
+        /// Actualiza los datos de una accion del portfolio
+        /// </summary>
+        public Boolean Update(Request.UpdatePortfolio pStock)
+        {
+            try
+            {
+                _dbContext.Portfolio.Find(pStock.quoteId).quantity = pStock.quantity;
+                _dbContext.SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// Eliminar una accion del portfolio
+        /// </summary>
+        public Boolean Delete(int idPortfolio)
+        {
+            try
+            {
+                Data.Entities.Portfolio portfolioToDelete = _dbContext.Portfolio.Find(idPortfolio);
+                _dbContext.Portfolio.Remove(portfolioToDelete);
+                _dbContext.SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
 
 
+        }
 
 
 

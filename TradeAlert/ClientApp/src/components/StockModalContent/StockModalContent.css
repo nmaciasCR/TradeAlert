@@ -74,15 +74,15 @@
 }
 
 
-.changePercent-up .quote-arrow {
+.stockModalContent .changePercent-up .quote-arrow {
     background-image: url("../../images/quote_arrow_up.png");
 }
 
-.changePercent-down .quote-arrow {
+.stockModalContent .changePercent-down .quote-arrow {
     background-image: url("../../images/quote_arrow_down.png");
 }
 
-.changePercent-zero .quote-arrow {
+.stockModalContent .changePercent-zero .quote-arrow {
     background-image: url("../../images/quote_arrow_zero.png");
 }
 

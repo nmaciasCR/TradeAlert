@@ -2,7 +2,7 @@
 import styles from "./QuoteBell.css";
 import bellIcon from "../../images/bell_icon.png";
 import bellIconActive from "../../images/bell_icon_active.png";
-import ModalInfo from "../Common/Modals/ModalInfo.jsx";
+import { ModalInfo } from "../Common/Modals/Modals";
 import ModalContent from "../StockModalContent/StockModalContent.jsx";
 
 
@@ -33,7 +33,7 @@ const QuoteBell = (props) => {
 
     return (
         <>
-            <img className="bell-icon" src={GetBellIcon(props.quote.reviewRequired)} onClick={() => setShowModal(true)} alt="Alertas"/>
+            <img className="bell-icon" src={GetBellIcon(props.quote.reviewRequired)} onClick={() => setShowModal(true)} alt="Alertas" title="Alertas" />
             <ModalInfo
                 show={showModal}
                 onClose={handleClose}

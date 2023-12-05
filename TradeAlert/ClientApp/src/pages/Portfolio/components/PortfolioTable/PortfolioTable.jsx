@@ -2,10 +2,11 @@
 import Table from 'react-bootstrap/Table';
 import { StockItem } from "../../../../components/Common/StockItem/StockItem";
 import { Trunc2Decimal } from "../../../../Utils/Numbers";
+import ActionsContainer from "../ActionsContainer/ActionsContainer.jsx";
 
 
 
-const PortfolioTable = ({ portfolioStocks }) => {
+const PortfolioTable = ({ portfolioStocks, refreshTablePortfolio }) => {
 
 
 
@@ -31,7 +32,7 @@ const PortfolioTable = ({ portfolioStocks }) => {
             </thead>
             <tbody>
                 {portfolioStocks.map(q =>
-                (<tr key={q.id}>
+                (<tr key={q.quoteId}>
                     <td>{StockItem.symbol(q._quote.symbol)}</td>
                     <td>{StockItem.market(q._quote._market.flag, q._quote._market.description)}</td>
                     <td>{q._quote.name} {StockItem.infoRedIcon(q._quote.reviewRequired)}</td>
@@ -42,7 +43,7 @@ const PortfolioTable = ({ portfolioStocks }) => {
                     <td>{StockItem.changePercent(Trunc2Decimal(q._quote.regularMarketChangePercent))}</td>
                     <td>{StockItem.change(Trunc2Decimal(q._quote.regularMarketChange))}</td>
                     <td>{StockItem.lastReview(q._quote.dateReviewDaysDiff, q._quote.dateReview)}</td>
-                    {/*<td><ActionContainer quote={q} refreshTable={props.refreshTableStocks} /></td>*/}
+                    <td><ActionsContainer portfolioQuote={q} refreshTable={refreshTablePortfolio} /></td>
                 </tr>)
                 )}
             </tbody>
