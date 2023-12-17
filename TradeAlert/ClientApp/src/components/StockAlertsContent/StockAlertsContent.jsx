@@ -1,29 +1,15 @@
 ﻿import React, { useEffect, useState, useCallback } from "react";
-import styles from "./StockModalContent.css";
+import styles from "./StockAlertsContent.css";
 import ListGroup from 'react-bootstrap/ListGroup';
 import PlusIcon from "../Common/PlusIcon/PlusIcon";
 import AcceptIcon from "../Common/AcceptIcon/AcceptIcon";
 import CancelIcon from "../Common/CancelIcon/CancelIcon";
 import RemoveIcon from "../Common/RemoveIcon/RemoveIcon";
-import { Trunc2Decimal } from "../../Utils/Numbers.js";
-
-const imgPath = require.context('../../images/flags', true);
+import { Trunc2Decimal } from "../../Utils/Numbers";
 
 
-function containerClass(price) {
-    switch (Math.sign(price)) {
-        case 1:
-            return "changePercent-up";
-        case -1:
-            return "changePercent-down";
-        default:
-            return "changePercent-zero";
-    }
-}
 
-
-function StockModalContent(props) {
-    const cssname = containerClass(props.quote.regularMarketChangePercent); //verde o rojo
+function StockAlertsContent(props) {
     const [supportsAlertsList, setSupportsAlertsList] = useState([]); //listado de soportes
     const [resistorsAlertsList, setResistorsAlertsList] = useState([]); //listado de resistencias
 
@@ -117,16 +103,6 @@ function StockModalContent(props) {
 
     return (
         <div className="stockModalContent">
-            <div className="title">
-                <img className="flag" src={imgPath(`./` + props.quote._market.flag)} title={props.quote._market.description} alt={props.quote._market.description} />
-                <div className="symbol">{props.quote.symbol}</div>
-                <div className={`changePercent ${cssname}`}>
-                    <div className="quote-arrow"></div>
-                    {Trunc2Decimal(props.quote.regularMarketChangePercent)} % ({Trunc2Decimal(props.quote.regularMarketChange)})
-                </div>
-            </div>
-
-            <div className="name">{props.quote.name}</div>
             <ListGroup className="listGroupAlerts">
                 <ListGroup.Item variant="success">Resistencias <PlusIcon onClick={PlusResistorIconClick} width="25" title="Agregar Resistencia" /></ListGroup.Item>
                 <ListGroup.Item className={`itemAlert ${showResistorsInput ? "show-element" : "hide-element"}`}>
@@ -174,4 +150,4 @@ function StockModalContent(props) {
 }
 
 
-export default StockModalContent;
+export default StockAlertsContent;

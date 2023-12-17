@@ -1,0 +1,53 @@
+﻿.stockModalContent {
+
+}
+
+    .stockModalContent .name {
+        color: #413F42;
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    .stockModalContent .quotes {
+        margin: 8px;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .stockModalContent .hide-element {
+        display: none;
+    }
+
+    .stockModalContent .show-element {
+        display: block;
+    }
+
+
+.quotes .price {
+    font-size: 50px;
+    color: #413F42;
+}
+
+
+.stockModalContent .listGroupAlerts {
+    margin-top: 10px;
+}
+
+.listGroupAlerts .itemAlert {
+    text-align: center;
+}
+
+    .listGroupAlerts .itemAlert .defeated {
+        text-decoration: line-through;
+        color: #E21818;
+    }
+
+
+.listGroupAlerts .inputNewAlert {
+    width: 100px;
+}
+
+.listGroupAlerts .remove-icon {
+    margin-left: 35px;
+}

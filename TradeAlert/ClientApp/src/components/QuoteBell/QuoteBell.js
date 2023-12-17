@@ -3,8 +3,8 @@ import styles from "./QuoteBell.css";
 import bellIcon from "../../images/bell_icon.png";
 import bellIconActive from "../../images/bell_icon_active.png";
 import { ModalInfo } from "../Common/Modals/Modals";
-import ModalContent from "../StockModalContent/StockModalContent.jsx";
-
+import AlertsContent from "../StockAlertsContent/StockAlertsContent.jsx";
+import StockModalTemplate from "../StockModalTemplate/StockModalTemplate.jsx";
 
 
 
@@ -15,7 +15,6 @@ function GetBellIcon(isActive) {
         return bellIcon;
     }
 }
-
 
 
 const QuoteBell = (props) => {
@@ -30,6 +29,17 @@ const QuoteBell = (props) => {
         }
     }
 
+    //El content para el modal de las alertas
+    //usando el template de StockModalTemplate
+    const CreateAlertModalContent = (quote) => {
+
+        return (
+            <StockModalTemplate
+                quote={quote}
+                content={<AlertsContent quote={quote} />}
+            />
+        )
+    }
 
     return (
         <>
@@ -37,11 +47,10 @@ const QuoteBell = (props) => {
             <ModalInfo
                 show={showModal}
                 onClose={handleClose}
-                content={<ModalContent quote={props.quote} />}
+                content={CreateAlertModalContent(props.quote)}
             />
         </>
-    )
-
+    );
 }
 
 
