@@ -3,6 +3,7 @@ import Styles from "./IndexMarket.css";
 import arrowUp from "../../images/quote_arrow_up.png";
 import arrowDown from "../../images/quote_arrow_down.png";
 import arrowZero from "../../images/quote_arrow_zero.png";
+import { Trunc2Decimal } from "../../Utils/Numbers.js";
 
 function GetArrow(pricePercent) {
     switch (Math.sign(pricePercent)) {
@@ -54,7 +55,7 @@ const Indexs = () => {
             (<div key={q.id} className="block">
                 <div  className="symbol" title={q.name}>{q.symbol}</div>
                 <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="20px" alt=""/></div>
-                <div className={`quote ${GetQuoteClass(q.regularMarketChangePercent)}`}>{q.regularMarketChangePercent} %</div>
+                <div className={`quote ${GetQuoteClass(q.regularMarketChangePercent)}`}>{Trunc2Decimal(q.regularMarketChangePercent)} %</div>
             </div>)
             )
 
