@@ -1,6 +1,6 @@
 ﻿.quotesGrid {
     display: flex;
     flex-wrap: wrap;
-    grid-gap: 15px;
+    grid-gap: 10px;
     align-content:start;
 }

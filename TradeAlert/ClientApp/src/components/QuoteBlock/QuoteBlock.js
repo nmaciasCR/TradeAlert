@@ -2,6 +2,7 @@
 import styles from "./QuoteBlock.css";
 import BellIcon from "../QuoteBell/QuoteBell";
 import { Trunc2Decimal } from "../../Utils/Numbers.js";
+import portfolioIcon from "../../images/portfolio_brown_icon.png";
 
 
 
@@ -17,6 +18,10 @@ function containerClass(price) {
     }
 }
 
+function portfoilioIcon(showIcon) {
+    return (showIcon && <img className="iconContainer" src={portfolioIcon} alt="Portafolio" title="En Portfafolio" width="22" />)
+}
+
 function Block(props) {
     const cssname = containerClass(props.quote.regularMarketChangePercent);
 
@@ -26,8 +31,9 @@ function Block(props) {
                 <span className="blkSymbol">{props.quote.symbol}</span>
                 <span className="blkPrice">   {Trunc2Decimal(props.quote.regularMarketPrice)}</span>
                 <span className="blkCurrency">  {props.quote.currency}</span>
-                <div className="bellIconContainer">
+                <div className="blockIconContainer">
                     <BellIcon quote={props.quote} />
+                    {portfoilioIcon(props.quote._Portfolio != null)}
                 </div>
             </div>
             <div className="blkCompanyName" title={props.quote.name}>{props.quote.name}</div>

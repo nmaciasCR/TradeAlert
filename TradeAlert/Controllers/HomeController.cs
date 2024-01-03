@@ -47,6 +47,7 @@ namespace TradeAlert.Controllers
                 listByPriority.ForEach(q => {
                     StocksDTO newStock = _businessStocks.MapToDTO(q);
                     newStock._market = _businessMarkets.MapToDTO(q.market);
+                    newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
                     quotesDTO.Add(newStock);
                 });
 

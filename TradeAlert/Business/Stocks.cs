@@ -121,6 +121,7 @@ namespace TradeAlert.Business
                     .Where(q => q.priorityId == priorityId)
                     .Include(q => q.market)
                     .Include(q => q.QuotesAlerts)
+                    .Include(q => q.Portfolio)
                     .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
                     .ToList();
 

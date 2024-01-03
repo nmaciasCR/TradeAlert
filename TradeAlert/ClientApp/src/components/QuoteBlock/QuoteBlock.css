@@ -88,6 +88,12 @@
     color: #413F42;
 }
 
-.blockContainer .bellIconContainer {
+.blockContainer .blockIconContainer {
     float: right;
+    display: inline-grid;
 }
+
+.blockContainer .blockIconContainer .iconContainer {
+    margin: 3px;
+}
+
