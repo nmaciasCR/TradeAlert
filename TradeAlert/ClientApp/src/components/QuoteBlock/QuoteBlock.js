@@ -30,7 +30,7 @@ function Block(props) {
             <div>
                 <span className="blkSymbol">{props.quote.symbol}</span>
                 <span className="blkPrice">   {Trunc2Decimal(props.quote.regularMarketPrice)}</span>
-                <span className="blkCurrency">  {props.quote.currency}</span>
+                <span className="blkCurrency">  {props.quote._currency.code}</span>
                 <div className="blockIconContainer">
                     <BellIcon quote={props.quote} />
                     {portfoilioIcon(props.quote._Portfolio != null)}

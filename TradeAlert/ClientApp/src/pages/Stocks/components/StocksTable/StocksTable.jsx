@@ -31,7 +31,7 @@ const StockTable = (props) => {
                     <td>{StockItem.market(q._market.flag, q._market.description)}</td>
                     <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)} {StockItem.portfolioIcon(q._Portfolio !== null)}</td>
                     <td>{StockItem.priorityIcon(q.priorityId)}</td>
-                    <td>{q.currency}</td>
+                    <td>{q._currency.code}</td>
                     <td>{Trunc2Decimal(q.regularMarketPrice)}</td>
                     <td>{StockItem.changePercent(Trunc2Decimal(q.regularMarketChangePercent))}</td>
                     <td>{StockItem.change(Trunc2Decimal(q.regularMarketChange))}</td>

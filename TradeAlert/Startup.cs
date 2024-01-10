@@ -46,6 +46,7 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
             services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
             services.AddTransient<Business.Interfaces.IPortfolio, Business.Portfolio>();
+            services.AddTransient<Business.Interfaces.ICurrency, Business.Currency>();
 
 
         }

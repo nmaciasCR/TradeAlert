@@ -20,13 +20,16 @@ namespace TradeAlert.Controllers
         private readonly IQuotesAlerts _businessQuotesAlerts;
         private readonly IMarkets _businessMarkets;
         private readonly IPortfolio _businessPortfolio;
+        private readonly ICurrency _businessCurrency;
 
-        public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts, IMarkets businessMarkets, IPortfolio businessPortfolio)
+        public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts, IMarkets businessMarkets, IPortfolio businessPortfolio,
+            ICurrency businessCurrency)
         {
             _businessStocks = businessStocks;
             _businessQuotesAlerts = businessQuotesAlerts;
             _businessMarkets = businessMarkets;
             _businessPortfolio = businessPortfolio;
+            _businessCurrency = businessCurrency;
         }
 
         /// <summary>
@@ -44,7 +47,11 @@ namespace TradeAlert.Controllers
                 {
                     StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
                     stocksDTO._market = _businessMarkets.MapToDTO(q.market);
-                    stocksDTO._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    if (q.Portfolio != null)
+                    {
+                        stocksDTO._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    }
+                    stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
                     quotesDTOList.Add(stocksDTO);
                 }
 

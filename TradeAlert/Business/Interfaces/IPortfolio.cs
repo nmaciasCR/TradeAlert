@@ -11,6 +11,6 @@ namespace TradeAlert.Business.Interfaces
         List<DTO.PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList);
         Boolean Update(Request.UpdatePortfolio pStock);
         Boolean Delete(int idPortfolio);
-
+        double GetWeightingPercent(double portfolioAmount, double stockAmount);
     }
 }

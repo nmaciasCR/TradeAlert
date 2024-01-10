@@ -30,6 +30,7 @@ namespace TradeAlert.Business
                     .Include(p => p.quote)
                     .Include(p => p.quote.QuotesAlerts)
                     .Include(p => p.quote.market)
+                    .Include(p => p.quote.currency)
                     .ToList();
 
                 return listPortfolio;
@@ -52,6 +53,7 @@ namespace TradeAlert.Business
             try
             {
                 DTO.PortfolioDTO DTOReturn = _mapper.Map<DTO.PortfolioDTO>(portfolio);
+                DTOReturn.euroTotalAmount = portfolio.euroTotalAmount;
 
                 return DTOReturn;
             }
@@ -107,8 +109,15 @@ namespace TradeAlert.Business
             {
                 return false;
             }
+        }
 
-
+        /// <summary>
+        /// Retorna el porcentaje que representa una accion
+        /// respecto al portfolio
+        /// </summary>
+        public double GetWeightingPercent(double portfolioAmount, double stockAmount)
+        {
+            return (stockAmount / portfolioAmount) * 100;
         }
 
 

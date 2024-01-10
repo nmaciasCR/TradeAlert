@@ -8,15 +8,16 @@ namespace TradeAlert.Data.Entities
 {
     public partial class TradeAlertContext : DbContext
     {
-        //public TradeAlertContext()
-        //{
-        //}
+        public TradeAlertContext()
+        {
+        }
 
         public TradeAlertContext(DbContextOptions<TradeAlertContext> options)
             : base(options)
         {
         }
 
+        public virtual DbSet<Currencies> Currencies { get; set; }
         public virtual DbSet<Markets> Markets { get; set; }
         public virtual DbSet<Portfolio> Portfolio { get; set; }
         public virtual DbSet<Quotes> Quotes { get; set; }
@@ -34,6 +35,21 @@ namespace TradeAlert.Data.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<Currencies>(entity =>
+            {
+                entity.Property(e => e.code)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.updateDate).HasColumnType("datetime");
+            });
 
             modelBuilder.Entity<Markets>(entity =>
             {
@@ -71,11 +87,6 @@ namespace TradeAlert.Data.Entities
 
             modelBuilder.Entity<Quotes>(entity =>
             {
-                entity.Property(e => e.currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.dateReview).HasColumnType("datetime");
 
                 entity.Property(e => e.name)
@@ -95,6 +106,12 @@ namespace TradeAlert.Data.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.updateDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.currency)
+                    .WithMany(p => p.Quotes)
+                    .HasForeignKey(d => d.currencyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Quotes_Currencies");
 
                 entity.HasOne(d => d.market)
                     .WithMany(p => p.Quotes)

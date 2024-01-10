@@ -16,12 +16,14 @@ namespace TradeAlert.Controllers
         private readonly IPortfolio _businessPortfolio;
         private readonly IStocks _businessStocks;
         private readonly IMarkets _businessMarkets;
+        private readonly ICurrency _businessCurrency;
 
-        public PortfolioController(IPortfolio businessPortfolio, IStocks businessStocks, IMarkets businessMarkets)
+        public PortfolioController(IPortfolio businessPortfolio, IStocks businessStocks, IMarkets businessMarkets, ICurrency businessCurrency)
         {
             _businessPortfolio = businessPortfolio;
             _businessStocks = businessStocks;
-            _businessMarkets = businessMarkets; 
+            _businessMarkets = businessMarkets;
+            _businessCurrency = businessCurrency;
         }
 
 
@@ -33,11 +35,14 @@ namespace TradeAlert.Controllers
 
             try
             {
-                _businessPortfolio.GetList().ForEach(portfolio =>
+                List<Data.Entities.Portfolio> portfolioList = _businessPortfolio.GetList();
+                portfolioList.ForEach(portfolio =>
                 {
                     PortfolioDTO newPortfolio = _businessPortfolio.MapToDTO(portfolio);
+                    newPortfolio.weightingPercent = _businessPortfolio.GetWeightingPercent(portfolioList.Sum(p => p.euroTotalAmount), portfolio.euroTotalAmount);
                     newPortfolio._quote = _businessStocks.MapToDTO(portfolio.quote);
                     newPortfolio._quote._market = _businessMarkets.MapToDTO(portfolio.quote.market);
+                    newPortfolio._quote._currency = _businessCurrency.MapToDTO(portfolio.quote.currency);
                     listDTO.Add(newPortfolio);
                 });
 

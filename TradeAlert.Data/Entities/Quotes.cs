@@ -16,7 +16,7 @@ namespace TradeAlert.Data.Entities
         public string symbol { get; set; }
         public string name { get; set; }
         public int marketId { get; set; }
-        public string currency { get; set; }
+        public int currencyId { get; set; }
         public decimal regularMarketPrice { get; set; }
         public decimal? regularMarketChangePercent { get; set; }
         public DateTime? updateDate { get; set; }
@@ -25,6 +25,7 @@ namespace TradeAlert.Data.Entities
         public DateTime dateReview { get; set; }
         public bool isMainIndex { get; set; }
 
+        public virtual Currencies currency { get; set; }
         public virtual Markets market { get; set; }
         public virtual QuotesPriority priority { get; set; }
         public virtual Portfolio Portfolio { get; set; }

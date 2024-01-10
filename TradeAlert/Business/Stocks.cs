@@ -32,7 +32,8 @@ namespace TradeAlert.Business
                 list = _dbContext.Quotes
                     .Include(q => q.QuotesAlerts)
                     .Include(q => q.market)
-                    .Include (q => q.Portfolio)
+                    .Include(q => q.Portfolio)
+                    .Include(q => q.currency)
                     .ToList();
 
                 return list;
@@ -122,6 +123,7 @@ namespace TradeAlert.Business
                     .Include(q => q.market)
                     .Include(q => q.QuotesAlerts)
                     .Include(q => q.Portfolio)
+                    .Include(q => q.currency)
                     .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
                     .ToList();
 
@@ -188,7 +190,7 @@ namespace TradeAlert.Business
         /// <returns></returns>
         public List<DTO.StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes)
         {
-            List< DTO.StocksDTO> listReturn = new List<DTO.StocksDTO>();
+            List<DTO.StocksDTO> listReturn = new List<DTO.StocksDTO>();
             quotes.ForEach(q => listReturn.Add(MapToDTO(q)));
             return listReturn;
         }

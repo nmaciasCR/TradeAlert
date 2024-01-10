@@ -8,7 +8,7 @@ namespace TradeAlert.Business.DTO
         public string symbol { get; set; }
         public string name { get; set; }
         public int marketId { get; set; }
-        public string currency { get; set; }
+        public int currencyId { get; set; }
         public decimal regularMarketPrice { get; set; }
         public decimal? regularMarketChangePercent { get; set; }
         public DateTime? updateDate { get; set; }
@@ -22,6 +22,7 @@ namespace TradeAlert.Business.DTO
 
 
         public MarketDTO _market { get; set; }
-        public virtual PortfolioDTO _Portfolio { get; set; }
+        public PortfolioDTO _Portfolio { get; set; }
+        public CurrencyDTO _currency { get; set; }
     }
 }

@@ -17,13 +17,15 @@ namespace TradeAlert.Controllers
         private readonly IStocks _businessStocks;
         private readonly IMarkets _businessMarkets;
         private readonly IPortfolio _businessPortfolio;
+        private readonly ICurrency _businessCurrency;
 
 
-        public HomeController(IStocks businessStocks, IMarkets businessMarkets, IPortfolio businessPortfolio)
+        public HomeController(IStocks businessStocks, IMarkets businessMarkets, IPortfolio businessPortfolio, ICurrency businessCurrency)
         {
             _businessStocks = businessStocks;
             _businessMarkets = businessMarkets;
             _businessPortfolio = businessPortfolio;
+            _businessCurrency = businessCurrency;
         }
 
 
@@ -47,7 +49,12 @@ namespace TradeAlert.Controllers
                 listByPriority.ForEach(q => {
                     StocksDTO newStock = _businessStocks.MapToDTO(q);
                     newStock._market = _businessMarkets.MapToDTO(q.market);
-                    newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    //Si es parte de portfolio lo mapeamos
+                    if (q.Portfolio != null)
+                    {
+                        newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    }
+                    newStock._currency = _businessCurrency.MapToDTO(q.currency);
                     quotesDTO.Add(newStock);
                 });
 
@@ -104,7 +111,11 @@ namespace TradeAlert.Controllers
                 quotes.ForEach(q => {
                     StocksDTO newStock = _businessStocks.MapToDTO(q);
                     newStock._market = _businessMarkets.MapToDTO(q.market);
-                    newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    //Si es parte de portfolio lo mapeamos
+                    if (q.Portfolio != null)
+                    {
+                        newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                    }
                     quotesDTO.Add(newStock);
                 });
 
