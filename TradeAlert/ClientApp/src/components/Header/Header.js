@@ -25,7 +25,7 @@ const Header = () => {
                 <Link to="/Portfolio">
                     <img src={portfolioIcon} height="60px" title="Portafolio" className="iconActions" alt="Portafolio" />
                 </Link>
-                <Link to="/">
+                <Link to="/Notifications">
                     <img src={notificationIcon} height="60px" title="Notificaciones" className="iconActions" alt="Notificaciones" />
                 </Link>
 

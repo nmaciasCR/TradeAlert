@@ -1,0 +1,27 @@
+﻿.Box-Notifications {
+    width: 40%;
+    border: 1px solid #F1EFEF;
+    border-radius: 8px;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /*398AB9*/
+}
+
+    .Box-Notifications .icon-notification {
+        width: 70px;
+        margin: 25px;
+    }
+
+    .Box-Notifications .Card-description {
+        padding: 10px;
+    }
+
+        .Box-Notifications .Card-description .Date {
+            font-size: 13px;
+            color: #9D9D9D;
+        }
+
+        .Box-Notifications .Card-description .Ticker {
+            font-size: 22px;
+            font-weight: bold;
+        }

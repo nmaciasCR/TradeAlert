@@ -1,0 +1,16 @@
+﻿.Notifications {
+}
+
+
+    .Notifications .Title {
+        font-size: 30px;
+    }
+
+    .Notifications .Box-Container {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        grid-gap: 12px;
+
+    }
+

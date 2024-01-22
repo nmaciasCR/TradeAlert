@@ -32,7 +32,8 @@ namespace TradeAlert
             });
             //Notification Manager
             services.AddHostedService<NotificationManager.Worker>();
-            services.AddTransient<IProcessAlerts, ProcessAlerts>();
+            services.AddSingleton<IProcessAlerts, ProcessAlerts>();
+            services.AddSingleton<IProcessNotifications, ProcessNotifications>();
 
             //Base de datos
             services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>
@@ -47,6 +48,7 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
             services.AddTransient<Business.Interfaces.IPortfolio, Business.Portfolio>();
             services.AddTransient<Business.Interfaces.ICurrency, Business.Currency>();
+            services.AddTransient<Business.Interfaces.INotifications, Business.Notifications>();
 
 
         }
