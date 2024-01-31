@@ -46,10 +46,43 @@ namespace TradeAlert.Controllers
         
         }
 
+        /// <summary>
+        /// Cambia el estado activo / no activo de una notificacion
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SetActive")]
+        public IActionResult SetActive(int id, bool active)
+        {
+            try
+            {
+                _businessNotifications.SetActive(id, active);
+                return StatusCode(StatusCodes.Status200OK);
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL CAMBIAR EL ESTADO ACTIVO DE LA NOTIFICACION");
+            }
+        }
 
-
-
-
+        /// <summary>
+        /// Elimina logicamente una notificacion
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _businessNotifications.Delete(id);
+                return StatusCode(StatusCodes.Status200OK);
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL ELIMINAR UNA NOTIFICACION");
+            }
+        }
 
     }
 }

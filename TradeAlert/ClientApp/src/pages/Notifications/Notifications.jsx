@@ -15,7 +15,7 @@ const CALENDAR_TYPE = 3;
 
 
 //Retorna un componente de notificacion segun tipo
-const CreateNotificationCard = (noti) => {
+const CreateNotificationCard = (noti, refreshNotifications) => {
 
     switch (noti.notificationTypeId) {
         case SUPPORT_TYPE:
@@ -26,6 +26,7 @@ const CreateNotificationCard = (noti) => {
                 title={noti.title}
                 description={noti.description}
                 active={noti.active}
+                refresList={refreshNotifications}
             />)
         case RESISTOR_TYPE:
             return (<Resistor
@@ -35,11 +36,12 @@ const CreateNotificationCard = (noti) => {
                 title={noti.title}
                 description={noti.description}
                 active={noti.active}
+                refresList={refreshNotifications}
             />)
         case CALENDAR_TYPE:
-            return ("No se puede mostrar la notificaion")
+            return ("No se puede mostrar la notificacion")
         default:
-            return ("No se puede mostrar la notificaion")
+            return ("No se puede mostrar la notificacion")
 
     }
 
@@ -85,7 +87,7 @@ const Notifications = () => {
                             <br />
                             <div className="Box-Container">
                                 {
-                                    notifications.map(noti => (CreateNotificationCard(noti)))
+                                    notifications.map(noti => (CreateNotificationCard(noti, loadNotifications)))
                                 }
 
                             </div>

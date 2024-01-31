@@ -4,8 +4,17 @@
     border-radius: 8px;
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    /*398AB9*/
 }
+
+.Box-Notifications-active {
+    border: 1px solid #40A2D8 !important;
+    box-shadow: #40A2D8 0px 3px 8px !important;
+}
+
+
+    .Box-Notifications .icon-container {
+        width: 17%;
+    }
 
     .Box-Notifications .icon-notification {
         width: 70px;
@@ -13,6 +22,7 @@
     }
 
     .Box-Notifications .Card-description {
+        width: 65%;
         padding: 10px;
     }
 
@@ -24,4 +34,19 @@
         .Box-Notifications .Card-description .Ticker {
             font-size: 22px;
             font-weight: bold;
+        }
+
+    .Box-Notifications .actions-container {
+        width: 18%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Box-Notifications .dropdown-custom-toggle {
+        cursor: pointer;
+    }
+
+        .Box-Notifications .dropdown-custom-toggle::after {
+            display: none !important;
         }

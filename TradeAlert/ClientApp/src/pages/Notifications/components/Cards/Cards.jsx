@@ -4,8 +4,7 @@ import supportIcon from "../../../../images/notification_down_icon.png";
 import resistorIcon from "../../../../images/notification_up_icon.png";
 import moment from "moment";
 import 'moment/locale/es';
-
-
+import CardsOptions from "../CardsOptions/CardsOptions.jsx";
 
 
 var momentLib = require('moment');
@@ -17,13 +16,11 @@ const GetTimeOf = (date) => {
 }
 
 
-
-
 //Notificacion de soporte
-export const Support = ({ id, entryDate, title, description, active }) => {
+export const Support = ({ id, entryDate, title, description, active, refresList }) => {
     return (
-        <div key={id} className="Box-Notifications">
-            <div>
+        <div key={id} className={`Box-Notifications ${(active) ? 'Box-Notifications-active' : ''}`}>
+            <div className="icon-container">
                 <img src={supportIcon} alt="Soporte" className="icon-notification" />
             </div>
             <div className="Card-description">
@@ -31,22 +28,36 @@ export const Support = ({ id, entryDate, title, description, active }) => {
                 <div className="Ticker">{title}</div>
                 <div>{description}</div>
             </div>
+            <div className="actions-container">
+                <CardsOptions
+                    id={id}
+                    active={active}
+                    refresList={refresList}
+                />
+            </div>
         </div>
     )
 }
 
 
 //Notificacion de resistencia
-export const Resistor = ({ id, entryDate, title, description, active }) => {
+export const Resistor = ({ id, entryDate, title, description, active, refresList }) => {
     return (
-        <div key={id} className="Box-Notifications">
-            <div>
+        <div key={id} className={`Box-Notifications ${(active) ? 'Box-Notifications-active' : ''}`}>
+            <div className="icon-container">
                 <img src={resistorIcon} alt="Resistencia" className="icon-notification" />
             </div>
             <div className="Card-description">
                 <div className="Date">{GetTimeOf(entryDate)}</div>
                 <div className="Ticker">{title}</div>
                 <div>{description}</div>
+            </div>
+            <div className="actions-container">
+                <CardsOptions
+                    id={id}
+                    active={active}
+                    refresList={refresList}
+                />
             </div>
         </div>
     )

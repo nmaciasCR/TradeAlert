@@ -76,6 +76,40 @@ namespace TradeAlert.Business
             return listReturn;
         }
 
+        /// <summary>
+        /// Setea el estado de active de una notificacion
+        /// </summary>
+        public bool SetActive(int id, bool active)
+        {
+            try
+            {
+                _dbContext.Notifications.Find(id).active = active;
+                _dbContext.SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Elimina logicamente una notificacion
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Delete(int id)
+        {
+            try
+            {
+                _dbContext.Notifications.Find(id).deleted = true;
+                _dbContext.SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
 
     }
 }
