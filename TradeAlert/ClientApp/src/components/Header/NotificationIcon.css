@@ -1,0 +1,29 @@
+﻿.Link-container {
+    text-decoration: none;
+}
+
+.NotificationIcon-container {
+    background-size: 56px 60px;
+    width: 56px; 
+    height: 60px;
+    text-align: right;
+    padding-top: 12px;
+    padding-left: 25px;
+}
+
+    .NotificationIcon-container .count {
+        color: white;
+        font-size: 15px;
+        width: 20px;
+        /*font-weight: bold;*/
+        text-align: center;
+    }
+
+    .NotificationIcon-bell {
+        background-image: url('../../images/bell_icon.png');
+    }
+
+    .NotificationIcon-bell-active {
+        background-image: url('../../images/bell_icon_active.png');
+    }
+

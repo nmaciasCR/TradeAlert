@@ -22,8 +22,5 @@
     .header .iconContainer {
         display: flex;
         align-items: center;
-    }
-
-    .header .iconActions {
-        margin-left: 40px;
+        grid-gap: 40px;
     }
