@@ -15,6 +15,8 @@ namespace NotificationManager.Business
         int SUPPORT_TYPE = 1;
         int RESISTOR_TYPE = 2;
         int CALENDAR_TYPE = 3;
+        int EARNINGS_3DAYS_TYPE = 4;
+        int EARNINGS_TODAY_TYPE = 5;
 
         public ProcessNotifications(IServiceProvider serviceProvider)
         {
@@ -36,7 +38,8 @@ namespace NotificationManager.Business
 
                 //Generamos las notificaciones con las alertas de las acciones
                 QuotesAlerts();
-
+                //Generamos las notificaciones de Earnings
+                Earnings();
             }
             catch (Exception ex)
             {
@@ -157,6 +160,73 @@ namespace NotificationManager.Business
             }
         }
 
+
+
+        private void Earnings()
+        {
+            List<Notifications> list = new List<Notifications>();
+            DateTime today = DateTime.Now.Date;
+            try
+            {
+                //acciones del portafolio a evaluar
+                List<Portfolio> portfolioQuotes = _dbContext.Portfolio
+                                                            .Include(p => p.quote)
+                                                            .Include(p => p.quote.market)
+                                                            .Where(p => p.quote.earningsDate != null)
+                                                            .ToList();
+
+                //Verificamos si presentar earning hoy o dentro de 3 dias
+                foreach (Portfolio portfolio in portfolioQuotes)
+                {
+                    //Hoy presenta resultados?
+                    if (portfolio.quote.earningsDate >= today && portfolio.quote.earningsDate < today.AddDays(1))
+                    {
+                        list.Add(new Notifications
+                        {
+                            notificationTypeId = EARNINGS_TODAY_TYPE,
+                            entryDate = DateTime.Now,
+                            title = portfolio.quote.symbol,
+                            description = $"Hoy presentación de resultados. El {portfolio.quote.earningsDate?.ToString("dd-MM-yyyy hh:mm:ss")} (Hora de {portfolio.quote.market.description})",
+                            referenceId = $"{portfolio.quote.ID}",
+                            active = true,
+                            deleted = false
+                        });
+                    }
+                    else if (portfolio.quote.earningsDate >= today.AddDays(3) && portfolio.quote.earningsDate < today.AddDays(4))
+                    {
+                        //Presenta balance dentro de 3 dias?
+                        list.Add(new Notifications
+                        {
+                            notificationTypeId = EARNINGS_3DAYS_TYPE,
+                            entryDate = DateTime.Now,
+                            title = portfolio.quote.symbol,
+                            description = $"Presentará resultados dentro de 3 dias. El {portfolio.quote.earningsDate?.ToString("dd-MM-yyyy hh:mm:ss")} (Hora de {portfolio.quote.market.description})",
+                            referenceId = $"{portfolio.quote.ID}",
+                            active = true,
+                            deleted = false
+                        });
+
+                    }
+                }
+
+                //Eliminamos en caso de estar repetida
+                list.RemoveAll(en => _dbContext.Notifications.ToList().Exists(noti => noti.notificationTypeId == en.notificationTypeId
+                                                                                        && noti.referenceId == en.referenceId
+                                                                                        && noti.description == en.description));
+                //Guardamos las nuevas notificaciones
+                _dbContext.Notifications.AddRange(list);
+                _dbContext.SaveChanges();
+
+
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor colorDefault = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Ocurrio un error al crear la notificacion de EARNINGS. Exception: " + ex.Message);
+                Console.ForegroundColor = colorDefault;
+            }
+        }
 
     }
 }

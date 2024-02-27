@@ -5,12 +5,15 @@ import IndexMarket from "../../components/IndexMarket/IndexMarket";
 import PortfolioTable from '../../components/PortfolioTable/PortfolioTable.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Support, Resistor } from "./components/Cards/Cards.jsx";
+import { Support, Resistor, Earnings3Days, EarningsToday } from "./components/Cards/Cards.jsx";
 
 
 const SUPPORT_TYPE = 1;
 const RESISTOR_TYPE = 2;
 const CALENDAR_TYPE = 3;
+const EARNINGS_3DAYS_TYPE = 4;
+const EARNINGS_TODAY_TYPE = 5;
+
 
 
 
@@ -40,9 +43,28 @@ const CreateNotificationCard = (noti, refreshNotifications) => {
             />)
         case CALENDAR_TYPE:
             return ("No se puede mostrar la notificacion")
-        default:
+        case EARNINGS_3DAYS_TYPE:
+            return (<Earnings3Days
+                id={noti.id}
+                entryDate={noti.entryDate}
+                typeId={noti.notificationTypeId}
+                title={noti.title}
+                description={noti.description}
+                active={noti.active}
+                refresList={refreshNotifications}
+            />)
+        case EARNINGS_TODAY_TYPE:
+            return (<EarningsToday
+                id={noti.id}
+                entryDate={noti.entryDate}
+                typeId={noti.notificationTypeId}
+                title={noti.title}
+                description={noti.description}
+                active={noti.active}
+                refresList={refreshNotifications}
+            />)
+        default: 
             return ("No se puede mostrar la notificacion")
-
     }
 
 }
@@ -87,17 +109,20 @@ const Notifications = () => {
                             <br />
                             <div className="Box-Container">
                                 {
-                                    notifications.map(noti => (CreateNotificationCard(noti, loadNotifications)))
+                                    notifications.length > 0 ? (
+                                        notifications.map(noti => CreateNotificationCard(noti, loadNotifications))
+                                    ) : (
+                                        <div>No hay Notificaciones</div>
+                                    )
                                 }
-
                             </div>
                         </Col>
                     </Row>
                 </div>
             </div>
-        </div>)
+        </div>
+    )
 }
-
 
 
 export default Notifications;

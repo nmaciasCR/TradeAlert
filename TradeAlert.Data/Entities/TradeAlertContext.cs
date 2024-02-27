@@ -124,6 +124,8 @@ namespace TradeAlert.Data.Entities
             {
                 entity.Property(e => e.dateReview).HasColumnType("datetime");
 
+                entity.Property(e => e.earningsDate).HasColumnType("datetime");
+
                 entity.Property(e => e.name)
                     .IsRequired()
                     .HasMaxLength(100)
@@ -138,6 +140,10 @@ namespace TradeAlert.Data.Entities
                 entity.Property(e => e.symbol)
                     .IsRequired()
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.timezoneName)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.updateDate).HasColumnType("datetime");
