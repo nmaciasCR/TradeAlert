@@ -43,6 +43,9 @@ namespace TradeAlert.Controllers
                     newPortfolio._quote = _businessStocks.MapToDTO(portfolio.quote);
                     newPortfolio._quote._market = _businessMarkets.MapToDTO(portfolio.quote.market);
                     newPortfolio._quote._currency = _businessCurrency.MapToDTO(portfolio.quote.currency);
+                    newPortfolio.averagePurchasePrice = portfolio.averagePurchasePrice;
+                    newPortfolio.euroProfit = portfolio.profit * portfolio.quote.currency.euroExchange;
+                    newPortfolio.profitPercent = portfolio.profitPercent;
                     listDTO.Add(newPortfolio);
                 });
 

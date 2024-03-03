@@ -13,11 +13,11 @@ const imgPath = require.context('../../../images/flags', true);
 function GetArrowClass(price) {
     switch (Math.sign(price)) {
         case 1:
-            return "quote-arrow-up";
+            return "quote-arrow quote-arrow-up";
         case -1:
-            return "quote-arrow-down";
+            return "quote-arrow quote-arrow-down";
         default:
-            return "quote-arrow-zero";
+            return "quote-arrow quote-arrow-zero";
     }
 }
 
@@ -54,20 +54,22 @@ export const StockItem = {
             <div className={arrowClass}></div>
         );
     },
-    changePercent: (price) => {
-        let priceClass = GetPriceClass(price);
+    number: (num, withArrow) => {
+        let priceClass = GetPriceClass(num);
         return (
-            <div className="StockItem-price-container">
-                {StockItem.arrow(price)}
-                <div className={priceClass}>{price}</div>
+            <div className="StockItem-value-container">
+                {withArrow? StockItem.arrow(num): ''}
+                <div className={priceClass}>{num}</div>
             </div>
         );
     },
-    change: (price) => {
-        let priceClass = GetPriceClass(price);
+    profit: (num, percent) => {
+        let priceClass = GetPriceClass(num);
         return (
-            <div className="StockItem-price-container">
-                <div className={priceClass}>{price}</div>
+            <div className="StockItem-value-container">
+                {StockItem.arrow(num)}
+                <div className={priceClass}>{num}</div>&nbsp;
+                <div className={priceClass}>({percent} %)</div>
             </div>
         );
     },

@@ -2,38 +2,41 @@
     font-weight: bold;
 }
 
-.StockItem-price-container {
+.StockItem-value-container {
     display: flex;
+    justify-content: right;
     font-weight: bold;
 }
+    .StockItem-value-container .quote-arrow {
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        margin-right: 3px;
+    }
 
-    .StockItem-price-container .quote-arrow-up {
-        width: 25px;
-        height: 23px;
+    .StockItem-value-container .quote-arrow-up {
         background-image: url("../../../images/quote_arrow_up.png");
     }
 
-    .StockItem-price-container .quote-arrow-down {
-        width: 25px;
-        height: 23px;
+    .StockItem-value-container .quote-arrow-down {
         background-image: url("../../../images/quote_arrow_down.png");
     }
 
-    .StockItem-price-container .quote-arrow-zero {
-        width: 25px;
-        height: 23px;
+    .StockItem-value-container .quote-arrow-zero {
         background-image: url("../../../images/quote_arrow_zero.png");
     }
 
-    .StockItem-price-container .price-up {
+    .StockItem-value-container .price-up {
         color: #68B984;
     }
 
-    .StockItem-price-container .price-down {
+    .StockItem-value-container .price-down {
         color: #E21818;
     }
 
-    .StockItem-price-container .price-zero {
+    .StockItem-value-container .price-zero {
         color: #413F42;
     }
 

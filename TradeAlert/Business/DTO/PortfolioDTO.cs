@@ -10,6 +10,9 @@ namespace TradeAlert.Business.DTO
         public double euroTotalAmount { get; set; }
         //Ponderancia (o peso) de esta accion respecto al portfolio (en %)
         public double weightingPercent { get; set; }
+        public double averagePurchasePrice { get; set; }
+        public double euroProfit { get; set; }
+        public double profitPercent { get; set; }
 
         public StocksDTO _quote { get; set; }
 

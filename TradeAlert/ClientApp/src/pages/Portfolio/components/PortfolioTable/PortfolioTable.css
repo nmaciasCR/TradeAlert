@@ -1,2 +1,19 @@
-﻿body {
+﻿.portfolio-table {
 }
+
+    .portfolio-table .table-body {
+        font-size: 14px;
+    }
+
+        .portfolio-table .table-body .align-center {
+            text-align: center;
+        }
+
+        .portfolio-table .table-body .align-right {
+            text-align: right;
+        }
+
+        .portfolio-table .table-body .justify-right {
+            display: flex;
+            justify-content: right;
+        }

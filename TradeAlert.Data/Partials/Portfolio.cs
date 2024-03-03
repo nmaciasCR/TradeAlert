@@ -19,7 +19,23 @@ namespace TradeAlert.Data.Entities
             }
         }
 
+        //Ganancia
+        public double profit
+        {
+            get
+            {
+                return this.quantity * ((double)this.quote.regularMarketPrice - this.averagePurchasePrice);
+            }
+        }
 
+        //Porcentaje de ganancia
+        public double profitPercent
+        {
+            get
+            {
+                return (((double)this.quote.regularMarketPrice / this.averagePurchasePrice) -1) * 100;
+            }
+        }
 
 
     }
