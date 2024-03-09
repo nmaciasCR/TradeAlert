@@ -6,6 +6,7 @@
     display: flex;
     justify-content: right;
     font-weight: bold;
+    align-items: center;
 }
     .StockItem-value-container .quote-arrow {
         background-size: 16px 16px;

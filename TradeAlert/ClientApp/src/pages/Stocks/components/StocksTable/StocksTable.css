@@ -1,2 +1,19 @@
-﻿body {
+﻿.stockTable-table {
 }
+
+    .stockTable-table .table-body {
+        font-size: 14px;
+    }
+
+        .stockTable-table .table-body .align-center {
+            text-align: center;
+        }
+
+        .stockTable-table .table-body .align-right {
+            text-align: right;
+        }
+
+        .stockTable-table .table-body .justify-right {
+            display: flex;
+            justify-content: right;
+        }

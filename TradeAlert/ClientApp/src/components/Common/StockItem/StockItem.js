@@ -5,6 +5,8 @@ import highPriorityIcon from "../../../images/high_priority_icon.png";
 import mediumPriorityIcon from "../../../images/medium_priority_icon.png";
 import lowPriorityIcon from "../../../images/low_priority_icon.png";
 import { format } from 'date-fns';
+import portfolioIcon from "../../../images/portfolio_brown_icon.png";
+
 
 
 
@@ -82,5 +84,8 @@ export const StockItem = {
     lastReview: (daysDiff, dateReview) => {
         var dateRev = format(new Date(dateReview), 'dd/MM/yyyy')
         return (<span title={dateRev}>{daysDiff} Días</span>)
+    },
+    portfolioIcon: (showElement) => {
+        return (showElement && <img src={portfolioIcon} className="name-table-icon" width="20" title="En Portafolio" alt="En Portafolio" />)
     }
 }
