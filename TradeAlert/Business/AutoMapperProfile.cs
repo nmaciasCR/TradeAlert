@@ -12,6 +12,7 @@ namespace TradeAlert.Business
             CreateMap<Data.Entities.Portfolio, DTO.PortfolioDTO>();
             CreateMap<Data.Entities.Currencies, DTO.CurrencyDTO>();
             CreateMap<Data.Entities.Notifications, DTO.NotificationDTO>();
+            CreateMap<Data.Entities.Calendar, DTO.CalendarDTO>();
         }
 
 

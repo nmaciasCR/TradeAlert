@@ -6,6 +6,7 @@ import homeIcon from "../../images/home_icon.png";
 import stocksIcon from "../../images/stock_icon.png";
 import portfolioIcon from "../../images/portfolio_icon.png";
 import NotificationIcon from "./NotificationIcon.jsx";
+import CalendarIcon from "./Calendar.jsx";
 
 const Header = () => {
 
@@ -48,6 +49,7 @@ const Header = () => {
                     <img src={portfolioIcon} height="60px" title="Portafolio" alt="Portafolio" />
                 </Link>
                 <NotificationIcon notifications={headerData.notification} />
+                <CalendarIcon />
             </div>
         </div>
     )

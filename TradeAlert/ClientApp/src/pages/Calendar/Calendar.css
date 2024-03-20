@@ -1,0 +1,52 @@
+﻿.Calendar {
+}
+
+    .Calendar .Title {
+        font-size: 30px;
+    }
+
+
+.calendar-body {
+}
+
+    .calendar-body .events-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+.events-table {
+    width: 70%;
+}
+
+    .events-table .event-day-title {
+        text-transform: capitalize;
+        font-weight: bold;
+    }
+
+
+    .events-table .event-time-column {
+        color: #9D9D9D;
+        font-weight: bold;
+        width: 20%;
+        padding-left: 60px;
+    }
+
+
+.events-table-today {
+    border-right: 1px solid #40A2D8;
+    border-left: 1px solid #40A2D8;
+    border-bottom: 1px solid #40A2D8;
+    font-size: 24px;
+}
+
+
+    .events-table-today .event-day-title-today {
+        background-color: #40A2D8 !important;
+        color: white;
+    }
+
+    .events-table-today .event-item-today {
+        background-color: #FDF6EC;
+    }
+

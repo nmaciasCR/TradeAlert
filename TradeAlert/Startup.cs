@@ -49,7 +49,7 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.IPortfolio, Business.Portfolio>();
             services.AddTransient<Business.Interfaces.ICurrency, Business.Currency>();
             services.AddTransient<Business.Interfaces.INotifications, Business.Notifications>();
-
+            services.AddTransient<Business.Interfaces.ICalendar, Business.Calendar>();
 
         }
 

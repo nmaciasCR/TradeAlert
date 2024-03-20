@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import Stocks from "./pages/Stocks/Stocks";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Notifications from "./pages/Notifications/Notifications";
+import Calendar from "./pages/Calendar/Calendar";
 
 const App = () => {
 
@@ -21,6 +22,9 @@ const App = () => {
                 </Route>
                 <Route path="/Notifications">
                     <Notifications />
+                </Route>
+                <Route path="/Calendar">
+                    <Calendar />
                 </Route>
                 <Route path="/">
                     <Home />

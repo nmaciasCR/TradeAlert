@@ -17,6 +17,8 @@ namespace TradeAlert.Data.Entities
         {
         }
 
+        public virtual DbSet<Calendar> Calendar { get; set; }
+        public virtual DbSet<CalendarTypes> CalendarTypes { get; set; }
         public virtual DbSet<Currencies> Currencies { get; set; }
         public virtual DbSet<Markets> Markets { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
@@ -37,6 +39,32 @@ namespace TradeAlert.Data.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+
+            modelBuilder.Entity<Calendar>(entity =>
+            {
+                entity.Property(e => e.description)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.entryDate).HasColumnType("datetime");
+
+                entity.Property(e => e.scheduleDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.calendarType)
+                    .WithMany(p => p.Calendar)
+                    .HasForeignKey(d => d.calendarTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Calendar_Calendar");
+            });
+
+            modelBuilder.Entity<CalendarTypes>(entity =>
+            {
+                entity.Property(e => e.description)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<Currencies>(entity =>
             {

@@ -1,0 +1,13 @@
+﻿.calendar-link-container {
+    text-decoration: none;
+}
+
+.calendar-container {
+    background-size: 57px 60px;
+    width: 57px;
+    height: 60px;
+}
+
+.calendarIcon {
+    background-image: url("../../images//calendar_icon.png");
+}
