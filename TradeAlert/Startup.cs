@@ -34,6 +34,10 @@ namespace TradeAlert
             services.AddHostedService<NotificationManager.Worker>();
             services.AddSingleton<IProcessAlerts, ProcessAlerts>();
             services.AddSingleton<IProcessNotifications, ProcessNotifications>();
+            //Calendar Manager
+            services.AddHostedService<CalendarManager.Worker>();
+            services.AddSingleton<CalendarManager.Business.ICalendar, CalendarManager.Business.Calendar>();
+
 
             //Base de datos
             services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>

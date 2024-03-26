@@ -13,6 +13,7 @@ namespace TradeAlert.Data.Entities
         public DateTime scheduleDate { get; set; }
         public DateTime entryDate { get; set; }
         public bool deleted { get; set; }
+        public string referenceId { get; set; }
 
         public virtual CalendarTypes calendarType { get; set; }
     }

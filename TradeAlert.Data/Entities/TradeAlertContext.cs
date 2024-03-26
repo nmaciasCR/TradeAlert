@@ -49,6 +49,10 @@ namespace TradeAlert.Data.Entities
 
                 entity.Property(e => e.entryDate).HasColumnType("datetime");
 
+                entity.Property(e => e.referenceId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.scheduleDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.calendarType)

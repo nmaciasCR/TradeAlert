@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CalendarManager\CalendarManager.csproj" />
     <ProjectReference Include="..\NotificationManager\NotificationManager.csproj" />
     <ProjectReference Include="..\TradeAlert.Data\TradeAlert.Data.csproj" />
   </ItemGroup>

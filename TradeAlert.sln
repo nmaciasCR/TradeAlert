@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAlert.Data", "TradeAle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationManager", "NotificationManager\NotificationManager.csproj", "{CAEBAF06-5EF2-4CD5-9E65-3D50462B5740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAlert.Testing", "TradeAlert.Testing\TradeAlert.Testing.csproj", "{BDE79BC2-14CC-49A4-BDAB-C0FFEE0AD760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAlert.Testing", "TradeAlert.Testing\TradeAlert.Testing.csproj", "{BDE79BC2-14CC-49A4-BDAB-C0FFEE0AD760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarManager", "CalendarManager\CalendarManager.csproj", "{A6019508-78A9-4D80-BE17-18D74144FFF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BDE79BC2-14CC-49A4-BDAB-C0FFEE0AD760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDE79BC2-14CC-49A4-BDAB-C0FFEE0AD760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDE79BC2-14CC-49A4-BDAB-C0FFEE0AD760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6019508-78A9-4D80-BE17-18D74144FFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6019508-78A9-4D80-BE17-18D74144FFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6019508-78A9-4D80-BE17-18D74144FFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6019508-78A9-4D80-BE17-18D74144FFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
