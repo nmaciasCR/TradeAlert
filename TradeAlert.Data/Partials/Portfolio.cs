@@ -15,7 +15,15 @@ namespace TradeAlert.Data.Entities
         {
             get
             {
-                return (double)(this.quantity * this.quote.regularMarketPrice) * this.quote.currency.euroExchange;
+                int LIBRA_ESTERLINA_ID = 4;
+                decimal currentPrice = this.quote.regularMarketPrice;
+                //Acciones del reino unido estan en centavos
+                //La convertinos a libra esterlina
+                if (this.quote.currency.ID == LIBRA_ESTERLINA_ID)
+                {
+                    currentPrice = currentPrice / 100;
+                }
+                return (double)(this.quantity * currentPrice) * this.quote.currency.euroExchange;
             }
         }
 
