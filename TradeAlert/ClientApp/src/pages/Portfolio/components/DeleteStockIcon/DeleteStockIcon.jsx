@@ -9,22 +9,18 @@ const DeleteStockIcon = ({ quoteId, name, refreshTable }) => {
     const [showModal, setShowModal] = useState(false);
     //Alert
     const [showErrorAlert, setShowErrorAlert] = useState(false);
-    const [dangerAlertContent, setDangerAlertContent] = useState("");
+    const [dangerAlertContent, setDangerAlertContent] = useState([]);
     //Modal Error
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         if (showModal) {
-            setDangerAlertContent("");
+            setDangerAlertContent([]);
             setShowErrorAlert(false);
         }
     }, [showModal]);
 
-
-    const CreateDangerAlertContent = () => {
-        return (<div>{dangerAlertContent}</div>)
-    }
 
     const contentConfirmModal = () => {
         return (
@@ -32,7 +28,7 @@ const DeleteStockIcon = ({ quoteId, name, refreshTable }) => {
                 <div>
                     ¿Está seguro de querer quitar a '<strong>{name}</strong>' del portfolio ?
                 </div>
-                <AlertDanger show={showErrorAlert} content={CreateDangerAlertContent()} />
+                <AlertDanger show={showErrorAlert} content={dangerAlertContent} />
             </>
         )
     }
@@ -62,7 +58,7 @@ const DeleteStockIcon = ({ quoteId, name, refreshTable }) => {
                     case 400: //BAD REQUEST
                         const text400 = await response.text();
                         //Agregamos los nuevos errores
-                        setDangerAlertContent(text400);
+                        setDangerAlertContent([text400]);
                         //Mostramos el alert
                         setShowErrorAlert(true);
                         break;

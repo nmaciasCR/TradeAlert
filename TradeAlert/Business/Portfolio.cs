@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,12 +13,14 @@ namespace TradeAlert.Business
     {
         private Data.Entities.TradeAlertContext _dbContext;
         private readonly IMapper _mapper;
+        private Interfaces.IStocks _businessStocks;
 
 
-        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper)
+        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper, Interfaces.IStocks businessStocks)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _businessStocks = businessStocks;
         }
 
         public List<Data.Entities.Portfolio> GetList()
@@ -36,7 +39,8 @@ namespace TradeAlert.Business
                 return listPortfolio;
 
 
-            } catch
+            }
+            catch
             {
                 return listPortfolio;
             }
@@ -87,7 +91,8 @@ namespace TradeAlert.Business
                 _dbContext.Portfolio.Find(pStock.quoteId).quantity = pStock.quantity;
                 _dbContext.SaveChanges();
                 return true;
-            } catch
+            }
+            catch
             {
                 return false;
             }
@@ -105,7 +110,8 @@ namespace TradeAlert.Business
                 _dbContext.Portfolio.Remove(portfolioToDelete);
                 _dbContext.SaveChanges();
                 return true;
-            } catch
+            }
+            catch
             {
                 return false;
             }
@@ -120,7 +126,72 @@ namespace TradeAlert.Business
             return (stockAmount / portfolioAmount) * 100;
         }
 
+        /// <summary>
+        /// Agregamos una accion al portfolio
+        /// </summary>
+        /// <param name="addPortfolio"></param>
+        /// <returns></returns>
+        public ProblemDetails Add(Request.AddPortfolio addPortfolio)
+        {
+            Data.Entities.Portfolio newPortfolio = new Data.Entities.Portfolio();
+            ProblemDetails problemDetailsResponse = new ProblemDetails()
+            {
+                Title = "Ha Ocurrido un error al crear una nueva acción en el portfolio",
+                Detail = "Los valores ingresados no sos correctos",
+                Status = StatusCodes.Status200OK,
+                Type = "error-portfolio-add",
+            };
+            Dictionary<string, string> errorDictionary = new Dictionary<string, string>();
 
+            try
+            {
+                //Validamos si existe la empresa
+                if (_businessStocks.GetQuote(addPortfolio.quoteId) == null)
+                {
+                    errorDictionary.Add("quoteId", "La empresa seleccionada no existe");
+                }
+                //Validamos si la empresa seleccionada ya es parte del portfolio
+                if (GetList().Any(p => p.quoteId == addPortfolio.quoteId))
+                {
+                    errorDictionary.Add("quoteId", "La empresa seleccionada ya existe en el portfolio");
+                }
+                //Validamos la cantidad de acciones
+                if (addPortfolio.quantity < 1)
+                {
+                    errorDictionary.Add("quantity", "La cantidad de acciones debe ser mayor que 0");
+                }
+                //Validamos el precio de la accion
+                if (addPortfolio.price <= 0.0)
+                {
+                    errorDictionary.Add("price", "El precio de compra de la acción debe ser mayor que 0");
+                }
+
+                //Si hay errores devolvemos el problemDetail
+                if (errorDictionary.Any())
+                {
+                    problemDetailsResponse.Extensions.Add("errors", errorDictionary);
+                    problemDetailsResponse.Status = StatusCodes.Status400BadRequest;
+                    return problemDetailsResponse;
+                }
+
+                //Agregamos la nueva accion al portfolio
+                newPortfolio.quoteId = addPortfolio.quoteId;
+                newPortfolio.quantity = addPortfolio.quantity;
+                newPortfolio.averagePurchasePrice = addPortfolio.price;
+                _dbContext.Portfolio.Add(newPortfolio);
+                _dbContext.SaveChanges();
+
+                //Incluimos el nuevo objeto en la respuesta de problemDetails
+                problemDetailsResponse.Extensions.Add("result", MapToDTO(newPortfolio));
+
+                return problemDetailsResponse;
+            }
+            catch
+            {
+                problemDetailsResponse.Status = StatusCodes.Status500InternalServerError;
+                return problemDetailsResponse;
+            }
+        }
 
     }
 }

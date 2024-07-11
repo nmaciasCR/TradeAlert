@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PortfolioTable from "./components/PortfolioTable/PortfolioTable.jsx";
 import StockTableBetterOrWorse from '../../components/StockTableBetterOrWorse/StockTableBetterOrWorse.jsx';
+import AddStockButton from './components/AddStockButton/AddStockButton.jsx';
 
 
 const Portfolio = () => {
@@ -38,6 +39,7 @@ const Portfolio = () => {
                     <Col sm={10}>
                         <div className="title">Portfolio</div>
                         <PortfolioTable portfolioStocks={portfolioStocks} refreshTablePortfolio={loadTablePortfolioStocks} />
+                        <div className="addStockButton"><AddStockButton refreshTablePortfolio={loadTablePortfolioStocks} /></div>
                     </Col>
                     <Col sm={2}>
                         <StockTableBetterOrWorse />

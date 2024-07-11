@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace TradeAlert.Business.Interfaces
@@ -12,5 +13,6 @@ namespace TradeAlert.Business.Interfaces
         Boolean Update(Request.UpdatePortfolio pStock);
         Boolean Delete(int idPortfolio);
         double GetWeightingPercent(double portfolioAmount, double stockAmount);
+        ProblemDetails Add(Request.AddPortfolio addPortfolio);
     }
 }

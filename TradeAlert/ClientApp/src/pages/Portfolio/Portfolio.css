@@ -1,7 +1,10 @@
 ﻿.container-portfolio {
-
 }
 
-.container-portfolio .title {
-    font-size: 30px;
-}
+    .container-portfolio .title {
+        font-size: 30px;
+    }
+
+    .container-portfolio .addStockButton {
+        text-align: right;
+    }

@@ -6,7 +6,11 @@ export function AlertDanger({ show, content }) {
 
     return (
         <Alert key="danger" variant="danger" show={show}>
-            {content}
+            {content.map((error, index) => (
+                <div key={index}>
+                    {error}
+                </div>
+            ))}
         </Alert>
     )
 }

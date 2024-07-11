@@ -82,6 +82,9 @@ namespace TradeAlert.Controllers
             }
         }
 
+        /// <summary>
+        /// Agregamos una alerta a una accion
+        /// </summary>
         [HttpPost]
         [Route("AddQuoteAlert")]
         public IActionResult AddQuoteAlert(AddQuoteAlert newAlert)
@@ -99,6 +102,9 @@ namespace TradeAlert.Controllers
             }
         }
 
+        /// <summary>
+        /// Eliminamos una alerta de una accion
+        /// </summary>
         [HttpPost]
         [Route("DeleteQuoteAlert")]
         public IActionResult DeleteQuoteAlert(DeleteQuoteAlert alertToDelete)
@@ -116,6 +122,10 @@ namespace TradeAlert.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna los indices principales (los que van en el header)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetMainStocks")]
         public IActionResult GetMainStocks()
@@ -123,7 +133,6 @@ namespace TradeAlert.Controllers
 
             try
             {
-
                 List<StocksDTO> mainStockDTO = _businessStocks.GetList()
                     .Where(s => s.isMainIndex)
                     .Select(x => _businessStocks.MapToDTO(x))
@@ -131,11 +140,41 @@ namespace TradeAlert.Controllers
 
                 return StatusCode(StatusCodes.Status200OK, mainStockDTO);
 
-            } catch
+            }
+            catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
+        }
+
+        /// <summary>
+        /// Retornamos todas las acciones mapeadas para generar un autocomplete
+        /// </summary>
+        [HttpGet]
+        [Route("GetStockAutocomplete")]
+        public IActionResult GetStockAutocomplete()
+        {
+            try
+            {
+                List<StockAutocompleteDTO> stockAutocomplete = _businessStocks.GetList()
+                    .Select(s => new StockAutocompleteDTO
+                    {
+                        id = s.ID,
+                        symbol = s.symbol,
+                        name = s.name,
+                        displayName = $"{s.symbol} - {s.name}"
+                    })
+                    .OrderBy(x => x.displayName)
+                    .ToList();
+
+                return StatusCode(StatusCodes.Status200OK, stockAutocomplete);
+
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
     }

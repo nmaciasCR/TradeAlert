@@ -103,9 +103,32 @@ namespace TradeAlert.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL ELIMINAR UNA ACCION DEL PORTFOLIO");
             }
+        }
 
+        [HttpPut]
+        [Route("AddPortfolioStock")]
+        public IActionResult AddPortfolioStock(Business.Request.AddPortfolio newPortfolio)
+        {
+            try
+            {
+                //Agregamos el nuevo portfolio
+                ProblemDetails response = _businessPortfolio.Add(newPortfolio);
 
+                //Validamos la respuesta
+                if (response.Status == StatusCodes.Status200OK)
+                {
+                    //Se pudo agregar correctamente
+                    return StatusCode(StatusCodes.Status200OK, response.Extensions["result"]);
+                } else
+                {
+                    //Ocurrio un error al agregar una nueva accion al portfolio
+                    return StatusCode(Convert.ToInt32(response.Status), response);
+                }
 
+            } catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL INSERTAR UNA ACCION AL PORTFOLIO");
+            }
         }
 
     }
