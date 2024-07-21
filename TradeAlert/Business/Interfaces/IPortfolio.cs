@@ -10,7 +10,7 @@ namespace TradeAlert.Business.Interfaces
         List<Data.Entities.Portfolio> GetList();
         DTO.PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio);
         List<DTO.PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList);
-        Boolean Update(Request.UpdatePortfolio pStock);
+        ProblemDetails Update(Request.UpdatePortfolio pStock);
         Boolean Delete(int idPortfolio);
         double GetWeightingPercent(double portfolioAmount, double stockAmount);
         ProblemDetails Add(Request.AddPortfolio addPortfolio);

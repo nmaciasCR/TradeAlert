@@ -162,7 +162,7 @@ const AddStockButton = ({ refreshTablePortfolio }) => {
         return (
             <>
                 <Form>
-                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalQuantity">
+                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalStock">
                         <Form.Label column sm={2}>
                             Stock
                         </Form.Label>
@@ -190,7 +190,7 @@ const AddStockButton = ({ refreshTablePortfolio }) => {
                             />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalQuantity">
+                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalPrice">
                         <Form.Label column sm={2}>
                             Precio
                         </Form.Label>

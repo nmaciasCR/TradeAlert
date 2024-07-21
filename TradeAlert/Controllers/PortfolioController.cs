@@ -66,18 +66,21 @@ namespace TradeAlert.Controllers
         {
             try
             {
-                if (_businessPortfolio.Update(pStock))
+                //Actualizamos la accion del portfolio
+                ProblemDetails response = _businessPortfolio.Update(pStock);
+
+                //Verificamos la respuesta
+                if (response.Status == StatusCodes.Status200OK)
                 {
                     return StatusCode(StatusCodes.Status200OK);
                 } else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, "ERROR 400: ERROR AL ACTUALIZAR UNA ACCION DEL PORTFOLIO");
+                    return StatusCode(StatusCodes.Status400BadRequest, response);
                 }
 
             } catch {
                 return StatusCode(StatusCodes.Status500InternalServerError, "ERROR 500: ERROR AL ACTUALIZAR UNA ACCION DEL PORTFOLIO");
             }
-
         }
 
         /// <summary>

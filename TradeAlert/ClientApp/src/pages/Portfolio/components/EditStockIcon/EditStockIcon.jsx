@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { AlertDanger } from "../../../../components/Common/Alerts/Alerts.jsx";
+import { OnlyInteger } from "../../../../Utils/InputText.js";
 
 
 
@@ -22,7 +23,7 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
 
     useEffect(() => {
         if (showModal) {
-            setPortfolioData({ quoteId: portfolioQuote.quoteId, quantity: portfolioQuote.quantity });
+            setPortfolioData({ quoteId: portfolioQuote.quoteId, quantity: portfolioQuote.quantity, price: portfolioQuote.averagePurchasePrice });
             setErrors400Response([]);
             setShowErrorAlert(false);
         }
@@ -37,9 +38,20 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
 
 
     const CreateEditModalContent = (pQuote) => {
+        //Evento para cantidad de acciones
         const handleQuantityInput = (event) => {
-            setPortfolioData({ ...portfolioData, quantity: event.target.value });
+            const quantityvalue = event.target.value;
+            //Solo permite numeros enteros
+            if (OnlyInteger(quantityvalue)) {
+                setPortfolioData({ ...portfolioData, quantity: quantityvalue });
+            }
         }
+
+        //evento para precio de venta promedio
+        const handlePriceInput = (event) => {
+            setPortfolioData({ ...portfolioData, price: event.target.value });
+        }
+
 
         const stockEditContent = (
             <>
@@ -50,12 +62,26 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
                         </Form.Label>
                         <Col sm={10}>
                             <Form.Control
-                                type="number"
+                                type="text"
                                 value={portfolioData.quantity}
                                 onChange={handleQuantityInput}
                             />
                         </Col>
                     </Form.Group>
+
+                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalPrice">
+                        <Form.Label column sm={2}>
+                            Precio
+                        </Form.Label>
+                        <Col sm={10}>
+                            <Form.Control
+                                type="number"
+                                value={portfolioData.price}
+                                onChange={handlePriceInput}
+                            />
+                        </Col>
+                    </Form.Group>
+
                 </Form>
                 <AlertDanger show={showErrorAlert} content={CreateErrorContent()} />
             </>
@@ -86,7 +112,8 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 'quoteId': portfolioData.quoteId,
-                'quantity': portfolioData.quantity
+                'quantity': portfolioData.quantity,
+                'price': portfolioData.price
             })
         };
 
@@ -99,21 +126,23 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
                         break;
                     case 400: //BAD REQUEST
                         const text400 = await response.text();
-                        const jsonErrors = JSON.parse(text400);
+                        const jsonErrors = JSON.parse(text400).errors;
                         //Agregamos los nuevos errores
-                        setErrors400Response([jsonErrors.errors.quantity]);
+                        setErrors400Response(Object.values(jsonErrors));
                         //Mostramos el alert
                         setShowErrorAlert(true);
                         break;
                     default:
-                        const textError = await response.text();
-                        throw new Error(textError);
+                        //Agregamos los nuevos errores
+                        setErrors400Response(["Ocurrió un ERROR al actualizar el portfolio"]);
+                        //Mostramos el alert
+                        setShowErrorAlert(true);
                         break;
                 }
             })
             .catch(error => {
                 //Modal de ERROR
-                openErrorModal(error.toString());
+                openErrorModal("Ocurrió un ERROR al actualizar el portfolio");
             })
     }
 

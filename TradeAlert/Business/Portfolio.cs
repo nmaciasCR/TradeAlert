@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Business.Request;
 
 namespace TradeAlert.Business
 {
@@ -84,17 +85,62 @@ namespace TradeAlert.Business
         /// <summary>
         /// Actualiza los datos de una accion del portfolio
         /// </summary>
-        public Boolean Update(Request.UpdatePortfolio pStock)
+        public ProblemDetails Update(Request.UpdatePortfolio pStock)
         {
+            //Objeto de respuesta ProblemDetails
+            ProblemDetails problemDetailsResponse = new ProblemDetails();
+            Dictionary<string, string> errorDictionary = new Dictionary<string, string>();
+
+
             try
             {
+                //Validamos si existe la empresa
+                if (_businessStocks.GetQuote(pStock.quoteId) == null)
+                {
+                    errorDictionary.Add("quoteId_1", "La empresa seleccionada no existe");
+                }
+                //Validamos si la empresa seleccionada es parte del portfolio
+                if (!GetList().Any(p => p.quoteId == pStock.quoteId))
+                {
+                    errorDictionary.Add("quoteId_2", "La empresa seleccionada no existe en el portfolio");
+                }
+                //Validamos la cantidad de acciones
+                if (pStock.quantity < 1)
+                {
+                    errorDictionary.Add("quantity", "La cantidad de acciones debe ser mayor que 0");
+                }
+                //Validamos el precio de la accion
+                if (pStock.price <= 0.0)
+                {
+                    errorDictionary.Add("price", "El precio de compra de la acción debe ser mayor que 0");
+                }
+
+                //Si hay errores devolvemos el problemDetail
+                if (errorDictionary.Any())
+                {
+                    problemDetailsResponse.Title = "Ha Ocurrido un error al actualizar acción en el portfolio";
+                    problemDetailsResponse.Detail = "Los valores ingresados no sos correctos";
+                    problemDetailsResponse.Type = "error-portfolio-update";
+                    problemDetailsResponse.Status = StatusCodes.Status400BadRequest;
+                    problemDetailsResponse.Extensions.Add("errors", errorDictionary);
+                    return problemDetailsResponse;
+                }
+
+
+                //Validaciones OK
+                //Actualizamos el portfolio
                 _dbContext.Portfolio.Find(pStock.quoteId).quantity = pStock.quantity;
+                _dbContext.Portfolio.Find(pStock.quoteId).averagePurchasePrice = pStock.price;
                 _dbContext.SaveChanges();
-                return true;
+
+                //Retornamos el problem detail ok
+                problemDetailsResponse.Status = StatusCodes.Status200OK;
+                return problemDetailsResponse;
             }
             catch
             {
-                return false;
+                problemDetailsResponse.Status = StatusCodes.Status500InternalServerError;
+                return problemDetailsResponse;
             }
 
         }
