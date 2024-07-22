@@ -13,6 +13,6 @@ namespace TradeAlert.Business.Interfaces
         ProblemDetails Update(Request.UpdatePortfolio pStock);
         Boolean Delete(int idPortfolio);
         double GetWeightingPercent(double portfolioAmount, double stockAmount);
-        ProblemDetails Add(Request.AddPortfolio addPortfolio);
+        ProblemDetails Add(Request.UpdatePortfolio addPortfolio);
     }
 }

@@ -177,7 +177,7 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="addPortfolio"></param>
         /// <returns></returns>
-        public ProblemDetails Add(Request.AddPortfolio addPortfolio)
+        public ProblemDetails Add(Request.UpdatePortfolio addPortfolio)
         {
             Data.Entities.Portfolio newPortfolio = new Data.Entities.Portfolio();
             ProblemDetails problemDetailsResponse = new ProblemDetails()

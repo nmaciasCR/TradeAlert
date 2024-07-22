@@ -110,7 +110,7 @@ namespace TradeAlert.Controllers
 
         [HttpPut]
         [Route("AddPortfolioStock")]
-        public IActionResult AddPortfolioStock(Business.Request.AddPortfolio newPortfolio)
+        public IActionResult AddPortfolioStock(Business.Request.UpdatePortfolio newPortfolio)
         {
             try
             {

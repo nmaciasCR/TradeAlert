@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { OnlyInteger } from "../../../../Utils/InputText.js";
 
 
 
@@ -51,6 +52,9 @@ const AddStockButton = ({ refreshTablePortfolio }) => {
             setStockSelected([]);
             setStockQuantity("");
             setStockPrice("");
+            //Contenedor de error del modal
+            setErrorContent([]);
+            setShowErrorContainer(false);
         }
         //Combo de autocomplete
         loadStocksAutocomplete();
@@ -62,7 +66,7 @@ const AddStockButton = ({ refreshTablePortfolio }) => {
     const handleQuantityInput = (event) => {
         const value = event.target.value;
         //Solo permite numeros enteros
-        if (value === '' || /^[0-9]+$/.test(value)) {
+        if (OnlyInteger(value)) {
             setStockQuantity(value);
         }
     }
