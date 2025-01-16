@@ -20,6 +20,7 @@ namespace TradeAlert.Data.Entities
         public virtual DbSet<Calendar> Calendar { get; set; }
         public virtual DbSet<CalendarTypes> CalendarTypes { get; set; }
         public virtual DbSet<Currencies> Currencies { get; set; }
+        public virtual DbSet<Groups> Groups { get; set; }
         public virtual DbSet<Markets> Markets { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<NotificationsTypes> NotificationsTypes { get; set; }
@@ -27,12 +28,14 @@ namespace TradeAlert.Data.Entities
         public virtual DbSet<Quotes> Quotes { get; set; }
         public virtual DbSet<QuotesAlerts> QuotesAlerts { get; set; }
         public virtual DbSet<QuotesAlertsTypes> QuotesAlertsTypes { get; set; }
+        public virtual DbSet<QuotesGroups> QuotesGroups { get; set; }
         public virtual DbSet<QuotesPriority> QuotesPriority { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+
             }
         }
 
@@ -83,6 +86,14 @@ namespace TradeAlert.Data.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.updateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Groups>(entity =>
+            {
+                entity.Property(e => e.description)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Markets>(entity =>
@@ -233,6 +244,23 @@ namespace TradeAlert.Data.Entities
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<QuotesGroups>(entity =>
+            {
+                entity.HasKey(e => new { e.QuoteId, e.GroupId });
+
+                entity.HasOne(d => d.Group)
+                    .WithMany(p => p.QuotesGroups)
+                    .HasForeignKey(d => d.GroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_QuotesGroups_Groups");
+
+                entity.HasOne(d => d.Quote)
+                    .WithMany(p => p.QuotesGroups)
+                    .HasForeignKey(d => d.QuoteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_QuotesGroups_Quotes");
             });
 
             modelBuilder.Entity<QuotesPriority>(entity =>

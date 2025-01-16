@@ -9,6 +9,7 @@ namespace TradeAlert.Business.Interfaces
     {
         List<Data.Entities.Quotes> GetList();
         Data.Entities.Quotes GetQuote(int id);
+        Data.Entities.Quotes GetQuote(string symbol);
         Boolean AddAlert(int quoteId, int typeId, decimal price);
         Boolean DeleteAlert(int quoteId, int alertId);
         List<Data.Entities.Quotes> GetListByPriority(int priorityId);

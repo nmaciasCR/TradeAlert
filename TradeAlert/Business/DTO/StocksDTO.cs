@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TradeAlert.Business.DTO
 {
@@ -24,5 +25,6 @@ namespace TradeAlert.Business.DTO
         public MarketDTO _market { get; set; }
         public PortfolioDTO _Portfolio { get; set; }
         public CurrencyDTO _currency { get; set; }
+        public List<GroupDTO> _groups { get; set; }
     }
 }

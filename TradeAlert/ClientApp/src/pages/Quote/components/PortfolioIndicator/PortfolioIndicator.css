@@ -1,0 +1,18 @@
+﻿.portfolio-indicator-container {
+    display: flex;
+    font-size: 18px;
+    justify-content:end;
+}
+    .portfolio-indicator-container .description {
+        margin-left: 10px;
+    }
+
+    .portfolio-indicator-container .quantity {
+        font-weight: bold;
+        color: #0D92F4;
+    }
+
+    .portfolio-indicator-container .avgPrice {
+        font-weight: bold;
+        color: #0D92F4;
+    }

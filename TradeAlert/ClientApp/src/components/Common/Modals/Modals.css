@@ -2,3 +2,8 @@
     background-color: #E21818;
     color: white;
 }
+
+.modal-body {
+    max-height: 555px;
+    overflow-y: auto;
+}

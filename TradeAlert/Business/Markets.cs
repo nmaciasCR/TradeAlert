@@ -17,7 +17,14 @@ namespace TradeAlert.Business
 
         }
 
-
+        /// <summary>
+        /// Retorna un objeto Market por ID
+        /// </summary>
+        /// <param name="id"></param>
+        public Data.Entities.Markets Get(int id)
+        {
+            return _dbContext.Markets.Find(id);
+        }
 
         public DTO.MarketDTO MapToDTO(Data.Entities.Markets market)
         {

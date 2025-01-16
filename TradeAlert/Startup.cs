@@ -54,6 +54,7 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.ICurrency, Business.Currency>();
             services.AddTransient<Business.Interfaces.INotifications, Business.Notifications>();
             services.AddTransient<Business.Interfaces.ICalendar, Business.Calendar>();
+            services.AddTransient<Business.Interfaces.IGroups, Business.Groups>();
 
         }
 

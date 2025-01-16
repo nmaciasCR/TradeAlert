@@ -45,11 +45,27 @@ namespace TradeAlert.Business
 
         }
 
-
+        /// <summary>
+        /// Retorna una accion por id
+        /// </summary>
+        /// <param name="id"></param>
         public Data.Entities.Quotes GetQuote(int id)
         {
             return _dbContext.Quotes.Find(id);
         }
+
+        /// <summary>
+        /// Retorna una accion por symbol
+        /// </summary>
+        /// <param name="symbol"></param>
+        public Data.Entities.Quotes GetQuote(string symbol)
+        {
+            return _dbContext.Quotes.Include(q => q.Portfolio)
+                                    .Include(q => q.QuotesGroups)
+                                        .ThenInclude(qg => qg.Group)
+                                    .FirstOrDefault(q => q.symbol == symbol);
+        }
+
 
         public Boolean AddAlert(int quoteId, int typeId, decimal price)
         {

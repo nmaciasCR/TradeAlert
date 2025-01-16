@@ -10,6 +10,7 @@ namespace TradeAlert.Data.Entities
         public Quotes()
         {
             QuotesAlerts = new HashSet<QuotesAlerts>();
+            QuotesGroups = new HashSet<QuotesGroups>();
         }
 
         public int ID { get; set; }
@@ -32,5 +33,6 @@ namespace TradeAlert.Data.Entities
         public virtual QuotesPriority priority { get; set; }
         public virtual Portfolio Portfolio { get; set; }
         public virtual ICollection<QuotesAlerts> QuotesAlerts { get; set; }
+        public virtual ICollection<QuotesGroups> QuotesGroups { get; set; }
     }
 }
