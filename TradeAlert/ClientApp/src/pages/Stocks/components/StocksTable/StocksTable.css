@@ -17,3 +17,9 @@
             display: flex;
             justify-content: right;
         }
+
+        .stockTable-table .table-body .quote-link {
+            color: #413F42;
+            text-decoration: none;
+        }
+

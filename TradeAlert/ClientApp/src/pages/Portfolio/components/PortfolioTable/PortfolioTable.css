@@ -17,3 +17,9 @@
             display: flex;
             justify-content: right;
         }
+
+        .portfolio-table .table-body .symbol-link {
+            text-decoration: none;
+            color: #413F42;
+        }
+

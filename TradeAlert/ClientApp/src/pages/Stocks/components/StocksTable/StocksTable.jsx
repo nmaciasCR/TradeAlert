@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { StockItem } from "../../../../components/Common/StockItem/StockItem";
 import ActionContainer from "../ActionsContainer/ActionsContainer";
 import { Trunc2Decimal } from "../../../../Utils/Numbers.js";
+import { Link } from 'react-router-dom';
 
 
 const StockTable = (props) => {
@@ -27,7 +28,7 @@ const StockTable = (props) => {
             <tbody className="table-body">
                 {props.quotes.map(q => 
                 (<tr key={q.id}>
-                    <td>{StockItem.symbol(q.symbol)}</td>
+                    <td><Link to={`/Quote?q=${q.symbol}`} className="quote-link">{StockItem.symbol(q.symbol)}</Link></td>
                     <td className="align-center">{StockItem.market(q._market.flag, q._market.description)}</td>
                     <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)} {StockItem.portfolioIcon(q._Portfolio !== null)}</td>
                     <td className="align-center">{StockItem.priorityIcon(q.priorityId)}</td>

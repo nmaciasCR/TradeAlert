@@ -4,6 +4,8 @@ import arrowUp from "../../images/quote_arrow_up.png";
 import arrowDown from "../../images/quote_arrow_down.png";
 import arrowZero from "../../images/quote_arrow_zero.png";
 import { Trunc2Decimal } from "../../Utils/Numbers.js";
+import { Link } from 'react-router-dom';
+
 
 function GetArrow(pricePercent) {
     switch (Math.sign(pricePercent)) {
@@ -48,20 +50,23 @@ const Indexs = () => {
 
 
 
-    return (<div className="indexMarketContainer">
-
-        {
-            mainstocksList.map(q =>
-            (<div key={q.id} className="block">
-                <div  className="symbol" title={q.name}>{q.symbol}</div>
-                <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="20px" alt=""/></div>
-                <div className={`quote ${GetQuoteClass(q.regularMarketChangePercent)}`}>{Trunc2Decimal(q.regularMarketChangePercent)} %</div>
-            </div>)
-            )
-
-        }
-
-    </div>)
+    return (
+        <div className="indexMarketContainer">
+            {
+                mainstocksList.map(q =>
+                (
+                    <Link to={`/Quote?q=${q.symbol}`} className="block-link">
+                        <div key={q.id} className="block">
+                            <div className="symbol" title={q.name}>{q.symbol}</div>
+                            <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="20px" alt="" /></div>
+                            <div className={`quote ${GetQuoteClass(q.regularMarketChangePercent)}`}>{Trunc2Decimal(q.regularMarketChangePercent)} %</div>
+                        </div>
+                    </Link>
+                )
+                )
+            }
+        </div>
+    )
 }
 
 

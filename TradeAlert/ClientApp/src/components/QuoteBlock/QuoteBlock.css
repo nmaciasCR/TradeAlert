@@ -27,6 +27,12 @@
     font-size: 22px;
 }
 
+.blockContainer .quote-link {
+    text-decoration: none;
+    color: #413F42;
+}
+
+
 .blockContainer .blkPrice {
     font-weight: bold;
     font-size: 20px;

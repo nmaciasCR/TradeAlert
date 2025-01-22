@@ -6,6 +6,12 @@
         display: flex;
     }
 
+        .itemListContainer .symbolContainer .quote-link {
+            text-decoration: none;
+            color: #413F42;
+        }
+
+
     .itemListContainer .quoteContainer {
         display: flex;
     }

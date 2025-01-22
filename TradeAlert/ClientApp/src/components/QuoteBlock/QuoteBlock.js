@@ -3,6 +3,8 @@ import styles from "./QuoteBlock.css";
 import BellIcon from "../QuoteBell/QuoteBell";
 import { Trunc2Decimal } from "../../Utils/Numbers.js";
 import portfolioIcon from "../../images/portfolio_brown_icon.png";
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -28,7 +30,9 @@ function Block(props) {
     return (
         <div className={`blockContainer ${cssname}`}>
             <div>
-                <span className="blkSymbol">{props.quote.symbol}</span>
+                <span className="blkSymbol">
+                    <Link to={`/Quote?q=${props.quote.symbol}`} className="quote-link">{props.quote.symbol}</Link>
+                </span>
                 <span className="blkPrice">   {Trunc2Decimal(props.quote.regularMarketPrice)}</span>
                 <span className="blkCurrency">  {props.quote._currency.code}</span>
                 <div className="blockIconContainer">

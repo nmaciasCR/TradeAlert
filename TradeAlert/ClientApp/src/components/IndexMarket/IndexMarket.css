@@ -19,6 +19,12 @@
         justify-content: center;
     }
 
+    .indexMarketContainer .block-link {
+        text-decoration: none;
+        color: #413F42;
+    }
+
+
 .block .symbol {
     font-weight: bold;
     font-size: 22px;

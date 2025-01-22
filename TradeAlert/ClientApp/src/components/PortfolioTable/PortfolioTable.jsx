@@ -48,7 +48,9 @@ const portfolioStockItem = (quote) => {
             <div className="itemPortfolioContainer">
                 <div className="symbolContainer">
                     <div className="flag">{getFlag(quote._market.flag, quote._market.description)}</div>
-                    <div className="symbol" title={quote.name}>{quote.symbol}</div>
+                    <div className="symbol" title={quote.name}>
+                        <Link className="quote-link" to={`/Quote?q=${quote.symbol}`}>{quote.symbol}</Link>
+                    </div>
                 </div>
                 <div className="quoteContainer">
                     <div className="imgArrow"><img src={GetArrow(quote.regularMarketChangePercent)} width="16px" /></div>
