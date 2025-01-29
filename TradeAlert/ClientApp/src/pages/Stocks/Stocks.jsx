@@ -24,7 +24,8 @@ const Stocks = () => {
     //evento del filtro
     const onChangeSelectStockList = (event) => {
         stockFilters.type = parseInt(event.target.value);
-        filterStockList(stocksList);
+        //Aplicamos los filstros
+        ApplyStockDisplayFilters(stocksList);
     }
 
     //Evento del buscador
@@ -33,8 +34,10 @@ const Stocks = () => {
     }
 
 
-    //filtramos la lista de acciones que se van a mostrar
-    const filterStockList = (stocks) => {
+    //Aplicamos todos los filtros de las acciones
+    function ApplyStockDisplayFilters(stocks) {
+
+
         switch (stockFilters.type) {
             case TODO:
                 setStockDisplayList(stocks);
@@ -47,7 +50,18 @@ const Stocks = () => {
                 break;
         }
 
+
+
+
+
+
+
+
     }
+
+
+
+
 
     //Buscador de acciones por simbolo o nombre
     const searchStocks = (textToSearch, allStocksList) => {
@@ -68,7 +82,8 @@ const Stocks = () => {
                 //Primeros las revisadas hace mas tiempo
                 let sortedList = responseJson.sort((a, b) => new Date(a.dateReview) > new Date(b.dateReview) ? 1 : -1)
                 setStockList(sortedList);
-                filterStockList(sortedList);
+                //Aplicamos filtros
+                ApplyStockDisplayFilters(sortedList);
             })
             .catch(error => {
                 console.log(error);
@@ -102,7 +117,7 @@ const Stocks = () => {
                                     </Col>
                                     <Col sm={3} className="col-filter-table">
                                         <span className="filter-title">Filtrar </span>
-                                        <SelectFilterList onChangeEvent={onChangeSelectStockList} />
+                                        <SelectFilterList valueSelected={stockFilters.type} onChangeEvent={onChangeSelectStockList} />
                                     </Col>
                                 </Row>
                                 <Row>
@@ -117,10 +132,6 @@ const Stocks = () => {
                         </Col>
                     </Row>
                 </div>
-
-
-
-
             </div>
         </div>
     )
