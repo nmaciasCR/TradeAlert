@@ -7,7 +7,7 @@ namespace TradeAlert.Business.Interfaces
 {
     public interface IStocks
     {
-        List<Data.Entities.Quotes> GetList();
+        IQueryable<Data.Entities.Quotes> GetList();
         Data.Entities.Quotes GetQuote(int id);
         Data.Entities.Quotes GetQuote(string symbol);
         Boolean AddAlert(int quoteId, int typeId, decimal price);

@@ -24,7 +24,10 @@ namespace TradeAlert.Business
         /// <returns></returns>
         public List<Data.Entities.Groups> GetAll()
         {
-            return _dbContext.Groups.ToList();
+            return _dbContext.Groups
+                                .Include(g => g.QuotesGroups)
+                                .OrderBy(g => g.description)
+                                .ToList();
         }
 
         /// <summary>

@@ -26,5 +26,6 @@ namespace TradeAlert.Business.DTO
         public PortfolioDTO _Portfolio { get; set; }
         public CurrencyDTO _currency { get; set; }
         public List<GroupDTO> _groups { get; set; }
+        public List<int> groupsIdList { get; set; }
     }
 }

@@ -28,7 +28,16 @@ namespace TradeAlert.Controllers
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, _BusinessGroups.MapToDTO(_BusinessGroups.GetAll()));
+                List<GroupDTO> groups = new List<GroupDTO>();
+
+                foreach (Data.Entities.Groups group in _BusinessGroups.GetAll())
+                {
+                    GroupDTO groupDTO = _BusinessGroups.MapToDTO(group);
+                    groupDTO.quoteQty = group.QuotesGroups.Count;
+                    groups.Add(groupDTO);
+                }
+
+                return StatusCode(StatusCodes.Status200OK, groups);
             } catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);

@@ -1,0 +1,11 @@
+﻿
+.group-filter-container {
+    max-height: 349px;
+    overflow-y: auto;
+}
+
+
+
+.group-filter-container .title {
+    font-size: 18px;
+}

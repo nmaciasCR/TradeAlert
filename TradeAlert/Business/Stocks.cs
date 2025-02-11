@@ -23,20 +23,20 @@ namespace TradeAlert.Business
         /// <summary>
         /// Retorna un listado de las acciones
         /// </summary>
-        public List<Data.Entities.Quotes> GetList()
+        public IQueryable<Data.Entities.Quotes> GetList()
         {
-            List<Data.Entities.Quotes> list = new List<Data.Entities.Quotes>();
+            IQueryable<Data.Entities.Quotes> list = new List<Data.Entities.Quotes>().AsQueryable();
 
             try
             {
-                list = _dbContext.Quotes
+                return _dbContext.Quotes
+                    .AsNoTracking()
                     .Include(q => q.QuotesAlerts)
                     .Include(q => q.market)
                     .Include(q => q.Portfolio)
                     .Include(q => q.currency)
-                    .ToList();
+                    .Include(q => q.QuotesGroups);
 
-                return list;
             }
             catch (Exception ex)
             {

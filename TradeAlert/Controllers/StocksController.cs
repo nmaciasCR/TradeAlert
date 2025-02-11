@@ -21,15 +21,17 @@ namespace TradeAlert.Controllers
         private readonly IMarkets _businessMarkets;
         private readonly IPortfolio _businessPortfolio;
         private readonly ICurrency _businessCurrency;
+        private readonly IGroups _businessGroups;
 
         public StocksController(IStocks businessStocks, IQuotesAlerts businessQuotesAlerts, IMarkets businessMarkets, IPortfolio businessPortfolio,
-            ICurrency businessCurrency)
+            ICurrency businessCurrency, IGroups businessGroups)
         {
             _businessStocks = businessStocks;
             _businessQuotesAlerts = businessQuotesAlerts;
             _businessMarkets = businessMarkets;
             _businessPortfolio = businessPortfolio;
             _businessCurrency = businessCurrency;
+            _businessGroups = businessGroups;   
         }
 
         /// <summary>
@@ -41,19 +43,31 @@ namespace TradeAlert.Controllers
         {
             try
             {
-                List<StocksDTO> quotesDTOList = new();
+                List<StocksDTO> quotesDTOList = _businessStocks.GetList()
+                                    .ToList()
+                                    .Select(q =>
+                                    {
+                                        StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
+                                        stocksDTO._market = _businessMarkets.MapToDTO(q.market);
+                                        stocksDTO._Portfolio = q.Portfolio != null? _businessPortfolio.MapToDTO(q.Portfolio): null;
+                                        stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
+                                        stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
+                                        return stocksDTO;
 
-                foreach (Data.Entities.Quotes q in _businessStocks.GetList())
-                {
-                    StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
-                    stocksDTO._market = _businessMarkets.MapToDTO(q.market);
-                    if (q.Portfolio != null)
-                    {
-                        stocksDTO._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
-                    }
-                    stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
-                    quotesDTOList.Add(stocksDTO);
-                }
+                                    }).ToList();
+
+                //foreach (Data.Entities.Quotes q in _businessStocks.GetList())
+                //{
+                //    StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
+                //    stocksDTO._market = _businessMarkets.MapToDTO(q.market);
+                //    if (q.Portfolio != null)
+                //    {
+                //        stocksDTO._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
+                //    }
+                //    stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
+                //    stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
+                //    quotesDTOList.Add(stocksDTO);
+                //}
 
                 return StatusCode(StatusCodes.Status200OK, quotesDTOList);
 

@@ -9,23 +9,29 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PortfolioTable from '../../components/PortfolioTable/PortfolioTable.jsx';
 import SearchInput from "../../components/SearchInput/SearchInput.jsx";
-
+import Filters from "./components/Filters/Filters";
 
 
 let stockFilters = {
-    type: TODO
+    type: TODO,
+    groups: [],
+    markets: []
 }
 
 
 const Stocks = () => {
     const [stocksList, setStockList] = useState([]);
     const [stocksDisplayList, setStockDisplayList] = useState([]);
+    //Filtros para listado de acciones
+    const [stockFiltersList, setStockFiltersList] = useState(stockFilters);
 
-    //evento del filtro
+    //evento del filtro de tipo
     const onChangeSelectStockList = (event) => {
-        stockFilters.type = parseInt(event.target.value);
-        //Aplicamos los filstros
-        ApplyStockDisplayFilters(stocksList);
+        //Actualizamos el filtro de tipo
+        setStockFiltersList((prev) => {
+            //Seleccionado (Los agregams si es que no esta)
+            return { ...prev, type: parseInt(event.target.value) }
+        });
     }
 
     //Evento del buscador
@@ -35,27 +41,45 @@ const Stocks = () => {
 
 
     //Aplicamos todos los filtros de las acciones
-    function ApplyStockDisplayFilters(stocks) {
+    function ApplyStockDisplayFilters() {
+        //Listado de acciones temporal
+        let listered = stocksList;
 
 
-        switch (stockFilters.type) {
+        //Filtro de tipo
+        switch (stockFiltersList.type) {
             case TODO:
-                setStockDisplayList(stocks);
+                listered = stocksList;;
                 break;
             case REVISION:
-                setStockDisplayList(stocks.filter((s) => s.reviewRequired));
+                listered = stocksList.filter((s) => s.reviewRequired);
                 break;
             default:
-                alert('ERROR EN stockFilters.type');
+                alert('ERROR EN stockFiltersList.type');
                 break;
+        }
+
+
+        //Filtro de grupos
+        if (stockFiltersList.groups.length > 0) {
+            listered = listered.filter(sg =>
+                sg.groupsIdList.some(id => stockFiltersList.groups.includes(id))
+            );
+        }
+
+        //Filtro de Mercados
+        if (stockFiltersList.markets.length > 0) {
+            listered = listered.filter(s =>
+                stockFiltersList.markets.includes(s._market.id)
+            );
         }
 
 
 
 
 
-
-
+        //Listado final de acciones
+        setStockDisplayList(listered);
 
     }
 
@@ -78,12 +102,10 @@ const Stocks = () => {
         fetch("api/Stocks/GetStocks")
             .then(response => { return response.json() })
             .then(responseJson => {
-                //rdenamos las acciones por fecha de revision
+                //Ordenamos las acciones por fecha de revision
                 //Primeros las revisadas hace mas tiempo
                 let sortedList = responseJson.sort((a, b) => new Date(a.dateReview) > new Date(b.dateReview) ? 1 : -1)
                 setStockList(sortedList);
-                //Aplicamos filtros
-                ApplyStockDisplayFilters(sortedList);
             })
             .catch(error => {
                 console.log(error);
@@ -95,6 +117,67 @@ const Stocks = () => {
     useEffect(() => {
         loadTableStocks();
     }, [loadTableStocks]);
+
+
+
+    //Funcion que actualiza los grupos seleccionados en el filtro
+    function UpdateGroupsFilters(event, groupId) {
+        //Check o uncheck
+        let isChecked = event.target.checked;
+
+        setStockFiltersList((prev) => {
+            if (isChecked) {
+                //Seleccionado (Los agregams si es que no esta)
+                if (!prev.groups.includes(groupId)) {
+                    return { ...prev, groups: [...prev.groups, groupId] }
+                }
+
+            } else {
+                //Deseleccionado
+                return {
+                    ...prev,
+                    groups: prev.groups.filter(id => id !== groupId) // Filtra el grupo eliminado
+                };
+            }
+        });
+    }
+
+    //Funcion que actualiza los mercados seleccionados en el filtro
+    function UpdateMarketsFilters(event, marketId) {
+        //Check o uncheck
+        let isChecked = event.target.checked;
+
+        setStockFiltersList((prev) => {
+            if (isChecked) {
+                //Seleccionado (Los agregams si es que no esta)
+                if (!prev.markets.includes(marketId)) {
+                    return { ...prev, markets: [...prev.markets, marketId] }
+                }
+
+            } else {
+                //Deseleccionado
+                return {
+                    ...prev,
+                    markets: prev.markets.filter(id => id !== marketId) // Filtra el market eliminado
+                };
+            }
+        });
+    }
+
+    //Funcion para link de reestablecer los filtros
+    function ResetFiltersEvent(event) {
+        event.stopPropagation(); // Detiene la propagación del evento
+        //Retet de filtros con el original
+        setStockFiltersList(stockFilters);
+    }
+
+
+
+    // Ejecuta ApplyStockDisplayFilters() cuando stockFiltersList cambie
+    useEffect(() => {
+        ApplyStockDisplayFilters();
+    }, [stockFiltersList, stocksList]);
+
 
     return (
         <div>
@@ -116,8 +199,6 @@ const Stocks = () => {
                                         <Summary quotes={stocksList} />
                                     </Col>
                                     <Col sm={3} className="col-filter-table">
-                                        <span className="filter-title">Filtrar </span>
-                                        <SelectFilterList valueSelected={stockFilters.type} onChangeEvent={onChangeSelectStockList} />
                                     </Col>
                                 </Row>
                                 <Row>
@@ -127,6 +208,15 @@ const Stocks = () => {
                                     </Col>
                                 </Row>
                             </div>
+                            <br />
+                            <Filters
+                                stockFiltersList={stockFiltersList}
+                                fnGroupFilters={UpdateGroupsFilters}
+                                fnMarketFilters={UpdateMarketsFilters}
+                                fnStatusSelectFilter={onChangeSelectStockList}
+                                statusSelectedValueFilter={stockFiltersList.type}
+                                fnResetFiltersEvent={ResetFiltersEvent }
+                            />
                             <br />
                             <StocksTable quotes={stocksDisplayList} refreshTableStocks={loadTableStocks} />
                         </Col>

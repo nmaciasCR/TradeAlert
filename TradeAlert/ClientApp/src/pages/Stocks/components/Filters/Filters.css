@@ -1,0 +1,14 @@
+﻿.container-filters {
+}
+
+
+.container-filters .sub-title {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    margin-bottom: 12px;
+}
+
+    .container-filters .reset-filters-link {
+        margin-left: 15px;
+        text-decoration: none;
+    }

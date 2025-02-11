@@ -7,6 +7,6 @@
         public string description { get; set; }
         public string flag { get; set; }
         public string state { get; set; }
-
+        public int QuotesQty { get; set; }
     }
 }

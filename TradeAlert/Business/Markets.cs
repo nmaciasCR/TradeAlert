@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace TradeAlert.Business
 {
@@ -24,6 +26,17 @@ namespace TradeAlert.Business
         public Data.Entities.Markets Get(int id)
         {
             return _dbContext.Markets.Find(id);
+        }
+
+        /// <summary>
+        /// Retorna un listado de todos los mercados
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Data.Entities.Markets> GetList()
+        {
+            return _dbContext.Markets
+                            .AsNoTracking()
+                            .Include(m => m.Quotes);
         }
 
         public DTO.MarketDTO MapToDTO(Data.Entities.Markets market)
