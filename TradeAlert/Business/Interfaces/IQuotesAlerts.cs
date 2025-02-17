@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TradeAlert.Business.Interfaces
 {
     public interface IQuotesAlerts
     {
-        List<Data.Entities.QuotesAlerts> GetList(int stockId);
+        Task<List<Data.DTO.QuotesAlertsDTO>> GetList(int stockId);
     }
 }

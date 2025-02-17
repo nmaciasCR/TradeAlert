@@ -39,35 +39,11 @@ namespace TradeAlert.Controllers
         /// </summary>
         [HttpGet]
         [Route("GetStocks")]
-        public IActionResult GetStocks()
+        public async Task<IActionResult> GetStocks()
         {
             try
             {
-                List<StocksDTO> quotesDTOList = _businessStocks.GetList()
-                                    .ToList()
-                                    .Select(q =>
-                                    {
-                                        StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
-                                        stocksDTO._market = _businessMarkets.MapToDTO(q.market);
-                                        stocksDTO._Portfolio = q.Portfolio != null? _businessPortfolio.MapToDTO(q.Portfolio): null;
-                                        stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
-                                        stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
-                                        return stocksDTO;
-
-                                    }).ToList();
-
-                //foreach (Data.Entities.Quotes q in _businessStocks.GetList())
-                //{
-                //    StocksDTO stocksDTO = _businessStocks.MapToDTO(q);
-                //    stocksDTO._market = _businessMarkets.MapToDTO(q.market);
-                //    if (q.Portfolio != null)
-                //    {
-                //        stocksDTO._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
-                //    }
-                //    stocksDTO._currency = _businessCurrency.MapToDTO(q.currency);
-                //    stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
-                //    quotesDTOList.Add(stocksDTO);
-                //}
+                List<Data.DTO.StocksDTO> quotesDTOList = await _businessStocks.GetListAsync();
 
                 return StatusCode(StatusCodes.Status200OK, quotesDTOList);
 
@@ -80,6 +56,12 @@ namespace TradeAlert.Controllers
 
         }
 
+
+        /// <summary>
+        /// Retorna las alertas de una accion
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetQuotesAlerts")]
         public IActionResult GetQuotesAlerts(int stockId)
@@ -87,7 +69,6 @@ namespace TradeAlert.Controllers
             try
             {
                 return StatusCode(StatusCodes.Status200OK, _businessQuotesAlerts.GetList(stockId));
-
 
             }
             catch (Exception ex)
@@ -107,7 +88,6 @@ namespace TradeAlert.Controllers
             {
                 _businessStocks.AddAlert(newAlert.QuoteId, newAlert.TypeId, newAlert.Price);
                 return StatusCode(StatusCodes.Status200OK, newAlert);
-
 
             }
             catch
@@ -179,13 +159,14 @@ namespace TradeAlert.Controllers
                         name = s.name,
                         displayName = $"{s.symbol} - {s.name}"
                     })
+                    .ToList()
                     .OrderBy(x => x.displayName)
                     .ToList();
 
                 return StatusCode(StatusCodes.Status200OK, stockAutocomplete);
 
             }
-            catch
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

@@ -2,37 +2,40 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
-//using TradeAlert.Repositories.Entities;
+using System.Threading.Tasks;
+using TradeAlert.Business.Interfaces;
 
 namespace TradeAlert.Business
 {
     public class QuotesAlerts : Interfaces.IQuotesAlerts
     {
-        private Data.Entities.TradeAlertContext _dbContext;
+        private readonly IStocks _businessStocks;
 
-        public QuotesAlerts(Data.Entities.TradeAlertContext dbContext)
+
+        public QuotesAlerts(IStocks businessStocks)
         {
-            this._dbContext = dbContext;
+            _businessStocks = businessStocks;
         }
 
-
-         public List<Data.Entities.QuotesAlerts> GetList(int stockId)
+        /// <summary>
+        /// Obtenemos la coleccion de alertas de una accion de la cache
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
+        public async Task<List<Data.DTO.QuotesAlertsDTO>> GetList(int stockId)
         {
-            List<Data.Entities.QuotesAlerts> list = new();
-
+            List<Data.DTO.QuotesAlertsDTO> list = new();
             try
             {
-                list = this._dbContext.QuotesAlerts.Where(qa => qa.QuoteId == stockId).ToList();
-                return list;
+                return (await _businessStocks.GetListAsync())
+                    .First(s => s.ID == stockId)
+                    ._alerts;
 
             } catch (Exception ex)
             {
                 return list;
             }
-
         }
-
 
     }
 }

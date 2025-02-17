@@ -2,12 +2,14 @@
 using System.Diagnostics;
 using TradeAlert.Data.Entities;
 using static System.Formats.Asn1.AsnWriter;
+using TradeAlert.MemoryCache.Interfaces;
 
 namespace NotificationManager.Business
 {
     public class ProcessAlerts : Interfaces.IProcessAlerts
     {
         TradeAlertContext _dbContext;
+        private readonly IMemoryCacheService _memoryCacheService;
 
         public ProcessAlerts(IServiceProvider serviceProvider)
         {
@@ -16,8 +18,10 @@ namespace NotificationManager.Business
             //    _dbContext = scope.ServiceProvider.GetRequiredService<TradeAlert.Data.Entities.TradeAlertContext>();
             //}
 
+            //Metodos scoped asignados a un worker singleton
             var scope = serviceProvider.CreateScope();
             _dbContext = scope.ServiceProvider.GetRequiredService<TradeAlertContext>();
+            _memoryCacheService = scope.ServiceProvider.GetRequiredService<IMemoryCacheService>();
         }
 
 
@@ -39,7 +43,12 @@ namespace NotificationManager.Business
                     .ToList()
                     .ForEach(q => q.priorityId = GetStockPriority(q.QuotesAlerts.Select(qa => qa.regularMarketPercentDiff).ToList()));
 
+                //Actualizamos la base de datos
                 _dbContext.SaveChanges();
+
+                //Actualizamos la cache
+                _memoryCacheService.RefreshStocksAllCache();
+
             }
             catch (Exception ex)
             {

@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NotificationManager.Business.Interfaces;
 using NotificationManager.Business;
+using TradeAlert.MemoryCache;
+using TradeAlert.MemoryCache.Interfaces;
+using System;
 
 namespace TradeAlert
 {
@@ -38,7 +41,6 @@ namespace TradeAlert
             services.AddHostedService<CalendarManager.Worker>();
             services.AddSingleton<CalendarManager.Business.ICalendar, CalendarManager.Business.Calendar>();
 
-
             //Base de datos
             services.AddDbContext<TradeAlert.Data.Entities.TradeAlertContext>(options =>
             {
@@ -46,7 +48,7 @@ namespace TradeAlert
                 //.UseLazyLoadingProxies();
             });
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
             services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
             services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
@@ -56,10 +58,21 @@ namespace TradeAlert
             services.AddTransient<Business.Interfaces.ICalendar, Business.Calendar>();
             services.AddTransient<Business.Interfaces.IGroups, Business.Groups>();
 
+            //Memory Cache
+            services.AddMemoryCache(); // Habilita IMemoryCache
+            services.AddTransient<MemoryCache.Interfaces.IStocks, MemoryCache.Business.Stocks>();
+            services.AddTransient<MemoryCache.Interfaces.IMarkets, MemoryCache.Business.Market>();
+            services.AddTransient<MemoryCache.Interfaces.IPortfolio, MemoryCache.Business.Portfolio>();
+            services.AddTransient<MemoryCache.Interfaces.ICurrencies, MemoryCache.Business.Currencies>();
+            services.AddTransient<MemoryCache.Interfaces.IQuotesAlerts, MemoryCache.Business.QuotesAlerts>();
+
+            services.AddScoped<IMemoryCacheService, MemoryCacheService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -72,6 +85,12 @@ namespace TradeAlert
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+
+            ////Generamos la cache de stocks inicialmente
+            //var cacheService = serviceProvider.GetRequiredService<IMemoryCacheService>();
+            //cacheService.RefreshStocksAllCache();
+
 
             app.UseRouting();
 

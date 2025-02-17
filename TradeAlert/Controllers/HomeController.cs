@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Data.Entities;
@@ -34,30 +35,13 @@ namespace TradeAlert.Controllers
         /// </summary>
         [HttpGet]
         [Route("GetStocksOrderAlerts")]
-        public IActionResult GetStocksOrderAlerts(int priorityId)
+        public async Task<IActionResult> GetStocksOrderAlerts(int priorityId)
         {
-            List<Data.Entities.Quotes> listByPriority;
-            List<StocksDTO> quotesDTO;
-
+            List<Data.DTO.StocksDTO> quotesDTO;
 
             try
             {
-                listByPriority = _businessStocks.GetListByPriority(priorityId);
-                quotesDTO = new List<StocksDTO>();
-
-                //Agregamos el objeto market
-                listByPriority.ForEach(q => {
-                    StocksDTO newStock = _businessStocks.MapToDTO(q);
-                    newStock._market = _businessMarkets.MapToDTO(q.market);
-                    //Si es parte de portfolio lo mapeamos
-                    if (q.Portfolio != null)
-                    {
-                        newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
-                    }
-                    newStock._currency = _businessCurrency.MapToDTO(q.currency);
-                    quotesDTO.Add(newStock);
-                });
-
+                quotesDTO = await _businessStocks.GetListByPriority(priorityId);
 
                 return StatusCode(StatusCodes.Status200OK, quotesDTO);
             }
@@ -77,7 +61,7 @@ namespace TradeAlert.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetStocksOrderByChangePercent")]
-        public IActionResult GetStocksOrderByChangePercent(int take, string order)
+        public async Task<IActionResult> GetStocksOrderByChangePercent(int take, string order)
         {
             List<Data.Entities.Quotes> quotes;
             List<StocksDTO> quotesDTO = new List<StocksDTO>();

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TradeAlert;
+using TradeAlert.MemoryCache.Interfaces;
 
 namespace TradeAlert.Business
 {
@@ -12,11 +14,13 @@ namespace TradeAlert.Business
 
         private Data.Entities.TradeAlertContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly IMemoryCacheService _memoryCacheService;
 
-        public Stocks(Data.Entities.TradeAlertContext dbContext, IMapper mapper)
+        public Stocks(Data.Entities.TradeAlertContext dbContext, IMapper mapper, IMemoryCacheService memoryCacheService)
         {
             this._dbContext = dbContext;
             this._mapper = mapper;
+            this._memoryCacheService = memoryCacheService;
         }
 
 
@@ -29,6 +33,7 @@ namespace TradeAlert.Business
 
             try
             {
+
                 return _dbContext.Quotes
                     .AsNoTracking()
                     .Include(q => q.QuotesAlerts)
@@ -46,12 +51,37 @@ namespace TradeAlert.Business
         }
 
         /// <summary>
+        /// Retorna un listado de las acciones
+        /// </summary>
+        public async Task<List<Data.DTO.StocksDTO>> GetListAsync()
+        {
+            List<Data.DTO.StocksDTO> list = new List<Data.DTO.StocksDTO>();
+
+            try
+            {
+                list = await _memoryCacheService.GetAsync<List<Data.DTO.StocksDTO>>("stocks");
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return list;
+            }
+        }
+
+
+        /// <summary>
         /// Retorna una accion por id
         /// </summary>
         /// <param name="id"></param>
         public Data.Entities.Quotes GetQuote(int id)
         {
-            return _dbContext.Quotes.Find(id);
+            return _dbContext.Quotes
+                                .Include(q => q.market)
+                                .Include(q => q.Portfolio)
+                                .Include(q => q.currency)
+                                .Include(q => q.QuotesAlerts)
+                                .First(q => q.ID == id);
+
         }
 
         /// <summary>
@@ -67,6 +97,9 @@ namespace TradeAlert.Business
         }
 
 
+        /// <summary>
+        /// Agrega una alerta a una accion
+        /// </summary>
         public Boolean AddAlert(int quoteId, int typeId, decimal price)
         {
             try
@@ -83,8 +116,11 @@ namespace TradeAlert.Business
                 //actualizamos el review de la accion
                 quote.dateReview = DateTime.Now;
                 _dbContext.Quotes.Update(quote);
-
+                //actualizamos en la base de datos
                 _dbContext.SaveChanges();
+
+                //Actualizamos em la cache
+                UpdateInCache(quoteId);
 
                 return true;
 
@@ -97,6 +133,9 @@ namespace TradeAlert.Business
         }
 
 
+        /// <summary>
+        /// Elimina una alerta de una accion
+        /// </summary>
         public Boolean DeleteAlert(int quoteId, int alertId)
         {
             try
@@ -110,8 +149,11 @@ namespace TradeAlert.Business
                 //actualizamos el objeto de cotizacion
                 quote.dateReview = DateTime.Now;
                 _dbContext.Quotes.Update(quote);
-
+                //actualizamos en la base de datos
                 _dbContext.SaveChanges();
+
+                //Actualizamos em la cache
+                UpdateInCache(quoteId);
 
                 return true;
 
@@ -128,20 +170,16 @@ namespace TradeAlert.Business
         /// ordenadas por el porcentaje de diferencia de precio de sus alertas
         /// </summary>
         /// <param name="priorityId"></param>
-        public List<Data.Entities.Quotes> GetListByPriority(int priorityId)
+        public async Task<List<Data.DTO.StocksDTO>> GetListByPriority(int priorityId)
         {
-            List<Data.Entities.Quotes> list = new List<Data.Entities.Quotes>();
+            List<Data.DTO.StocksDTO> list = new List<Data.DTO.StocksDTO>();
 
             try
             {
-                list = _dbContext.Quotes
-                    .Where(q => q.priorityId == priorityId)
-                    .Include(q => q.market)
-                    .Include(q => q.QuotesAlerts)
-                    .Include(q => q.Portfolio)
-                    .Include(q => q.currency)
-                    .OrderBy(q => q.QuotesAlerts.Min(qa => qa.regularMarketPercentDiff))
-                    .ToList();
+                list = (await GetListAsync())
+                            .Where(q => q.priorityId == priorityId)
+                            .OrderBy(q => q._alerts.Min(qa => qa.regularMarketPercentDiff))
+                            .ToList();
 
                 return list;
             }
@@ -211,7 +249,14 @@ namespace TradeAlert.Business
             return listReturn;
         }
 
-
-
+        /// <summary>
+        /// Actualizamos la accion en la memorua cache
+        /// </summary>
+        /// <param name="quoteId"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateInCache(int quoteId)
+        {
+            return await _memoryCacheService.UpdateStock(GetQuote(quoteId));
+        }
     }
 }

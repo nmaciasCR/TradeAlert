@@ -22,8 +22,8 @@ function StockAlertsContent(props) {
             .then(response => { return response.json() })
             .then(responseJson => {
                 //Guardamos la lista de soportes ordenadas de manor a mayor
-                setSupportsAlertsList(responseJson.filter(s => s.quoteAlertTypeId === 1));
-                setResistorsAlertsList(responseJson.filter(s => s.quoteAlertTypeId === 2));
+                setSupportsAlertsList(responseJson.result.filter(s => s.quoteAlertTypeId === 1));
+                setResistorsAlertsList(responseJson.result.filter(s => s.quoteAlertTypeId === 2));
             })
             .catch(error => {
                 console.log(error);
