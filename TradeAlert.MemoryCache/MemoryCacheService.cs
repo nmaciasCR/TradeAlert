@@ -41,17 +41,35 @@ namespace TradeAlert.MemoryCache
 
         public Task SetAsync<T>(string key, T value, TimeSpan duration)
         {
+            //Para medir tiempo de ejecucion
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            stopwatch.Start();
+
             var jsonData = JsonSerializer.Serialize(value);
             _cache.Set(key, jsonData, duration);
+
+            //Tiempo de ejecucion
+            stopwatch.Stop();
+            Console.WriteLine($"Tiempo de ejecución de SetAsync(): {stopwatch.ElapsedMilliseconds} ms.");
+
             return Task.CompletedTask;
         }
 
         public Task<T?> GetAsync<T>(string key)
         {
+            //Para medir tiempo de ejecucion
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            stopwatch.Start();
+
             if (_cache.TryGetValue(key, out string jsonData))
             {
                 return Task.FromResult(JsonSerializer.Deserialize<T>(jsonData));
             }
+
+            //Tiempo de ejecucion
+            stopwatch.Stop();
+            Console.WriteLine($"Tiempo de ejecución de GetAsync(): {stopwatch.ElapsedMilliseconds} ms.");
+
             return Task.FromResult<T?>(default);
         }
 
@@ -74,7 +92,11 @@ namespace TradeAlert.MemoryCache
                                                 {
                                                     StocksDTO stocksDTO = _bsStocks.MapToDTO(q);
                                                     stocksDTO._market = _bsMarkets.MapToDTO(q.market);
-                                                    stocksDTO._Portfolio = q.Portfolio != null ? _bsPortfolio.MapToDTO(q.Portfolio) : null;
+                                                    if (q.Portfolio != null)
+                                                    {
+                                                        stocksDTO._Portfolio = _bsPortfolio.MapToDTO(q.Portfolio);
+                                                        stocksDTO._Portfolio.euroProfit = stocksDTO._Portfolio.profit * q.currency.euroExchange;
+                                                    }
                                                     stocksDTO._currency = _bsCurrencies.MapToDTO(q.currency);
                                                     stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(q.QuotesAlerts.ToList());
                                                     stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
@@ -101,49 +123,21 @@ namespace TradeAlert.MemoryCache
         /// <summary>
         /// Actualiza un elemento en la coleccion
         /// </summary>
-        public async Task<bool> UpdateStock(StocksDTO updatedStock)
+        public async Task<bool> UpdateStock(int quoteId)
         {
             //Para medir tiempo de ejecucion
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Start();
 
-            //Obtener la colección completa desde la caché
-            var stocks = await GetAsync<List<StocksDTO>>(stocksKey);
-
-            if (stocks == null || !stocks.Any()) return false; //No hay datos en caché
-
-            //Buscar el elemento a actualizar
-            var index = stocks.FindIndex(s => s.symbol == updatedStock.symbol);
-            if (index == -1) return false; // No encontrado
-
-            //Reemplazar el elemento en la lista
-            stocks[index] = updatedStock;
-
-            //Guardar la lista actualizada en caché
-            await SetAsync(stocksKey, stocks, TimeSpan.FromDays(1));
-
-            //Tiempo de ejecucion
-            stopwatch.Stop();
-            Console.WriteLine($"Tiempo de ejecución de UpdateStock(StocksDTO): {stopwatch.ElapsedMilliseconds} ms.");
-
-            return true; // Elemento actualizado correctamente
-        }
-
-
-        /// <summary>
-        /// Actualiza un elemento en la coleccion
-        /// </summary>
-        public async Task<bool> UpdateStock(Data.Entities.Quotes updatedStock)
-        {
-            //Para medir tiempo de ejecucion
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            stopwatch.Start();
-
-            Quotes updateDTO = _bsStocks.Get(updatedStock.ID);
+            Quotes updateDTO = _bsStocks.Get(quoteId);
 
             StocksDTO stocksDTO = _bsStocks.MapToDTO(updateDTO);
             stocksDTO._market = _bsMarkets.MapToDTO(updateDTO.market);
-            stocksDTO._Portfolio = updateDTO.Portfolio != null ? _bsPortfolio.MapToDTO(updateDTO.Portfolio) : null;
+            if (updateDTO.Portfolio != null)
+            {
+                stocksDTO._Portfolio = _bsPortfolio.MapToDTO(updateDTO.Portfolio);
+                stocksDTO._Portfolio.euroProfit = stocksDTO._Portfolio.profit * updateDTO.currency.euroExchange;
+            }
             stocksDTO._currency = _bsCurrencies.MapToDTO(updateDTO.currency);
             stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(updateDTO.QuotesAlerts.ToList());
             stocksDTO.groupsIdList = updateDTO.QuotesGroups.Select(g => g.GroupId).ToList();
@@ -169,9 +163,6 @@ namespace TradeAlert.MemoryCache
 
             return true; // Elemento actualizado correctamente
         }
-
-
-
 
     }
 }

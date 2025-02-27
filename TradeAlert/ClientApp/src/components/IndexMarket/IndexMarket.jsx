@@ -55,7 +55,7 @@ const Indexs = () => {
             {
                 mainstocksList.map(q =>
                 (
-                    <Link to={`/Quote?q=${q.symbol}`} className="block-link">
+                    <Link to={`/Quote?q=${q.symbol}`} className="block-link" key={q.id}>
                         <div key={q.id} className="block">
                             <div className="symbol" title={q.name}>{q.symbol}</div>
                             <div className="arrow"><img src={GetArrow(q.regularMarketChangePercent)} height="20px" alt="" /></div>

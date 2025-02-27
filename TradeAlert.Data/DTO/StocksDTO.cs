@@ -16,6 +16,8 @@ namespace TradeAlert.Data.DTO
         public int priorityId { get; set; }
         public decimal? regularMarketChange { get; set; }
         public DateTime dateReview { get; set; }
+        public bool isMainIndex { get; set; }
+
         //Indica si la accion debe ser re-evaluada
         public bool reviewRequired { get; set; }
         //Dias desde la ultima revision

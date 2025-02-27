@@ -23,7 +23,7 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
 
     useEffect(() => {
         if (showModal) {
-            setPortfolioData({ quoteId: portfolioQuote.quoteId, quantity: portfolioQuote.quantity, price: portfolioQuote.averagePurchasePrice });
+            setPortfolioData({ quoteId: portfolioQuote.id, quantity: portfolioQuote._Portfolio.quantity, price: portfolioQuote._Portfolio.averagePurchasePrice });
             setErrors400Response([]);
             setShowErrorAlert(false);
         }
@@ -89,7 +89,7 @@ const EditStockIcon = ({ portfolioQuote, refreshTable }) => {
 
         return (
             <StockModalTemplate
-                quote={pQuote._quote}
+                quote={pQuote}
                 content={stockEditContent}
             />
         )

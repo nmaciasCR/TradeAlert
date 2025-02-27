@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TradeAlert.Business.Interfaces
 {
@@ -8,6 +9,7 @@ namespace TradeAlert.Business.Interfaces
     {
 
         List<Data.Entities.Portfolio> GetList();
+        Task<List<Data.DTO.StocksDTO>> GetListFromCache();
         DTO.PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio);
         List<DTO.PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList);
         ProblemDetails Update(Request.UpdatePortfolio pStock);

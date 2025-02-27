@@ -17,7 +17,7 @@ const Portfolio = () => {
         fetch("api/Portfolio/GetPortfolio")
             .then(response => { return response.json() })
             .then(responseJson => {
-                setPortfolioStocks(responseJson.sort((a, b) => a.weightingPercent < b.weightingPercent ? 1 : -1));
+                setPortfolioStocks(responseJson.sort((a, b) => a._Portfolio.weightingPercent < b._Portfolio.weightingPercent ? 1 : -1));
             })
             .catch(error => {
                 console.log(error);

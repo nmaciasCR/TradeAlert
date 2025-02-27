@@ -11,6 +11,8 @@ namespace TradeAlert.Data.DTO
         //Ponderancia (o peso) de esta accion respecto al portfolio (en %)
         public double weightingPercent { get; set; }
         public double averagePurchasePrice { get; set; }
+        //Beneficio de la accion en la moneda de origen
+        public double profit { get; set; }
         public double euroProfit { get; set; }
         public double profitPercent { get; set; }
 

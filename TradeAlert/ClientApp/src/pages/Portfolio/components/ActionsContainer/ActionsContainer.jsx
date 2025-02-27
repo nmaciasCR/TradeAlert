@@ -13,13 +13,13 @@ const ActionsContainer = ({ portfolioQuote, refreshTable }) => {
     return (
         <div className="container">
             <div>
-                <ActionAlert quote={portfolioQuote._quote} afterCloseModal={refreshTable} />
+                <ActionAlert quote={portfolioQuote} afterCloseModal={refreshTable} />
             </div>
             <div>
                 <EditIcon portfolioQuote={portfolioQuote} refreshTable={refreshTable} />
             </div>
             <div>
-                <DeleteStockIcon quoteId={portfolioQuote.quoteId} name={portfolioQuote._quote.name} refreshTable={refreshTable} />
+                <DeleteStockIcon quoteId={portfolioQuote.id} name={portfolioQuote.name} refreshTable={refreshTable} />
             </div>
         </div>
     )

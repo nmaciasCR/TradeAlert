@@ -86,8 +86,8 @@ const PortfolioTable = () => {
         <ListGroup className="PortfolioContainer">
             <ListGroup.Item variant=""><h4>Portafolio</h4></ListGroup.Item>
             {
-                portfolioList.sort((a, b) => a._quote.name > b._quote.name ? 1 : -1)
-                    .map(p => (portfolioStockItem(p._quote)))
+                portfolioList.sort((a, b) => a.name > b.name ? 1 : -1)
+                    .map(p => (portfolioStockItem(p)))
             }
             <ListGroup.Item className="linkToPortfolio">
                 <Link to="/Portfolio">Ir a Portfolio</Link>

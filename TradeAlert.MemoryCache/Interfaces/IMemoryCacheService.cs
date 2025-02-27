@@ -13,8 +13,6 @@ namespace TradeAlert.MemoryCache.Interfaces
         Task SetAsync<T>(string key, T value, TimeSpan duration);
         Task<T?> GetAsync<T>(string key);
         Task<int> RefreshStocksAllCache();
-        Task<bool> UpdateStock(StocksDTO updatedStock);
-        Task<bool> UpdateStock(Data.Entities.Quotes updatedStock);
-
+        Task<bool> UpdateStock(int quoteId);
     }
 }

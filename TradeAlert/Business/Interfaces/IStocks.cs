@@ -17,6 +17,5 @@ namespace TradeAlert.Business.Interfaces
         DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote);
         Boolean HasReviewRequired(decimal price, List<Data.Entities.QuotesAlerts> alertsList);
         List<DTO.StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes);
-        Task<bool> UpdateInCache(int quoteId);
     }
 }

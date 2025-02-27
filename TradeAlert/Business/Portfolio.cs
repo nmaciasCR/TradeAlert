@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Business.Request;
+using TradeAlert.MemoryCache.Interfaces;
 
 namespace TradeAlert.Business
 {
@@ -15,13 +17,15 @@ namespace TradeAlert.Business
         private Data.Entities.TradeAlertContext _dbContext;
         private readonly IMapper _mapper;
         private Interfaces.IStocks _businessStocks;
+        private readonly IMemoryCacheService _memoryCacheService;
 
 
-        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper, Interfaces.IStocks businessStocks)
+        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper, Interfaces.IStocks businessStocks, IMemoryCacheService memoryCacheService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _businessStocks = businessStocks;
+            _memoryCacheService = memoryCacheService;
         }
 
         public List<Data.Entities.Portfolio> GetList()
@@ -47,6 +51,28 @@ namespace TradeAlert.Business
             }
 
 
+        }
+
+        /// <summary>
+        /// Retorna las acciones que forman parte del portfolio
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Data.DTO.StocksDTO>> GetListFromCache()
+        {
+            List<Data.DTO.StocksDTO> listReturn = new List<Data.DTO.StocksDTO>();
+
+            try
+            {
+                listReturn = (await _memoryCacheService.GetAsync<List<Data.DTO.StocksDTO>>("stocks"))
+                                .Where(s => s._Portfolio != null)
+                                .ToList();
+
+                return listReturn;
+
+            } catch
+            {
+                return listReturn;
+            }
         }
 
 
@@ -133,6 +159,9 @@ namespace TradeAlert.Business
                 _dbContext.Portfolio.Find(pStock.quoteId).averagePurchasePrice = pStock.price;
                 _dbContext.SaveChanges();
 
+                //La actualizamos en la cache
+                _memoryCacheService.UpdateStock(pStock.quoteId);
+
                 //Retornamos el problem detail ok
                 problemDetailsResponse.Status = StatusCodes.Status200OK;
                 return problemDetailsResponse;
@@ -152,9 +181,14 @@ namespace TradeAlert.Business
         {
             try
             {
+                //Se elimina de la base de datos
                 Data.Entities.Portfolio portfolioToDelete = _dbContext.Portfolio.Find(idPortfolio);
                 _dbContext.Portfolio.Remove(portfolioToDelete);
                 _dbContext.SaveChanges();
+
+                //La actualizamos en la cache
+                _memoryCacheService.UpdateStock(portfolioToDelete.quoteId);
+
                 return true;
             }
             catch
@@ -226,6 +260,9 @@ namespace TradeAlert.Business
                 newPortfolio.averagePurchasePrice = addPortfolio.price;
                 _dbContext.Portfolio.Add(newPortfolio);
                 _dbContext.SaveChanges();
+
+                //La actualizamos en la cache
+                _memoryCacheService.UpdateStock(newPortfolio.quoteId);
 
                 //Incluimos el nuevo objeto en la respuesta de problemDetails
                 problemDetailsResponse.Extensions.Add("result", MapToDTO(newPortfolio));

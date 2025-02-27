@@ -33,23 +33,23 @@ const PortfolioTable = ({ portfolioStocks, refreshTablePortfolio }) => {
             </thead>
             <tbody className="table-body">
                 {portfolioStocks.map(q =>
-                (<tr key={q.quoteId}>
+                (<tr key={q.id}>
                     <td>
-                        <Link to={`/Quote?q=${q._quote.symbol}`} className="symbol-link">{StockItem.symbol(q._quote.symbol)}</Link>
+                        <Link to={`/Quote?q=${q.symbol}`} className="symbol-link">{StockItem.symbol(q.symbol)}</Link>
                     </td>
-                    <td className="align-center">{StockItem.market(q._quote._market.flag, q._quote._market.description)}</td>
-                    <td>{q._quote.name} {StockItem.infoRedIcon(q._quote.reviewRequired)}</td>
-                    <td className="align-center">{StockItem.priorityIcon(q._quote.priorityId)}</td>
-                    <td className="align-right">{Trunc2Decimal(q.weightingPercent)}</td>
-                    <td className="align-right">{q.quantity}</td>
-                    <td className="align-center"><span title={q._quote._currency.name}>{q._quote._currency.code}</span></td>
-                    <td className="align-right">{Trunc2Decimal(q._quote.regularMarketPrice)}</td>
-                    <td>{StockItem.number(Trunc2Decimal(q._quote.regularMarketChangePercent), true)}</td>
-                    <td>{StockItem.number(Trunc2Decimal(q._quote.regularMarketChange), false)}</td>
-                    <td className="align-right">{Trunc2Decimal(q.euroTotalAmount)}</td>
-                    <td className="align-right">{Trunc2Decimal(q.averagePurchasePrice)}</td>
-                    <td>{StockItem.profit(Trunc2Decimal(q.euroProfit), Trunc2Decimal(q.profitPercent))}</td>
-                    <td>{StockItem.lastReview(q._quote.dateReviewDaysDiff, q._quote.dateReview)}</td>
+                    <td className="align-center">{StockItem.market(q._market.flag, q._market.description)}</td>
+                    <td>{q.name} {StockItem.infoRedIcon(q.reviewRequired)}</td>
+                    <td className="align-center">{StockItem.priorityIcon(q.priorityId)}</td>
+                    <td className="align-right">{Trunc2Decimal(q._Portfolio.weightingPercent)}</td>
+                    <td className="align-right">{q._Portfolio.quantity}</td>
+                    <td className="align-center"><span title={q._currency.name}>{q._currency.code}</span></td>
+                    <td className="align-right">{Trunc2Decimal(q.regularMarketPrice)}</td>
+                    <td>{StockItem.number(Trunc2Decimal(q.regularMarketChangePercent), true)}</td>
+                    <td>{StockItem.number(Trunc2Decimal(q.regularMarketChange), false)}</td>
+                    <td className="align-right">{Trunc2Decimal(q._Portfolio.euroTotalAmount)}</td>
+                    <td className="align-right">{Trunc2Decimal(q._Portfolio.averagePurchasePrice)}</td>
+                    <td>{StockItem.profit(Trunc2Decimal(q._Portfolio.euroProfit), Trunc2Decimal(q._Portfolio.profitPercent))}</td>
+                    <td>{StockItem.lastReview(q.dateReviewDaysDiff, q.dateReview)}</td>
                     <td><ActionsContainer portfolioQuote={q} refreshTable={refreshTablePortfolio} /></td>
                 </tr>)
                 )}

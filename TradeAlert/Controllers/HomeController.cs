@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Data.Entities;
 
@@ -49,8 +48,6 @@ namespace TradeAlert.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
-
         }
 
         /// <summary>
@@ -63,46 +60,32 @@ namespace TradeAlert.Controllers
         [Route("GetStocksOrderByChangePercent")]
         public async Task<IActionResult> GetStocksOrderByChangePercent(int take, string order)
         {
-            List<Data.Entities.Quotes> quotes;
-            List<StocksDTO> quotesDTO = new List<StocksDTO>();
 
             try
             {
+                List<Data.DTO.StocksDTO> quotesDTO = await _businessStocks.GetListAsync();
 
                 if (order.ToUpper() == "ASC")
                 {
-                    quotes = _businessStocks.GetList()
-                        .OrderBy(q => q.regularMarketChangePercent)
-                        .Take(take)
-                        .ToList();
+                    quotesDTO = quotesDTO
+                                .OrderBy(q => q.regularMarketChangePercent)
+                                .Take(take)
+                                .ToList();
                 }
                 else if (order.ToUpper() == "DESC")
                 {
-                    quotes = _businessStocks.GetList()
-                         .OrderByDescending(q => q.regularMarketChangePercent)
-                         .Take(take)
-                         .ToList();
+                    quotesDTO = quotesDTO
+                            .OrderByDescending(q => q.regularMarketChangePercent)
+                            .Take(take)
+                            .ToList();
                 }
                 else
                 {
-                    quotes = _businessStocks.GetList()
-                        .OrderBy(q => q.regularMarketChangePercent)
-                        .Take(take)
-                        .ToList();
+                    quotesDTO = quotesDTO
+                            .OrderBy(q => q.regularMarketChangePercent)
+                            .Take(take)
+                            .ToList();
                 }
-
-
-                quotes.ForEach(q => {
-                    StocksDTO newStock = _businessStocks.MapToDTO(q);
-                    newStock._market = _businessMarkets.MapToDTO(q.market);
-                    //Si es parte de portfolio lo mapeamos
-                    if (q.Portfolio != null)
-                    {
-                        newStock._Portfolio = _businessPortfolio.MapToDTO(q.Portfolio);
-                    }
-                    quotesDTO.Add(newStock);
-                });
-
 
                 return StatusCode(StatusCodes.Status200OK, quotesDTO);
 

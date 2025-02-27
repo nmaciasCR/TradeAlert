@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
 
@@ -29,27 +30,23 @@ namespace TradeAlert.Controllers
 
         [HttpGet]
         [Route("GetPortfolio")]
-        public IActionResult GetPortfolio()
+        public async Task<IActionResult> GetPortfolio()
         {
             List<PortfolioDTO> listDTO = new List<PortfolioDTO>();
 
             try
             {
-                List<Data.Entities.Portfolio> portfolioList = _businessPortfolio.GetList();
-                portfolioList.ForEach(portfolio =>
+                //Listado de acciones del portfolio
+                List<Data.DTO.StocksDTO> portfolioStocks = await _businessPortfolio.GetListFromCache();
+                //Total del portfolio (€)
+                double euroPortfolioAmount = portfolioStocks.Select(s => s._Portfolio)
+                                                            .Sum(p => p.euroTotalAmount);
+                portfolioStocks.ForEach(stock =>
                 {
-                    PortfolioDTO newPortfolio = _businessPortfolio.MapToDTO(portfolio);
-                    newPortfolio.weightingPercent = _businessPortfolio.GetWeightingPercent(portfolioList.Sum(p => p.euroTotalAmount), portfolio.euroTotalAmount);
-                    newPortfolio._quote = _businessStocks.MapToDTO(portfolio.quote);
-                    newPortfolio._quote._market = _businessMarkets.MapToDTO(portfolio.quote.market);
-                    newPortfolio._quote._currency = _businessCurrency.MapToDTO(portfolio.quote.currency);
-                    newPortfolio.averagePurchasePrice = portfolio.averagePurchasePrice;
-                    newPortfolio.euroProfit = portfolio.profit * portfolio.quote.currency.euroExchange;
-                    newPortfolio.profitPercent = portfolio.profitPercent;
-                    listDTO.Add(newPortfolio);
+                    stock._Portfolio.weightingPercent = _businessPortfolio.GetWeightingPercent(euroPortfolioAmount, stock._Portfolio.euroTotalAmount);
                 });
 
-                return StatusCode(StatusCodes.Status200OK, listDTO);
+                return StatusCode(StatusCodes.Status200OK, portfolioStocks);
             }
             catch
             {

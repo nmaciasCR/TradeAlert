@@ -51,7 +51,7 @@ namespace TradeAlert.Business
         }
 
         /// <summary>
-        /// Retorna un listado de las acciones
+        /// Retorna un listado de las acciones de la cache
         /// </summary>
         public async Task<List<Data.DTO.StocksDTO>> GetListAsync()
         {
@@ -120,7 +120,7 @@ namespace TradeAlert.Business
                 _dbContext.SaveChanges();
 
                 //Actualizamos em la cache
-                UpdateInCache(quoteId);
+                _memoryCacheService.UpdateStock(quoteId);
 
                 return true;
 
@@ -153,7 +153,7 @@ namespace TradeAlert.Business
                 _dbContext.SaveChanges();
 
                 //Actualizamos em la cache
-                UpdateInCache(quoteId);
+                _memoryCacheService.UpdateStock(quoteId);
 
                 return true;
 
@@ -249,14 +249,5 @@ namespace TradeAlert.Business
             return listReturn;
         }
 
-        /// <summary>
-        /// Actualizamos la accion en la memorua cache
-        /// </summary>
-        /// <param name="quoteId"></param>
-        /// <returns></returns>
-        public async Task<bool> UpdateInCache(int quoteId)
-        {
-            return await _memoryCacheService.UpdateStock(GetQuote(quoteId));
-        }
     }
 }

@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business;
 using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Business.Request;
+
 
 namespace TradeAlert.Controllers
 {
@@ -122,15 +122,14 @@ namespace TradeAlert.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetMainStocks")]
-        public IActionResult GetMainStocks()
+        public async Task<IActionResult> GetMainStocks()
         {
 
             try
             {
-                List<StocksDTO> mainStockDTO = _businessStocks.GetList()
-                    .Where(s => s.isMainIndex)
-                    .Select(x => _businessStocks.MapToDTO(x))
-                    .ToList();
+                List<Data.DTO.StocksDTO> mainStockDTO = (await _businessStocks.GetListAsync())
+                                                        .Where(s => s.isMainIndex)
+                                                        .ToList();
 
                 return StatusCode(StatusCodes.Status200OK, mainStockDTO);
 
