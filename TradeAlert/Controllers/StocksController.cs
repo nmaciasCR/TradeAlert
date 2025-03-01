@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business.DTO;
+using TradeAlert.Data.DTO;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Business.Request;
 
@@ -127,7 +127,7 @@ namespace TradeAlert.Controllers
 
             try
             {
-                List<Data.DTO.StocksDTO> mainStockDTO = (await _businessStocks.GetListAsync())
+                List<StocksDTO> mainStockDTO = (await _businessStocks.GetListAsync())
                                                         .Where(s => s.isMainIndex)
                                                         .ToList();
 

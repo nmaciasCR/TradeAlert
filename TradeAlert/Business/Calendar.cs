@@ -32,9 +32,9 @@ namespace TradeAlert.Business
         /// <summary>
         /// Mapea un objeto calendar en su correspondiente DTO
         /// </summary>
-        public DTO.CalendarDTO MapToDTO(Data.Entities.Calendar calendar)
+        public Data.DTO.CalendarDTO MapToDTO(Data.Entities.Calendar calendar)
         {
-            DTO.CalendarDTO DTOReturn = _mapper.Map<DTO.CalendarDTO>(calendar);
+            Data.DTO.CalendarDTO DTOReturn = _mapper.Map<Data.DTO.CalendarDTO>(calendar);
             return DTOReturn;
         }
 

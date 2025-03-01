@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Controllers
 {
@@ -37,7 +38,7 @@ namespace TradeAlert.Controllers
             {
                 Data.Entities.Quotes quote = _businessStocks.GetQuote(q);
                 //DTO return
-                Business.DTO.StocksDTO quoteDTO = _businessStocks.MapToDTO(quote);
+                StocksDTO quoteDTO = _businessStocks.MapToDTO(quote);
                 //Market DTO
                 Data.Entities.Markets market = _businessMarkets.Get(quote.marketId);
                 quoteDTO._market = _businessMarkets.MapToDTO(market);

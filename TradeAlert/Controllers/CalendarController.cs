@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TradeAlert.Business.DTO;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Controllers
 {

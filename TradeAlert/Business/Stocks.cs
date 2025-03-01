@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert;
+using TradeAlert.Data.DTO;
 using TradeAlert.MemoryCache.Interfaces;
 
 namespace TradeAlert.Business
@@ -195,9 +195,9 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="quote"></param>
         /// <returns></returns>
-        public DTO.StocksDTO MapToDTO(Data.Entities.Quotes quote)
+        public StocksDTO MapToDTO(Data.Entities.Quotes quote)
         {
-            DTO.StocksDTO DTOReturn = _mapper.Map<DTO.StocksDTO>(quote);
+            StocksDTO DTOReturn = _mapper.Map<StocksDTO>(quote);
             //Indicamos si hay que hacer una review de la accion
             DTOReturn.reviewRequired = this.HasReviewRequired(quote.regularMarketPrice, quote.QuotesAlerts.ToList());
             //Diferencia de dias desde la ultima revision
@@ -242,9 +242,9 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="quotes"></param>
         /// <returns></returns>
-        public List<DTO.StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes)
+        public List<StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes)
         {
-            List<DTO.StocksDTO> listReturn = new List<DTO.StocksDTO>();
+            List<StocksDTO> listReturn = new List<StocksDTO>();
             quotes.ForEach(q => listReturn.Add(MapToDTO(q)));
             return listReturn;
         }

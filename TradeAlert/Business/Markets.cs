@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business
 {
@@ -39,9 +40,9 @@ namespace TradeAlert.Business
                             .Include(m => m.Quotes);
         }
 
-        public DTO.MarketDTO MapToDTO(Data.Entities.Markets market)
+        public MarketDTO MapToDTO(Data.Entities.Markets market)
         {
-            DTO.MarketDTO dtoReturn = _mapper.Map<DTO.MarketDTO>(market);
+            MarketDTO dtoReturn = _mapper.Map<MarketDTO>(market);
 
             return dtoReturn;
         }

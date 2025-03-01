@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TradeAlert.Business.Interfaces;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business
 {
@@ -53,11 +54,11 @@ namespace TradeAlert.Business
         /// <summary>
         /// Mapea un objeto notification en su correspondiente DTO
         /// </summary>
-        public DTO.NotificationDTO MapToDTO(Data.Entities.Notifications notification)
+        public NotificationDTO MapToDTO(Data.Entities.Notifications notification)
         {
             try
             {
-                DTO.NotificationDTO DTOReturn = _mapper.Map<DTO.NotificationDTO>(notification);
+                NotificationDTO DTOReturn = _mapper.Map<NotificationDTO>(notification);
                 return DTOReturn;
             }
             catch (Exception ex)
@@ -69,9 +70,9 @@ namespace TradeAlert.Business
         /// <summary>
         /// Mapea una lista de notifiaciones en su correspondiente DTO
         /// </summary>
-        public List<DTO.NotificationDTO> MapToDTO(List<Data.Entities.Notifications> notificationsList)
+        public List<NotificationDTO> MapToDTO(List<Data.Entities.Notifications> notificationsList)
         {
-            List<DTO.NotificationDTO> listReturn = new List<DTO.NotificationDTO>();
+            List<NotificationDTO> listReturn = new List<NotificationDTO>();
             notificationsList.ForEach(n => listReturn.Add(MapToDTO(n)));
             return listReturn;
         }

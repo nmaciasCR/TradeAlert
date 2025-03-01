@@ -6,7 +6,7 @@ namespace TradeAlert.Business.Interfaces
     {
 
         List<Data.Entities.Calendar> GetCurrentList();
-        DTO.CalendarDTO MapToDTO(Data.Entities.Calendar calendar);
+        Data.DTO.CalendarDTO MapToDTO(Data.Entities.Calendar calendar);
 
     }
 }

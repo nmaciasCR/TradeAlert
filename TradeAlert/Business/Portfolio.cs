@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TradeAlert.Business.Interfaces;
 using TradeAlert.Business.Request;
 using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business
 {
@@ -79,11 +80,11 @@ namespace TradeAlert.Business
         /// <summary>
         /// Mapea un objeto portfolio en su correspondiente DTO
         /// </summary>
-        public DTO.PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio)
+        public PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio)
         {
             try
             {
-                DTO.PortfolioDTO DTOReturn = _mapper.Map<DTO.PortfolioDTO>(portfolio);
+                PortfolioDTO DTOReturn = _mapper.Map<PortfolioDTO>(portfolio);
                 DTOReturn.euroTotalAmount = portfolio.euroTotalAmount;
 
                 return DTOReturn;
@@ -100,9 +101,9 @@ namespace TradeAlert.Business
         /// <summary>
         /// Mapea una lista de quotes en su correspondiente DTO
         /// </summary>
-        public List<DTO.PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList)
+        public List<PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList)
         {
-            List<DTO.PortfolioDTO> listReturn = new List<DTO.PortfolioDTO>();
+            List<PortfolioDTO> listReturn = new List<PortfolioDTO>();
             portfolioList.ForEach(q => listReturn.Add(MapToDTO(q)));
             return listReturn;
         }

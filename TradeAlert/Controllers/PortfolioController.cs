@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business.DTO;
+using TradeAlert.Data.DTO;
 using TradeAlert.Business.Interfaces;
 
 namespace TradeAlert.Controllers
@@ -37,7 +37,7 @@ namespace TradeAlert.Controllers
             try
             {
                 //Listado de acciones del portfolio
-                List<Data.DTO.StocksDTO> portfolioStocks = await _businessPortfolio.GetListFromCache();
+                List<StocksDTO> portfolioStocks = await _businessPortfolio.GetListFromCache();
                 //Total del portfolio (€)
                 double euroPortfolioAmount = portfolioStocks.Select(s => s._Portfolio)
                                                             .Sum(p => p.euroTotalAmount);

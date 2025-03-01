@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business
 {
@@ -35,9 +36,9 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="Groups"></param>
         /// <returns></returns>
-        public DTO.GroupDTO MapToDTO(Data.Entities.Groups group)
+        public GroupDTO MapToDTO(Data.Entities.Groups group)
         {
-            DTO.GroupDTO DTOReturn = _mapper.Map<DTO.GroupDTO>(group);
+            GroupDTO DTOReturn = _mapper.Map<GroupDTO>(group);
 
             return DTOReturn;
         }
@@ -47,9 +48,9 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="groups"></param>
         /// <returns></returns>
-        public List<DTO.GroupDTO> MapToDTO(List<Data.Entities.Groups> groups)
+        public List<GroupDTO> MapToDTO(List<Data.Entities.Groups> groups)
         {
-            List<DTO.GroupDTO> listReturn = groups.Select(g => MapToDTO(g)).ToList();
+            List<GroupDTO> listReturn = groups.Select(g => MapToDTO(g)).ToList();
             return listReturn;
         }
 
@@ -68,7 +69,7 @@ namespace TradeAlert.Business
         /// <summary>
         /// Actualizamos los grupos asignamos a una accion
         /// </summary>
-        public bool Update(int quoteId, List<DTO.GroupDTO> list)
+        public bool Update(int quoteId, List<GroupDTO> list)
         {
             try
             {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TradeAlert.Business.DTO;
+using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business.Request
 {
