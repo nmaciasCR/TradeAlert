@@ -33,7 +33,7 @@ namespace NotificationManager
                 _processAlerts?.Run();
                 _processNotifications?.Run();
                 _logger?.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000 * 60 * 5, stoppingToken); //Cada 5 minutos
+                await Task.Delay(1000 * 60 * 10, stoppingToken); //Cada 10 minutos
             }
         }
     }

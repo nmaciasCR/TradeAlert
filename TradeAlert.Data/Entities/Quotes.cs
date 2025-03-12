@@ -27,6 +27,9 @@ namespace TradeAlert.Data.Entities
         public bool isMainIndex { get; set; }
         public DateTime? earningsDate { get; set; }
         public string timezoneName { get; set; }
+        public double? stochasticK { get; set; }
+        public double? stochasticD { get; set; }
+        public bool? isCached { get; set; }
 
         public virtual Currencies currency { get; set; }
         public virtual Markets market { get; set; }

@@ -17,6 +17,12 @@ namespace TradeAlert.Data.DTO
         public decimal? regularMarketChange { get; set; }
         public DateTime dateReview { get; set; }
         public bool isMainIndex { get; set; }
+        public DateTime? earningsDate { get; set; }
+        public string timezoneName { get; set; }
+        public double? stochasticK { get; set; }
+        public double? stochasticD { get; set; }
+        public bool? isCached { get; set; }
+
 
         //Indica si la accion debe ser re-evaluada
         public bool reviewRequired { get; set; }

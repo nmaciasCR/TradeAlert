@@ -169,6 +169,10 @@ namespace TradeAlert.Data.Entities
 
                 entity.Property(e => e.earningsDate).HasColumnType("datetime");
 
+                entity.Property(e => e.isCached)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.name)
                     .IsRequired()
                     .HasMaxLength(100)

@@ -34,6 +34,16 @@ function GetPriceClass(price) {
     }
 }
 
+
+function GetStochasticClass(price) {
+    if (price >= 80) {
+        return "price-down";
+    } else if (price < 20) {
+        return "price-up";
+    }
+}
+
+
 function GetPriorityIcon(priorityId) {
     switch (priorityId) {
         case 1: return (<img src={highPriorityIcon} title="Alta Prioridad" width="26px" alt="Alta Prioridad" />);
@@ -60,7 +70,7 @@ export const StockItem = {
         let priceClass = GetPriceClass(num);
         return (
             <div className="StockItem-value-container">
-                {withArrow? StockItem.arrow(num): ''}
+                {withArrow ? StockItem.arrow(num) : ''}
                 <div className={priceClass}>{num}</div>
             </div>
         );
@@ -87,5 +97,13 @@ export const StockItem = {
     },
     portfolioIcon: (showElement) => {
         return (showElement && <img src={portfolioIcon} className="name-table-icon" width="20" title="En Portafolio" alt="En Portafolio" />)
+    },
+    stochastic: (num) => {
+        let stochasticClass = GetStochasticClass(num);
+        return (
+            <div className="StockItem-value-container">
+                <div className={stochasticClass}>{num}</div>
+            </div>
+        );
     }
 }

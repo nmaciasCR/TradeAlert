@@ -27,6 +27,7 @@ const PortfolioTable = ({ portfolioStocks, refreshTablePortfolio }) => {
                     <th>Monto<br/>Total (€)</th>
                     <th>Precio Prom.<br />de Compra</th>
                     <th>Ganancia</th>
+                    <th>Estocástico</th>
                     <th>Última<br />Revisión</th>
                     <th></th>
                 </tr>
@@ -49,6 +50,7 @@ const PortfolioTable = ({ portfolioStocks, refreshTablePortfolio }) => {
                     <td className="align-right">{Trunc2Decimal(q._Portfolio.euroTotalAmount)}</td>
                     <td className="align-right">{Trunc2Decimal(q._Portfolio.averagePurchasePrice)}</td>
                     <td>{StockItem.profit(Trunc2Decimal(q._Portfolio.euroProfit), Trunc2Decimal(q._Portfolio.profitPercent))}</td>
+                    <td className="align-right">{StockItem.stochastic(Trunc2Decimal(q.stochasticD))}</td>
                     <td>{StockItem.lastReview(q.dateReviewDaysDiff, q.dateReview)}</td>
                     <td><ActionsContainer portfolioQuote={q} refreshTable={refreshTablePortfolio} /></td>
                 </tr>)

@@ -21,12 +21,13 @@ const StockTable = (props) => {
                     <th>Precio</th>
                     <th>%</th>
                     <th>Variación</th>
+                    <th>Estocástico</th>
                     <th>Última Revisión</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody className="table-body">
-                {props.quotes.map(q => 
+                {props.quotes.map(q =>
                 (<tr key={q.id}>
                     <td><Link to={`/Quote?q=${q.symbol}`} className="quote-link">{StockItem.symbol(q.symbol)}</Link></td>
                     <td className="align-center">{StockItem.market(q._market.flag, q._market.description)}</td>
@@ -36,6 +37,7 @@ const StockTable = (props) => {
                     <td className="align-right">{Trunc2Decimal(q.regularMarketPrice)}</td>
                     <td className="align-right">{StockItem.number(Trunc2Decimal(q.regularMarketChangePercent), true)}</td>
                     <td className="align-right">{StockItem.number(Trunc2Decimal(q.regularMarketChange), false)}</td>
+                    <td className="align-right">{StockItem.stochastic(Trunc2Decimal(q.stochasticD))}</td>
                     <td>{StockItem.lastReview(q.dateReviewDaysDiff, q.dateReview)}</td>
                     <td><ActionContainer quote={q} refreshTable={props.refreshTableStocks} /></td>
                 </tr>)
