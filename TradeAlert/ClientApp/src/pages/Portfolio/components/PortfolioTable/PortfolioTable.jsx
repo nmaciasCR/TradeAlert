@@ -18,7 +18,7 @@ const PortfolioTable = ({ portfolioStocks, refreshTablePortfolio }) => {
                     <th>Mercado</th>
                     <th>Nombre</th>
                     <th>Prioridad</th>
-                    <th>Ponderación %</th>
+                    <th>% Portf.</th>
                     <th>Cant.</th>
                     <th>Moneda</th>
                     <th>Precio</th>

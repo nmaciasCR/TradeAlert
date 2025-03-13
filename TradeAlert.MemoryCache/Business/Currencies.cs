@@ -28,7 +28,20 @@ namespace TradeAlert.MemoryCache.Business
             return DTOReturn;
         }
 
+        /// <summary>
+        /// Convierte un monto a euros
+        /// </summary>
+        public double ConvertToEuro(double amount, Data.Entities.Currencies currencyFrom)
+        {
+            double tempAmount = amount;
 
+            if (currencyFrom.ID == Data.Static.Currency.LIBRA_ESTERLINA)
+            {
+                tempAmount = tempAmount / 100;
+            }
+
+            return tempAmount * currencyFrom.euroExchange;
+        }
 
     }
 }

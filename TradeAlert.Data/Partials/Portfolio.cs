@@ -27,7 +27,7 @@ namespace TradeAlert.Data.Entities
             }
         }
 
-        //Ganancia
+        //Ganancia (en moneda de origen)
         public double profit
         {
             get

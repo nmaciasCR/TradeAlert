@@ -95,7 +95,7 @@ namespace TradeAlert.MemoryCache
                                                     if (q.Portfolio != null)
                                                     {
                                                         stocksDTO._Portfolio = _bsPortfolio.MapToDTO(q.Portfolio);
-                                                        stocksDTO._Portfolio.euroProfit = stocksDTO._Portfolio.profit * q.currency.euroExchange;
+                                                        stocksDTO._Portfolio.euroProfit = _bsCurrencies.ConvertToEuro(stocksDTO._Portfolio.profit, q.currency);
                                                     }
                                                     stocksDTO._currency = _bsCurrencies.MapToDTO(q.currency);
                                                     stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(q.QuotesAlerts.ToList());
@@ -136,7 +136,7 @@ namespace TradeAlert.MemoryCache
             if (updateDTO.Portfolio != null)
             {
                 stocksDTO._Portfolio = _bsPortfolio.MapToDTO(updateDTO.Portfolio);
-                stocksDTO._Portfolio.euroProfit = stocksDTO._Portfolio.profit * updateDTO.currency.euroExchange;
+                stocksDTO._Portfolio.euroProfit = _bsCurrencies.ConvertToEuro(stocksDTO._Portfolio.profit, updateDTO.currency);
             }
             stocksDTO._currency = _bsCurrencies.MapToDTO(updateDTO.currency);
             stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(updateDTO.QuotesAlerts.ToList());

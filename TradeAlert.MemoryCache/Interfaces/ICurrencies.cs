@@ -11,5 +11,6 @@ namespace TradeAlert.MemoryCache.Interfaces
     {
 
         CurrencyDTO MapToDTO(Data.Entities.Currencies currency);
+        double ConvertToEuro(double amount, Data.Entities.Currencies currencyFrom);
     }
 }
