@@ -19,22 +19,14 @@ namespace TradeAlert.MemoryCache
 
         private readonly IMemoryCache _cache;
         private readonly IStocks _bsStocks;
-        private readonly IMarkets _bsMarkets;
-        private readonly IPortfolio _bsPortfolio;
-        private readonly ICurrencies _bsCurrencies;
-        private readonly IQuotesAlerts _bsQuotesAlerts;
 
         const string stocksKey = "stocks";
 
 
-        public MemoryCacheService(IMemoryCache cache, IStocks bsStocks, IMarkets bsMarkets, IPortfolio bsPortfolio, ICurrencies bsCurrencies, IQuotesAlerts bsQuotesAlert)
+        public MemoryCacheService(IMemoryCache cache, IStocks bsStocks)
         {
             _cache = cache;
             _bsStocks = bsStocks;
-            _bsMarkets = bsMarkets;
-            _bsPortfolio = bsPortfolio;
-            _bsCurrencies = bsCurrencies;
-            _bsQuotesAlerts = bsQuotesAlert;
         }
 
 
@@ -88,20 +80,8 @@ namespace TradeAlert.MemoryCache
                 //Mapeamos los stocks para cachear
                 List<StocksDTO> quotesDTOList = stocks
                                                 .ToList()
-                                                .Select(q =>
-                                                {
-                                                    StocksDTO stocksDTO = _bsStocks.MapToDTO(q);
-                                                    stocksDTO._market = _bsMarkets.MapToDTO(q.market);
-                                                    if (q.Portfolio != null)
-                                                    {
-                                                        stocksDTO._Portfolio = _bsPortfolio.MapToDTO(q.Portfolio);
-                                                        stocksDTO._Portfolio.euroProfit = _bsCurrencies.ConvertToEuro(stocksDTO._Portfolio.profit, q.currency);
-                                                    }
-                                                    stocksDTO._currency = _bsCurrencies.MapToDTO(q.currency);
-                                                    stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(q.QuotesAlerts.ToList());
-                                                    stocksDTO.groupsIdList = q.QuotesGroups.Select(g => g.GroupId).ToList();
-                                                    return stocksDTO;
-                                                }).ToList();
+                                                .Select(q => _bsStocks.GetStockToCache(q))
+                                                .ToList();
 
                 //cacheamos
                 await SetAsync(stocksKey, quotesDTOList, TimeSpan.FromDays(1));
@@ -131,16 +111,7 @@ namespace TradeAlert.MemoryCache
 
             Quotes updateDTO = _bsStocks.Get(quoteId);
 
-            StocksDTO stocksDTO = _bsStocks.MapToDTO(updateDTO);
-            stocksDTO._market = _bsMarkets.MapToDTO(updateDTO.market);
-            if (updateDTO.Portfolio != null)
-            {
-                stocksDTO._Portfolio = _bsPortfolio.MapToDTO(updateDTO.Portfolio);
-                stocksDTO._Portfolio.euroProfit = _bsCurrencies.ConvertToEuro(stocksDTO._Portfolio.profit, updateDTO.currency);
-            }
-            stocksDTO._currency = _bsCurrencies.MapToDTO(updateDTO.currency);
-            stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(updateDTO.QuotesAlerts.ToList());
-            stocksDTO.groupsIdList = updateDTO.QuotesGroups.Select(g => g.GroupId).ToList();
+            StocksDTO stocksDTO = _bsStocks.GetStockToCache(updateDTO);
 
             //Obtener la colección completa desde la caché
             var stocks = await GetAsync<List<StocksDTO>>(stocksKey);

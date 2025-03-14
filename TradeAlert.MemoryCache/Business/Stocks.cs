@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
+using TradeAlert.Data.Entities;
+using TradeAlert.MemoryCache.Interfaces;
 
 namespace TradeAlert.MemoryCache.Business
 {
@@ -15,12 +17,21 @@ namespace TradeAlert.MemoryCache.Business
     {
         private readonly IMapper _mapper;
         private Data.Entities.TradeAlertContext _dbContext;
+        private readonly IMarkets _bsMarkets;
+        private readonly IPortfolio _bsPortfolio;
+        private readonly ICurrencies _bsCurrencies;
+        private readonly IQuotesAlerts _bsQuotesAlerts;
 
 
-        public Stocks(IMapper mapper, Data.Entities.TradeAlertContext dbContext)
+
+        public Stocks(IMapper mapper, Data.Entities.TradeAlertContext dbContext, IMarkets bsMarkets, IPortfolio bsPortfolio, ICurrencies bsCurrencies, IQuotesAlerts bsQuotesAlert)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _bsMarkets = bsMarkets;
+            _bsPortfolio = bsPortfolio;
+            _bsCurrencies = bsCurrencies;
+            _bsQuotesAlerts = bsQuotesAlert;
         }
 
         /// <summary>
@@ -107,7 +118,25 @@ namespace TradeAlert.MemoryCache.Business
             return hasReview;
         }
 
-
+        /// <summary>
+        /// Retorna el objeto Stock que sea cacheado en MemoryCache
+        /// </summary>
+        /// <param name="quoteToCache"></param>
+        /// <returns></returns>
+        public StocksDTO GetStockToCache(Quotes quoteToCache)
+        {
+            StocksDTO stocksDTO = MapToDTO(quoteToCache);
+            stocksDTO._market = _bsMarkets.MapToDTO(quoteToCache.market);
+            if (quoteToCache.Portfolio != null)
+            {
+                stocksDTO._Portfolio = _bsPortfolio.MapToDTO(quoteToCache.Portfolio);
+                stocksDTO._Portfolio.euroProfit = _bsCurrencies.ConvertToEuro(stocksDTO._Portfolio.profit, quoteToCache.currency);
+            }
+            stocksDTO._currency = _bsCurrencies.MapToDTO(quoteToCache.currency);
+            stocksDTO._alerts = _bsQuotesAlerts.MapToDTO(quoteToCache.QuotesAlerts.ToList());
+            stocksDTO.groupsIdList = quoteToCache.QuotesGroups.Select(g => g.GroupId).ToList();
+            return stocksDTO;
+        }
 
 
     }
