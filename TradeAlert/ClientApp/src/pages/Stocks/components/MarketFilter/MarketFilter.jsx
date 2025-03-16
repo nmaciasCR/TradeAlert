@@ -39,17 +39,17 @@ const MarketFilter = ({ stockFiltersList, fnMarketFilters }) => {
 
         return (
             <ListGroup.Item key={market.id}>
-                <div className="">
-                    <Form.Check
-                        type="checkbox"
-                        id={market.id}
-                        label={CreateMarketLabel(market.description, market.quotesQty)}
-                        checked={stockFiltersList.markets.some(m => m === market.id)}
-                        onChange={(event) => fnMarketFilters(event, market.id)}
-                    />
-                </div>
+                <Form.Check
+                    type="checkbox"
+                    id={market.id}
+                    label={CreateMarketLabel(market.description, market.quotesQty)}
+                    checked={stockFiltersList.markets.some(m => m === market.id)}
+                    onChange={(event) => {
+                        fnMarketFilters(event, market.id);
+                    }
+                    }
+                />
             </ListGroup.Item>
-
         )
     }
 

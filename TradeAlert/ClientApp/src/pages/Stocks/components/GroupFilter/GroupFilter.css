@@ -6,6 +6,10 @@
 
 
 
-.group-filter-container .title {
-    font-size: 18px;
-}
+    .group-filter-container .title {
+        font-size: 18px;
+    }
+
+    .group-filter-container label {
+        pointer-events: none;
+    }

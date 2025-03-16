@@ -8,3 +8,7 @@
     .market-filter-container .title {
         font-size: 18px;
     }
+
+    .market-filter-container label {
+        pointer-events: none;
+    }

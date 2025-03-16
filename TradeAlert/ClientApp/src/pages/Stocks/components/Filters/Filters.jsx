@@ -42,8 +42,6 @@ const Filters = ({ stockFiltersList, fnGroupFilters, fnMarketFilters, fnStatusSe
                                 </Col>
                             </Row>
                         </div>
-
-
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
