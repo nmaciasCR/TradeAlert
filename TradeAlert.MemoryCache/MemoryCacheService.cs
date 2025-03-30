@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,8 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
 using TradeAlert.Data.Entities;
-using TradeAlert.MemoryCache.Business;
-using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.MemoryCache
 {
@@ -18,15 +16,15 @@ namespace TradeAlert.MemoryCache
     {
 
         private readonly IMemoryCache _cache;
-        private readonly IStocks _bsStocks;
+        private readonly Lazy<IStocks> _businessStocks;
 
         const string stocksKey = "stocks";
 
 
-        public MemoryCacheService(IMemoryCache cache, IStocks bsStocks)
+        public MemoryCacheService(IMemoryCache cache, Lazy<IStocks> bsStocks)
         {
             _cache = cache;
-            _bsStocks = bsStocks;
+            _businessStocks = bsStocks;
         }
 
 
@@ -68,6 +66,8 @@ namespace TradeAlert.MemoryCache
 
         public async Task<int> RefreshStocksAllCache()
         {
+            var _bsStocks = _businessStocks.Value;
+
             try
             {
                 //Para medir tiempo de ejecucion
@@ -105,11 +105,13 @@ namespace TradeAlert.MemoryCache
         /// </summary>
         public async Task<bool> UpdateStock(int quoteId)
         {
+            var _bsStocks = _businessStocks.Value;
+
             //Para medir tiempo de ejecucion
             Stopwatch stopwatch = Stopwatch.StartNew();
             stopwatch.Start();
 
-            Quotes updateDTO = _bsStocks.Get(quoteId);
+            Quotes updateDTO = _bsStocks.GetQuote(quoteId);
 
             StocksDTO stocksDTO = _bsStocks.GetStockToCache(updateDTO);
 

@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TradeAlert.Data\TradeAlert.Data.csproj" />
-    <ProjectReference Include="..\TradeAlert.MemoryCache\TradeAlert.MemoryCache.csproj" />
+    <ProjectReference Include="..\TradeAlert.Interfaces\TradeAlert.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

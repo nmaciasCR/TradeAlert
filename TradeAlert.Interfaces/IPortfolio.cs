@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
+using TradeAlert.Data.Request;
 
-namespace TradeAlert.Business.Interfaces
+namespace TradeAlert.Interfaces
 {
     public interface IPortfolio
     {
@@ -13,9 +14,9 @@ namespace TradeAlert.Business.Interfaces
         Task<List<StocksDTO>> GetListFromCache();
         PortfolioDTO MapToDTO(Data.Entities.Portfolio portfolio);
         List<PortfolioDTO> MapToDTO(List<Data.Entities.Portfolio> portfolioList);
-        ProblemDetails Update(Request.UpdatePortfolio pStock);
+        ProblemDetails Update(UpdatePortfolio pStock);
         Boolean Delete(int idPortfolio);
         double GetWeightingPercent(double portfolioAmount, double stockAmount);
-        ProblemDetails Add(Request.UpdatePortfolio addPortfolio);
+        ProblemDetails Add(UpdatePortfolio addPortfolio);
     }
 }

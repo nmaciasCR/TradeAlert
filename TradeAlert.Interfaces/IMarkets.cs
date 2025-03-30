@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using TradeAlert.Data.DTO;
 
-namespace TradeAlert.Business.Interfaces
+namespace TradeAlert.Interfaces
 {
     public interface IMarkets
     {

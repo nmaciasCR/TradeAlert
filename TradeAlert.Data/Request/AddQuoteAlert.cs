@@ -1,4 +1,4 @@
-﻿namespace TradeAlert.Business.Request
+﻿namespace TradeAlert.Data.Request
 {
     public class AddQuoteAlert
     {

@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
-using TradeAlert.Business.Interfaces;
-using TradeAlert.Business.Request;
+using TradeAlert.Interfaces;
+using TradeAlert.Data.Request;
 
 
 namespace TradeAlert.Controllers

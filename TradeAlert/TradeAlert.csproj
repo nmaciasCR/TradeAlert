@@ -35,7 +35,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CalendarManager\CalendarManager.csproj" />
     <ProjectReference Include="..\NotificationManager\NotificationManager.csproj" />
+    <ProjectReference Include="..\TradeAlert.Business\TradeAlert.Business.csproj" />
     <ProjectReference Include="..\TradeAlert.Data\TradeAlert.Data.csproj" />
+    <ProjectReference Include="..\TradeAlert.Interfaces\TradeAlert.Interfaces.csproj" />
     <ProjectReference Include="..\TradeAlert.MemoryCache\TradeAlert.MemoryCache.csproj" />
   </ItemGroup>
 

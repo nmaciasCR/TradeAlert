@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
+using TradeAlert.Data.Entities;
 
-namespace TradeAlert.Business.Interfaces
+namespace TradeAlert.Interfaces
 {
     public interface IStocks
     {
@@ -18,5 +19,6 @@ namespace TradeAlert.Business.Interfaces
         StocksDTO MapToDTO(Data.Entities.Quotes quote);
         Boolean HasReviewRequired(decimal price, List<Data.Entities.QuotesAlerts> alertsList);
         List<StocksDTO> MapToDTO(List<Data.Entities.Quotes> quotes);
+        StocksDTO GetStockToCache(Quotes quoteToCache);
     }
 }

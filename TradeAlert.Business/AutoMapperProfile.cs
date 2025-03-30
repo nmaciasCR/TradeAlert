@@ -15,6 +15,7 @@ namespace TradeAlert.Business
             CreateMap<Data.Entities.Notifications, NotificationDTO>();
             CreateMap<Data.Entities.Calendar, CalendarDTO>();
             CreateMap<Data.Entities.Groups, GroupDTO>();
+            CreateMap<Data.Entities.QuotesAlerts, QuotesAlertsDTO>();
         }
 
 

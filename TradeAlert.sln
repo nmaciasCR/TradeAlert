@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAlert.MemoryCache", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAlert.Business", "TradeAlert.Business\TradeAlert.Business.csproj", "{CC10AC38-D364-4F85-828A-6324FAABBB77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAlert.Interfaces", "TradeAlert.Interfaces\TradeAlert.Interfaces.csproj", "{22DDB1D5-BB52-4C9B-8AA8-FE632E5B30EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CC10AC38-D364-4F85-828A-6324FAABBB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC10AC38-D364-4F85-828A-6324FAABBB77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC10AC38-D364-4F85-828A-6324FAABBB77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DDB1D5-BB52-4C9B-8AA8-FE632E5B30EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DDB1D5-BB52-4C9B-8AA8-FE632E5B30EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DDB1D5-BB52-4C9B-8AA8-FE632E5B30EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DDB1D5-BB52-4C9B-8AA8-FE632E5B30EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using TradeAlert.Data.DTO;
-using TradeAlert.Business.Interfaces;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Controllers
 {

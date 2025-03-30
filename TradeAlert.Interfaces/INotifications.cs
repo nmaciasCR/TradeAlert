@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TradeAlert.Data.DTO;
 
-namespace TradeAlert.Business.Interfaces
+namespace TradeAlert.Interfaces
 {
     public interface INotifications
     {

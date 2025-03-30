@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using TradeAlert.Data.Entities;
 using static System.Formats.Asn1.AsnWriter;
-using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Interfaces;
 
 namespace NotificationManager.Business
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TradeAlert.Business.Request
+namespace TradeAlert.Data.Request
 {
     public class UpdatePortfolio
     {

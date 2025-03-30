@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TradeAlert.Data.DTO;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Controllers
 {
@@ -11,10 +12,10 @@ namespace TradeAlert.Controllers
     [ApiController]
     public class MarketController : ControllerBase
     {
-        private readonly Business.Interfaces.IMarkets _businessMarkets;
+        private readonly IMarkets _businessMarkets;
 
 
-        public MarketController(Business.Interfaces.IMarkets businessMarkets)
+        public MarketController(Interfaces.IMarkets businessMarkets)
         {
 
             _businessMarkets = businessMarkets;

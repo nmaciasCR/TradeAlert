@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TradeAlert.Business.Request;
+using TradeAlert.Data.Request;
 using TradeAlert.Data.DTO;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Controllers
 {
@@ -12,11 +13,11 @@ namespace TradeAlert.Controllers
     public class GroupsController : ControllerBase
     {
 
-        private readonly Business.Interfaces.IGroups _BusinessGroups;
+        private readonly IGroups _BusinessGroups;
 
 
 
-        public GroupsController(Business.Interfaces.IGroups businessGroups)
+        public GroupsController(IGroups businessGroups)
         {
             _BusinessGroups = businessGroups;
         }

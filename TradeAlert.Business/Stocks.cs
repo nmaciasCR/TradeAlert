@@ -5,22 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
-using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Data.Entities;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Business
 {
-    public class Stocks : Interfaces.IStocks
+    public class Stocks : IStocks
     {
 
         private Data.Entities.TradeAlertContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IMemoryCacheService _memoryCacheService;
+        private readonly IMarkets _businessMarkets;
+        private readonly IPortfolio _businessPortfolio;
+        private readonly ICurrency _businessCurrency;
+        private readonly IQuotesAlerts _businessQuotesAlerts;
 
-        public Stocks(Data.Entities.TradeAlertContext dbContext, IMapper mapper, IMemoryCacheService memoryCacheService)
+
+
+
+        public Stocks(TradeAlertContext dbContext, IMapper mapper, IMemoryCacheService memoryCacheService, IMarkets businessMarkets, IPortfolio businessPortfolio,
+                            ICurrency businessCurrency, IQuotesAlerts businessQuotesAlerts)
         {
-            this._dbContext = dbContext;
-            this._mapper = mapper;
-            this._memoryCacheService = memoryCacheService;
+            _dbContext = dbContext;
+            _mapper = mapper;
+            _memoryCacheService = memoryCacheService;
+            _businessMarkets = businessMarkets;
+            _businessPortfolio = businessPortfolio;
+            _businessCurrency = businessCurrency;
+            _businessQuotesAlerts = businessQuotesAlerts;
         }
 
 
@@ -80,6 +93,7 @@ namespace TradeAlert.Business
                                 .Include(q => q.Portfolio)
                                 .Include(q => q.currency)
                                 .Include(q => q.QuotesAlerts)
+                                .Include(q => q.QuotesGroups)
                                 .First(q => q.ID == id);
 
         }
@@ -90,10 +104,11 @@ namespace TradeAlert.Business
         /// <param name="symbol"></param>
         public Data.Entities.Quotes GetQuote(string symbol)
         {
-            return _dbContext.Quotes.Include(q => q.Portfolio)
-                                    .Include(q => q.QuotesGroups)
-                                        .ThenInclude(qg => qg.Group)
-                                    .FirstOrDefault(q => q.symbol == symbol);
+            return _dbContext.Quotes
+                                .Include(q => q.Portfolio)
+                                .Include(q => q.QuotesGroups)
+                                      .ThenInclude(qg => qg.Group)
+                                 .FirstOrDefault(q => q.symbol == symbol);
         }
 
 
@@ -248,6 +263,27 @@ namespace TradeAlert.Business
             quotes.ForEach(q => listReturn.Add(MapToDTO(q)));
             return listReturn;
         }
+
+        /// <summary>
+        /// Retorna el objeto Stock que sea cacheado en MemoryCache
+        /// </summary>
+        /// <param name="quoteToCache"></param>
+        /// <returns></returns>
+        public StocksDTO GetStockToCache(Quotes quoteToCache)
+        {
+            StocksDTO stocksDTO = MapToDTO(quoteToCache);
+            stocksDTO._market = _businessMarkets.MapToDTO(quoteToCache.market);
+            if (quoteToCache.Portfolio != null)
+            {
+                stocksDTO._Portfolio = _businessPortfolio.MapToDTO(quoteToCache.Portfolio);
+                stocksDTO._Portfolio.euroProfit = _businessCurrency.ConvertToEuro(stocksDTO._Portfolio.profit, quoteToCache.currency);
+            }
+            stocksDTO._currency = _businessCurrency.MapToDTO(quoteToCache.currency);
+            stocksDTO._alerts = _businessQuotesAlerts.MapToDTO(quoteToCache.QuotesAlerts.ToList());
+            stocksDTO.groupsIdList = quoteToCache.QuotesGroups.Select(g => g.GroupId).ToList();
+            return stocksDTO;
+        }
+
 
     }
 }

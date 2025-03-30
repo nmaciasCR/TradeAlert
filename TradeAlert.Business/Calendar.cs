@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TradeAlert.Business.Interfaces;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Business
 {
-    public class Calendar : Interfaces.ICalendar
+    public class Calendar : ICalendar
     {
 
         private readonly IMapper _mapper;

@@ -4,8 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business.Interfaces;
-using TradeAlert.Data.Entities;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Controllers
 {

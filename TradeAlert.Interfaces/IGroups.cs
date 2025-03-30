@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TradeAlert.Business.Interfaces
+namespace TradeAlert.Interfaces
 {
     public interface IGroups
     {

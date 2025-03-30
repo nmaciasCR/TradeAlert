@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TradeAlert.Data.DTO;
-using TradeAlert.Business.Interfaces;
+using TradeAlert.Data.Request;
+using TradeAlert.Interfaces;
 
 namespace TradeAlert.Controllers
 {
@@ -59,7 +60,7 @@ namespace TradeAlert.Controllers
         /// </summary>
         [HttpPost]
         [Route("UpdatePortfolioStock")]
-        public IActionResult UpdatePortfolioStock(Business.Request.UpdatePortfolio pStock)
+        public IActionResult UpdatePortfolioStock(UpdatePortfolio pStock)
         {
             try
             {
@@ -107,7 +108,7 @@ namespace TradeAlert.Controllers
 
         [HttpPut]
         [Route("AddPortfolioStock")]
-        public IActionResult AddPortfolioStock(Business.Request.UpdatePortfolio newPortfolio)
+        public IActionResult AddPortfolioStock(UpdatePortfolio newPortfolio)
         {
             try
             {

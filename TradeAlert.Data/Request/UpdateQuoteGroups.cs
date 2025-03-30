@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TradeAlert.Data.DTO;
 
-namespace TradeAlert.Business.Request
+
+namespace TradeAlert.Data.Request
 {
     public class UpdateQuoteGroups
     {
         public int quoteId { get; set; }
-        public List<GroupDTO> groupList { get; set; }
+        public List<DTO.GroupDTO> groupList { get; set; }
     }
 }

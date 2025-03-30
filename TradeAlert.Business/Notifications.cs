@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TradeAlert.Business.Interfaces;
+using TradeAlert.Interfaces;
 using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business

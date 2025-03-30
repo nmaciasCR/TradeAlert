@@ -6,22 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAlert.Business.Interfaces;
-using TradeAlert.Business.Request;
-using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Interfaces;
+using TradeAlert.Data.Request;
 using TradeAlert.Data.DTO;
 
 namespace TradeAlert.Business
 {
-    public class Portfolio : Interfaces.IPortfolio
+    public class Portfolio : IPortfolio
     {
         private Data.Entities.TradeAlertContext _dbContext;
         private readonly IMapper _mapper;
-        private Interfaces.IStocks _businessStocks;
+        private readonly Lazy<IStocks> _businessStocks;
         private readonly IMemoryCacheService _memoryCacheService;
 
 
-        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper, Interfaces.IStocks businessStocks, IMemoryCacheService memoryCacheService)
+        public Portfolio(Data.Entities.TradeAlertContext dbContext, IMapper mapper, Lazy<IStocks> businessStocks, IMemoryCacheService memoryCacheService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -112,17 +111,19 @@ namespace TradeAlert.Business
         /// <summary>
         /// Actualiza los datos de una accion del portfolio
         /// </summary>
-        public ProblemDetails Update(Request.UpdatePortfolio pStock)
+        public ProblemDetails Update(UpdatePortfolio pStock)
         {
+
             //Objeto de respuesta ProblemDetails
             ProblemDetails problemDetailsResponse = new ProblemDetails();
             Dictionary<string, string> errorDictionary = new Dictionary<string, string>();
 
+            var _bsStocks = _businessStocks.Value;
 
             try
             {
                 //Validamos si existe la empresa
-                if (_businessStocks.GetQuote(pStock.quoteId) == null)
+                if (_bsStocks.GetQuote(pStock.quoteId) == null)
                 {
                     errorDictionary.Add("quoteId_1", "La empresa seleccionada no existe");
                 }
@@ -212,8 +213,12 @@ namespace TradeAlert.Business
         /// </summary>
         /// <param name="addPortfolio"></param>
         /// <returns></returns>
-        public ProblemDetails Add(Request.UpdatePortfolio addPortfolio)
+        public ProblemDetails Add(UpdatePortfolio addPortfolio)
         {
+
+            var _bsStocks = _businessStocks.Value;
+
+
             Data.Entities.Portfolio newPortfolio = new Data.Entities.Portfolio();
             ProblemDetails problemDetailsResponse = new ProblemDetails()
             {
@@ -227,7 +232,7 @@ namespace TradeAlert.Business
             try
             {
                 //Validamos si existe la empresa
-                if (_businessStocks.GetQuote(addPortfolio.quoteId) == null)
+                if (_bsStocks.GetQuote(addPortfolio.quoteId) == null)
                 {
                     errorDictionary.Add("quoteId", "La empresa seleccionada no existe");
                 }

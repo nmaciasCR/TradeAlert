@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using NotificationManager.Business.Interfaces;
 using NotificationManager.Business;
 using TradeAlert.MemoryCache;
-using TradeAlert.MemoryCache.Interfaces;
+using TradeAlert.Interfaces;
 using System;
 
 namespace TradeAlert
@@ -48,24 +48,24 @@ namespace TradeAlert
                 //.UseLazyLoadingProxies();
             });
 
+            //AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddTransient<Business.Interfaces.IStocks, Business.Stocks>();
-            services.AddTransient<Business.Interfaces.IQuotesAlerts, Business.QuotesAlerts>();
-            services.AddTransient<Business.Interfaces.IMarkets, Business.Markets>();
-            services.AddTransient<Business.Interfaces.IPortfolio, Business.Portfolio>();
-            services.AddTransient<Business.Interfaces.ICurrency, Business.Currency>();
-            services.AddTransient<Business.Interfaces.INotifications, Business.Notifications>();
-            services.AddTransient<Business.Interfaces.ICalendar, Business.Calendar>();
-            services.AddTransient<Business.Interfaces.IGroups, Business.Groups>();
+
+
+            services.AddScoped<IStocks, Business.Stocks>();
+            services.AddScoped<IQuotesAlerts, Business.QuotesAlerts>();
+            services.AddScoped<IMarkets, Business.Markets>();
+            services.AddScoped<IPortfolio, Business.Portfolio>();
+            services.AddScoped<ICurrency, Business.Currency>();
+            services.AddScoped<INotifications, Business.Notifications>();
+            services.AddScoped<ICalendar, Business.Calendar>();
+            services.AddScoped<IGroups, Business.Groups>();
+
+            //Registrar Lazy<T> manualmente
+            services.AddScoped(provider => new Lazy<IStocks>(() => provider.GetRequiredService<IStocks>()));
 
             //Memory Cache
             services.AddMemoryCache(); // Habilita IMemoryCache
-            services.AddTransient<MemoryCache.Interfaces.IStocks, MemoryCache.Business.Stocks>();
-            services.AddTransient<MemoryCache.Interfaces.IMarkets, MemoryCache.Business.Market>();
-            services.AddTransient<MemoryCache.Interfaces.IPortfolio, MemoryCache.Business.Portfolio>();
-            services.AddTransient<MemoryCache.Interfaces.ICurrencies, MemoryCache.Business.Currencies>();
-            services.AddTransient<MemoryCache.Interfaces.IQuotesAlerts, MemoryCache.Business.QuotesAlerts>();
-
             services.AddScoped<IMemoryCacheService, MemoryCacheService>();
 
 
